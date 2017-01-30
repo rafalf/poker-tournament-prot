@@ -1,0 +1,4 @@
+.idea
+confs/node_modules
+*.html
+*.json
