@@ -11,13 +11,14 @@ describe('Login', function() {
 
         console.log('\n**********  test spec: ' + __filename + '  **********')
         browser.get(testData.login_url)
+        browser.driver.manage().window().maximize();
     });
 
     afterEach(function () {
         console.log('\n**********')
     });
 
-    it('should login with fb and create a club', function() {
+    it('should login with fb', function() {
 
         login.getConnectFbButton().click();
 
@@ -35,22 +36,57 @@ describe('Login', function() {
 
         page.getFbLoginButton().click();
 
-        // back on poker angular page
+        page.switchToMainWindow();
+
+        page.waitForWelcomeHeading();
+
+        var title = lobby.getWelcomeHeading();
+
+        expect(title).toBe('Welcome PoTe Kurosava');
+
+        lobby.getGetLogoutButton().click();
+
+        page.waitForLaunchWindow();
+
+    });
+
+
+    it('should login with gmail', function() {
+
+        login.getConnectGoogleButton().click();
+
+        // non angular page
+        // fb booklet
         browser.ignoreSynchronization = true;
+
+        page.switchToNewWindow();
+
+        page.waitForGoogle();
+
+        page.getGoogleEmailInput().sendKeys(testData.gmail_user);
+
+        page.getGoogleNextButton().click();
+
+        page.waitForPassInput();
+
+        page.getGooglePasswordInput().sendKeys(testData.password);
+
+        page.getGoogleSignInButton().click();
 
         page.switchToMainWindow();
 
-        // create club modal
+        page.waitForWelcomeHeading();
 
-        lobby.waitForLobby();
+        var title = lobby.getWelcomeHeading();
 
-        var clubName = page.getRandomString();
-        lobby.getCreateClubInput().sendKeys(clubName);
+        expect(title).toBe('Welcome akiro kurosava');
 
-        browser.pause();
-        browser.debugger();
+        lobby.getGetLogoutButton().click();
+
+        page.waitForLaunchWindow();
 
     });
+
 
 
     xit('should sign up', function() {
