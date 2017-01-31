@@ -3,10 +3,9 @@ describe('Login', function() {
     // pages
     var page = require('../pages/page.po.js');
     var login = require('../pages/login.po.js');
-    var testData = require("../confs/test.json");
-    var randomUser = Math.random().toString(36).slice(2)
+    var lobby = require('../pages/lobby.po.js')
 
-    var EC = protractor.ExpectedConditions;
+    var testData = require("../confs/test.json");
 
     beforeEach(function(){
 
@@ -18,23 +17,49 @@ describe('Login', function() {
         console.log('\n**********')
     });
 
-    it('should sign up', function() {
-
-        login.getLoginEmailButton().click();
-
-        login.getSignUpEmailInput().sendKeys(randomUser + "@test.com");
-
-        login.getSignUpPasswordInput().sendKeys(testData.password);
-
-        login.getCancelButton().click();
+    it('should login with fb and create a club', function() {
 
         login.getConnectFbButton().click();
 
+        // non angular page
+        // fb booklet
+        browser.ignoreSynchronization = true;
+
         page.switchToNewWindow();
+
+        page.waitForFbBooklet();
+
+        page.getFbLoginInput().sendKeys(testData.gmail_user);
+
+        page.getFbPasswordInput().sendKeys(testData.password);
+
+        page.getFbLoginButton().click();
+
+        // back on poker angular page
+        browser.ignoreSynchronization = true;
+
+        page.switchToMainWindow();
+
+        // create club modal
+
+        lobby.waitForLobby();
+
+        var clubName = page.getRandomString();
+        lobby.getCreateClubInput().sendKeys(clubName);
 
         browser.pause();
         browser.debugger();
 
+    });
+
+
+    xit('should sign up', function() {
+
+        login.getLoginEmailButton().click();
+
+        login.getSignUpEmailInput().sendKeys(page.getRandomString() + "@test.com");
+
+        login.getSignUpPasswordInput().sendKeys(testData.password);
 
     });
 

@@ -44,7 +44,6 @@ var loginPage = function (){
         return element(by.cssContainingText('.btn', 'Cancel'));
     };
 
-
 };
 
 module.exports = new loginPage();
