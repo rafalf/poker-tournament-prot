@@ -4,6 +4,7 @@ describe('Login', function() {
     var page = require('../pages/page.po.js');
     var login = require('../pages/login.po.js');
     var testData = require("../confs/test.json");
+    var randomUser = Math.random().toString(36).slice(2)
 
     var EC = protractor.ExpectedConditions;
 
@@ -20,6 +21,16 @@ describe('Login', function() {
     it('should sign up', function() {
 
         login.getLoginEmailButton().click();
+
+        login.getSignUpEmailInput().sendKeys(randomUser + "@test.com");
+
+        login.getSignUpPasswordInput().sendKeys(testData.password);
+
+        login.getCancelButton().click();
+
+        login.getConnectFbButton().click();
+
+        page.switchToNewWindow();
 
         browser.pause();
         browser.debugger();

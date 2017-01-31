@@ -1,4 +1,4 @@
-var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+//var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 
 exports.config = {
 
@@ -18,14 +18,14 @@ exports.config = {
         includeStackTrace: true
     },
 
-    onPrepare: function() {
-        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-            savePath: './reports/',
-            takeScreenshots: true,
-            takeScreenshotsOnlyOnFailures: true,
-            screenshotsFolder: 'fail_images'
-            })
-        );
-    }
+//    onPrepare: function() {
+//        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+//            savePath: './reports/',
+//            takeScreenshots: true,
+//            takeScreenshotsOnlyOnFailures: true,
+//            screenshotsFolder: 'fail_images'
+//            })
+//        );
+//    }
 };
 
