@@ -14,6 +14,10 @@ var loginPage = function (){
         return $('#btn_connect_google')
     };
 
+    this.getConnectEmailButton = function(){
+        return $('#emailBtn')
+    };
+
     // Connect with modal functions
 
     this.getLoginEmailInput = function(){

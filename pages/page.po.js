@@ -6,6 +6,10 @@ var Page = function (){
         return Math.random().toString(36).slice(2);
     }
 
+    this.getRandomNumber = function() {
+        return Math.floor((Math.random() * 100000) + 1);
+    }
+
     this.switchToNewWindow = function(){
         browser.getAllWindowHandles().then(function(handles){
             browser.switchTo().window(handles[1]); // 0 or 1 to switch between the 2 open windows

@@ -1,4 +1,4 @@
-describe('Login', function() {
+describe('login', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -10,11 +10,16 @@ describe('Login', function() {
     beforeEach(function(){
 
         console.log('\n**********  test spec: ' + __filename + '  **********')
+
         browser.get(testData.login_url)
+
         browser.driver.manage().window().maximize();
     });
 
     afterEach(function () {
+
+        browser.restart()
+
         console.log('\n**********')
     });
 
@@ -84,18 +89,6 @@ describe('Login', function() {
         lobby.getGetLogoutButton().click();
 
         page.waitForLaunchWindow();
-
-    });
-
-
-
-    xit('should sign up', function() {
-
-        login.getLoginEmailButton().click();
-
-        login.getSignUpEmailInput().sendKeys(page.getRandomString() + "@test.com");
-
-        login.getSignUpPasswordInput().sendKeys(testData.password);
 
     });
 
