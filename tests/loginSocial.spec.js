@@ -1,4 +1,4 @@
-describe('login', function() {
+describe('loginSocial', function() {
 
     // pages
     var page = require('../pages/page.po.js');

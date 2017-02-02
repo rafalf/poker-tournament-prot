@@ -3,7 +3,8 @@ describe('tearDown', function() {
     // pages
     var page = require('../pages/page.po.js');
     var login = require('../pages/login.po.js');
-    var lobby = require('../pages/lobby.po.js')
+    var lobby = require('../pages/lobby.po.js');
+    var club = require('../pages/club.po.js');
 
     var testData = require("../confs/test.json");
     var storage;
@@ -44,6 +45,35 @@ describe('tearDown', function() {
         lobby.getGetLogoutButton().click();
 
         page.waitForLaunchWindow();
+
+    });
+
+    it('should delete all clubs', function() {
+
+        login.getConnectEmailButton().click();
+
+        login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+        login.getLoginPasswordInput().sendKeys(testData.password);
+
+        login.getLoginButton().click();
+
+        page.waitForWelcomeHeading();
+
+        var title = lobby.getWelcomeHeading();
+
+        lobby.getSettingsClubButton().click();
+
+        club.getTrashButton().click();
+
+        club.getConfirmDeleteClubButton().click();
+
+        lobby.getGetLogoutButton().click();
+
+        page.waitForLaunchWindow();
+
+        browser.pause();
+        browser.debugger();
 
     });
 

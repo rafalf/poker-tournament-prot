@@ -6,7 +6,6 @@ describe('addClub', function() {
     var lobby = require('../pages/lobby.po.js')
 
     var testData = require("../confs/test.json");
-    var storage;
 
     beforeEach(function(){
 

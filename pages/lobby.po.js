@@ -3,6 +3,11 @@ var lobbyPage = function (){
     var EC = protractor.ExpectedConditions;
 
     // Left side menu
+    this.getCardsMenu = function(){
+        return $('.lobby-left img');
+    };
+
+
     this.getAddClubMenu = function(){
         return $('.tourn-menu-cont ul:nth-of-type(1) img');
     };
@@ -69,6 +74,7 @@ var lobbyPage = function (){
         return h.getText();
     };
 
+    // Tournaments
     this.getAllTournamentHeadings = function(){
         var headings = $$('.lobby-card h5');
         headings.getText().then(function(t){
@@ -103,6 +109,11 @@ var lobbyPage = function (){
 
     this.getConfirmDeleteButton = function(){
         return $('#btn_confirmDeleteTourn');
+    };
+
+    // Clubs
+    this.getSettingsClubButton = function(){
+        return $('.lobby-club button.btn-link');
     };
 };
 

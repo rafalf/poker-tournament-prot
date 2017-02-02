@@ -3,7 +3,7 @@
 exports.config = {
 
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['../tests/login.spec.js',
+    specs: ['../tests/loginSocial.spec.js',
             '../tests/addClub.spec.js'],
 
     // browser
