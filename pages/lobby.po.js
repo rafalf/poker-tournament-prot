@@ -44,7 +44,7 @@ var lobbyPage = function (){
     };
 
     this.getCreateClubButton = function(){
-        return element(by.cssContainingText('.btn', 'Create Club'));
+        return $('#btn_create_club')
     };
 
     // Create Tournament modal functions
@@ -54,7 +54,7 @@ var lobbyPage = function (){
     };
 
     this.getCreateTournamentButtonModal = function(){
-        return element(by.cssContainingText('.btn', 'Create Tournament'));
+        return $('#btn_create_tourn');
     };
 
 

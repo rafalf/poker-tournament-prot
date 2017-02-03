@@ -29,7 +29,7 @@ var loginPage = function (){
     };
 
     this.getLoginButton = function(){
-        return element(by.cssContainingText('.btn', 'Login'));
+        return $('#btn_modal_login');
     };
 
     this.getSignUpEmailInput = function(){
@@ -41,11 +41,11 @@ var loginPage = function (){
     };
 
     this.getSignUpButton = function(){
-        return element(by.cssContainingText('.btn', 'Sign up'));
+        return $('#btn_modal_signup');
     };
 
     this.getCancelButton = function(){
-        return element(by.cssContainingText('.btn', 'Cancel'));
+        return $('[translate="CANCEL"]')
     };
 
 };
