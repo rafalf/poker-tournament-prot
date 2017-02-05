@@ -47,11 +47,67 @@ var lobbyPage = function (){
         return $('#btn_create_club')
     };
 
-    // Create Tournament modal functions
+
+    // *************************************************************************
+    // Create Tournament Modal
+    // *************************************************************************
+
+
+    // inputs
+    //--------------------------------------------------------------------------
+
 
     this.getEnterTournamentNameInput = function(){
         return element(by.model('tournParams.tournName'));
     };
+
+    this.getTournDateInput = function(){
+        return $("#input_tournDate");
+    };
+
+    this.getTournTimeInput = function(){
+        return $("#input_tournTime");
+    };
+
+    this.getTournPlayersInput = function(){
+        return $("[name='expPlayers']");
+    };
+
+    this.getTournDurationInput = function(){
+        return $("[name='duration']");
+    };
+
+    this.getTournBuyInInput = function(){
+        return $("[name='buyin']");
+    };
+
+    this.getTournSmallBlindInput = function(){
+        return $("[name='initSmallBlind']");
+    };
+
+    this.getTournStartStackInput = function(){
+        return $("[name='startingStack']");
+    };
+
+    // checkboxes
+    //--------------------------------------------------------------------------
+
+    this.getTournManagePayouts = function(){
+        return  $("#input_managePayouts");
+    };
+
+    this.getTournKnockouts = function(){
+        return  element(by.model('tournParams.trackKnockouts'));
+    };
+
+    this.getManageRegistration = function(){
+        return element(by.model('tournParams.manageRegistrations'));
+    };
+
+    this.getRebuyTournament = function(){
+        return element(by.model('tournParams.rebuyTournament'));
+    };
+
 
     this.getCreateTournamentButtonModal = function(){
         return $('#btn_create_tourn');
