@@ -47,6 +47,21 @@ var lobbyPage = function (){
         return $('#btn_create_club')
     };
 
+    this.getCancelClubButton = function(){
+        return $('#btn_cancel_create_club');
+    };
+
+    this.closeCreateClubModalIfPresent = function () {
+        this.getCancelClubButton().isPresent().then(function (result) {
+            if (result){
+                console.log('Add club present')
+                $('#btn_cancel_create_club').click();
+            }
+
+        })
+
+    }
+
 
     // *************************************************************************
     // Create Tournament Modal
@@ -71,6 +86,12 @@ var lobbyPage = function (){
 
     this.getTournPlayersInput = function(){
         return $("[name='expPlayers']");
+    };
+
+    this.enterTournPlayersInput = function(players){
+        el = this.getTournPlayersInput();
+        el.clear();
+        el.sendKeys(players);
     };
 
     this.getTournDurationInput = function(){
@@ -157,6 +178,18 @@ var lobbyPage = function (){
             element.click();
             $('#btn_confirmDeleteTourn').click();
         });
+    };
+
+    this.getAllOpenTournamentButtons = function(){
+        var buttons = $$('#btn_openTourn');
+        buttons.count().then(function(c){
+            console.log("tournament buttons: " + c)
+        });
+        return buttons;
+    };
+
+    this.getFirstTournamentButton = function () {
+        return this.getAllOpenTournamentButtons().first();
     };
 
     this.getAllTournaments = function(){

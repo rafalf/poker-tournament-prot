@@ -1,0 +1,108 @@
+describe('addClub', function() {
+
+    // pages
+    var page = require('../pages/page.po.js');
+    var login = require('../pages/login.po.js');
+    var lobby = require('../pages/lobby.po.js');
+    var tourn = require('../pages/tournament.po.js');
+
+
+    var testData = require("../confs/test.json");
+
+    beforeAll(function(){
+
+        console.log('\n**********  test spec: ' + __filename + '  **********')
+
+        browser.get(testData.login_url)
+        browser.driver.manage().window().maximize();
+
+    });
+
+
+    it('should create a new tournament and add 20 players - non members', function() {
+
+        login.getConnectEmailButton().click();
+
+        login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+        login.getLoginPasswordInput().sendKeys(testData.password);
+
+        login.getLoginButton().click();
+
+        page.waitForWelcomeHeading();
+
+        var title = lobby.getWelcomeHeading();
+
+        expect(title).toBe('Welcome test.blindvalet');
+
+        lobby.closeCreateClubModalIfPresent();
+
+        // create a club
+        lobby.getAddClubMenu().click();
+
+        var club_name = "Club-" + page.getRandomNumber();
+        lobby.getEnterClubNameInput().sendKeys(club_name);
+
+        lobby.getEnterClubPassword().sendKeys('pass');
+
+        lobby.getCreateClubButton().click();
+
+        // create a tournament
+        lobby.getCreateTournamentButton().click();
+
+        var tournament_name = 'Tournament-' + page.getRandomNumber();
+        lobby.getEnterTournamentNameInput().clear();
+        lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+
+        lobby.enterTournPlayersInput('20');
+
+        lobby.getCreateTournamentButtonModal().click();
+
+        headings = lobby.getAllTournamentHeadings();
+        expect(headings).toContain(tournament_name);
+
+        lobby.getFirstTournamentButton().click();
+
+        tourn.getPlayersLeftMenu().click();
+
+        tourn.getRegisterPlayerButton().click();
+
+        var i;
+        for (i = 0; i < 20; i++) {
+            tourn.enterPlayerName('New Player Name' + i);
+            tourn.getRegisterButton().click();
+        };
+
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
+
+    });
+
+    it('should close register modal', function () {
+
+        tourn.getRegisterPlayerButton().click();
+
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
+
+    });
+
+    it('should deregister 5 players', function () {
+
+        var i;
+        for (i = 0; i < 5; i++){
+
+            tourn.getActionsOnPlayerButton().click();
+
+            tourn.getUnregisterPlayerButton().click();
+        }
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+
+    });
+
+
+
+});

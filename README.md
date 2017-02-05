@@ -11,7 +11,7 @@
 * drop ```test.json``` into confs dir
 * run ```cmd``` and start webdriver: ```webdriver-manager start``` and leave the server running
 * again run ```cmd``` --> ```cd ./confs/```
-* run ```protractor conf.js```
+* run ```protractor conf.js --suite=```
 
 
 ### Prep & tear down:
@@ -20,7 +20,7 @@ any data left behind created by test.blindvalet user).
 
 * run ```cmd``` and start webdriver: ```webdriver-manager start``` and leave the server running
 * again run ```cmd``` --> ```cd ./confs/```
-* run ```protractor teardown.js```
+* run ```protractor conf.js --suite=```
 
 ### Results:
 After tests are executed and completed, the suite generates a html report.

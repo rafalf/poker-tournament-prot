@@ -7,7 +7,6 @@ describe('tearDown', function() {
     var club = require('../pages/club.po.js');
 
     var testData = require("../confs/test.json");
-    var storage;
 
     beforeEach(function(){
 
@@ -38,7 +37,7 @@ describe('tearDown', function() {
 
         page.waitForWelcomeHeading();
 
-        var title = lobby.getWelcomeHeading();
+        lobby.closeCreateClubModalIfPresent();
 
         lobby.deleteAllTournaments();
 
@@ -60,20 +59,13 @@ describe('tearDown', function() {
 
         page.waitForWelcomeHeading();
 
-        var title = lobby.getWelcomeHeading();
+        lobby.closeCreateClubModalIfPresent();
 
-        lobby.getSettingsClubButton().click();
-
-        club.getTrashButton().click();
-
-        club.getConfirmDeleteClubButton().click();
+        club.deleteAllClubs();
 
         lobby.getGetLogoutButton().click();
 
         page.waitForLaunchWindow();
-
-        browser.pause();
-        browser.debugger();
 
     });
 
