@@ -20,8 +20,7 @@ var clubPage = function (){
     this.deleteAllClubs = function(){
         $$('.club-select option.ng-binding').count().then(function (c) {
             console.log('club to delete: ' + c)
-            var i;
-            for (i = 0; i < c; i++) {
+            for (var i = 0; i < c; i++) {
                 lobby.getSettingsClubButton().click();
                 $('#btn_open_delete_club').click();
                 $('#btn_delete_club').click();

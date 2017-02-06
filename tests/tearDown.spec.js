@@ -63,10 +63,6 @@ describe('tearDown', function() {
 
         club.deleteAllClubs();
 
-        lobby.getGetLogoutButton().click();
-
-        page.waitForLaunchWindow();
-
     });
 
 });
