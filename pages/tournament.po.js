@@ -6,13 +6,29 @@ var tournamentPage = function (){
         browser.wait(EC.presenceOf(this.getPlayersLeftMenu()), 10000, 'Tournament failed to load');
     };
 
-    this.getPlayersLeftMenu = function(){
-        return $('[ng-show="tournament.params.manageRegistrations"] span');
+    // Side left menu
+    this.getBlindStructLeftMenu = function(){
+        return $('#side_blind_structure span');
     };
 
-    this.getPlayersPayouts = function(){
-        return $('[ng-show="tournament.params.managePayouts"] span');
+    this.getPlayersLeftMenu = function(){
+        return $('#side_players span');
     };
+
+    this.getPayoutsLeftMenu = function(){
+        return $('#side_payouts span');
+    };
+
+    this.getClockLeftMenu = function(){
+        return $('#side_clock span');
+    };
+
+    this.getPokerLobbyLeftMenu = function(){
+        return $('#side_lobby span');
+    };
+
+    //  ---
+
 
     this.getRegisterPlayerButton = function(){
         return $('#btn_tourn_open_manualRegister');

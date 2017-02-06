@@ -5,6 +5,7 @@ describe('addClub', function() {
     var login = require('../pages/login.po.js');
     var lobby = require('../pages/lobby.po.js');
     var club = require('../pages/club.po.js');
+    var tourn = require('../pages/tournament.po.js');
 
     var testData = require("../confs/test.json");
 
@@ -105,7 +106,15 @@ describe('addClub', function() {
 
         expect(lobby.getRegisterButton().isDisplayed()).toBe(false);
 
-        // implement more //
+        lobby.getFirstOpenTournamentButton().click();
+
+        expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(false);
+        expect(tourn.getPayoutsLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
+
+        tourn.getPokerLobbyLeftMenu().click();
 
         expect(headings.count()).toBe(1);
 

@@ -65,6 +65,8 @@ describe('addClub', function() {
 
         tourn.getPlayersLeftMenu().click();
 
+        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true)
+
         tourn.getRegisterPlayerButton().click();
 
         for (var i = 0; i < 20; i++) {
