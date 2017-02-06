@@ -1,5 +1,5 @@
-// var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
-// var specReporter = require('jasmine-spec-reporter');
+var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
 exports.config = {
 
@@ -32,16 +32,16 @@ exports.config = {
         dev: ['../tests/registerTourn.spec.js']
     },
 
-   // onPrepare: function() {
-   //
-   //     jasmine.getEnv().addReporter(new specReporter());
-   //     jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-   //         savePath: './reports/',
-   //         takeScreenshots: true,
-   //         takeScreenshotsOnlyOnFailures: true,
-   //         screenshotsFolder: 'fail_images'
-   //         })
-   //     );
-   // }
+   onPrepare: function() {
+
+       jasmine.getEnv().addReporter(new SpecReporter());
+       jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+           savePath: './reports/',
+           takeScreenshots: true,
+           takeScreenshotsOnlyOnFailures: true,
+           screenshotsFolder: 'fail_images'
+           })
+       );
+   }
 };
 
