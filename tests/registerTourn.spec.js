@@ -61,14 +61,13 @@ describe('addClub', function() {
         headings = lobby.getAllTournamentHeadings();
         expect(headings).toContain(tournament_name);
 
-        lobby.getFirstTournamentButton().click();
+        lobby.getFirstOpenTournamentButton().click();
 
         tourn.getPlayersLeftMenu().click();
 
         tourn.getRegisterPlayerButton().click();
 
-        var i;
-        for (i = 0; i < 20; i++) {
+        for (var i = 0; i < 20; i++) {
             tourn.enterPlayerName('New Player Name' + i);
             tourn.getRegisterButton().click();
         };
@@ -91,8 +90,7 @@ describe('addClub', function() {
 
     it('should deregister 5 players', function () {
 
-        var i;
-        for (i = 0; i < 5; i++){
+        for (var i = 0; i < 5; i++){
 
             tourn.getActionsOnPlayerButton().click();
 

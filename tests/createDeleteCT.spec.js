@@ -76,6 +76,37 @@ describe('addClub', function() {
         headings = lobby.getAllTournamentHeadings();
         expect(headings).toContain(tournament_name);
 
+        expect(lobby.getRegisterButton().isDisplayed()).toBe(true);
+
+        expect(headings.count()).toBe(1);
+
+        lobby.deleteFirstTournament();
+
+        expect(headings.count()).toBe(0);
+
+    });
+
+    it('should create a new tournament - manage players opt out', function() {
+
+        lobby.closeCreateClubModalIfPresent();
+
+        lobby.getCreateTournamentButton().click();
+
+        var tournament_name = 'Tournament-' + page.getRandomNumber();
+        lobby.getEnterTournamentNameInput().clear();
+        lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+
+        lobby.getManageRegistration().click();
+
+        lobby.getCreateTournamentButtonModal().click();
+
+        headings = lobby.getAllTournamentHeadings();
+        expect(headings).toContain(tournament_name);
+
+        expect(lobby.getRegisterButton().isDisplayed()).toBe(false);
+
+        // implement more //
+
         expect(headings.count()).toBe(1);
 
         lobby.deleteFirstTournament();

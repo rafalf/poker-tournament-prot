@@ -188,7 +188,7 @@ var lobbyPage = function (){
         return buttons;
     };
 
-    this.getFirstTournamentButton = function () {
+    this.getFirstOpenTournamentButton = function () {
         return this.getAllOpenTournamentButtons().first();
     };
 
@@ -198,6 +198,18 @@ var lobbyPage = function (){
 
     this.getConfirmDeleteButton = function(){
         return $('#btn_confirmDeleteTourn');
+    };
+
+    this.getRegisterButton = function(){
+        return $('#btn_registerTourn');
+    };
+
+    this.getAllRegisterButtons = function(){
+        var buttons = $$('#btn_registerTourn');
+        buttons.count().then(function(c){
+            console.log("register buttons: " + c)
+        });
+        return buttons;
     };
 
     // Clubs
