@@ -104,8 +104,6 @@ describe('addClub', function() {
         headings = lobby.getAllTournamentHeadings();
         expect(headings).toContain(tournament_name);
 
-        expect(lobby.getRegisterButton().isDisplayed()).toBe(false);
-
         lobby.getFirstOpenTournamentButton().click();
 
         expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
@@ -115,6 +113,45 @@ describe('addClub', function() {
         expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
 
         tourn.getPokerLobbyLeftMenu().click();
+
+        expect(lobby.getRegisterButton().isDisplayed()).toBe(false);
+
+        expect(headings.count()).toBe(1);
+
+        lobby.deleteFirstTournament();
+
+        expect(headings.count()).toBe(0);
+
+    });
+
+    it('should create a new tournament - payouts opt out', function() {
+
+        lobby.closeCreateClubModalIfPresent();
+
+        lobby.getCreateTournamentButton().click();
+
+        var tournament_name = 'Tournament-' + page.getRandomNumber();
+        lobby.getEnterTournamentNameInput().clear();
+        lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+
+        lobby.getTournManagePayouts().click();
+
+        lobby.getCreateTournamentButtonModal().click();
+
+        headings = lobby.getAllTournamentHeadings();
+        expect(headings).toContain(tournament_name);
+
+        lobby.getFirstOpenTournamentButton().click();
+
+        expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPayoutsLeftMenu().isDisplayed()).toBe(false);
+        expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
+
+        tourn.getPokerLobbyLeftMenu().click();
+
+        expect(lobby.getRegisterButton().isDisplayed()).toBe(true);
 
         expect(headings.count()).toBe(1);
 
