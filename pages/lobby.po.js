@@ -117,6 +117,31 @@ var lobbyPage = function (){
         return  $("#input_managePayouts");
     };
 
+    this.selectManagePayouts = function(checked){
+
+        // true = select
+        // false = deselect
+
+        var p = this.getTournManagePayouts()
+        if (checked === true){
+            p.isSelected().then(function(s){
+                if (s === false) {
+                    $("#input_managePayouts").click();
+                } else {
+                    console.log('payouts already checked')
+                };
+            });
+        } else {
+            p.isSelected().then(function(s){
+                if (s === true) {
+                    $("#input_managePayouts").click();
+                } else {
+                    console.log('payouts already unchecked')
+                };
+            });
+        };
+    };
+
     this.getTournKnockouts = function(){
         return  element(by.model('tournParams.trackKnockouts'));
     };
@@ -124,6 +149,7 @@ var lobbyPage = function (){
     this.getManageRegistration = function(){
         return element(by.model('tournParams.manageRegistrations'));
     };
+
 
     this.getRebuyTournament = function(){
         return element(by.model('tournParams.rebuyTournament'));
@@ -152,12 +178,22 @@ var lobbyPage = function (){
     };
 
     // Tournaments
-    this.getAllTournamentHeadings = function(){
+    this.getAllTournamentHeadings = function(count){
         var headings = $$('.lobby-card h5');
         headings.getText().then(function(t){
-            console.log("headings: " + t)
+            console.log("Tournament headings: " + t)
         });
-        return headings.getText();
+        headings.count().then(function(c){
+            if (count != c) {
+                console.log('Must sleep for tournaments to appear');
+                browser.sleep(2000);
+                var headings = $$('.lobby-card h5');
+                headings.getText().then(function(t){
+                    console.log("Tournament headings: " + t)
+                });
+            };
+        });
+        return $$('.lobby-card h5').getText();
     };
 
     this.getAllDeleteTournamentButtons = function(){

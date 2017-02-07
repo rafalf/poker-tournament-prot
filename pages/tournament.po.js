@@ -15,8 +15,16 @@ var tournamentPage = function (){
         return $('#side_players span');
     };
 
+    this.getPlayersLeftLiMenu = function(){
+        return $('li#side_players');
+    };
+
     this.getPayoutsLeftMenu = function(){
         return $('#side_payouts span');
+    };
+
+    this.getPayoutsLeftLiMenu = function(){
+        return $('li#side_payouts');
     };
 
     this.getClockLeftMenu = function(){
@@ -25,6 +33,25 @@ var tournamentPage = function (){
 
     this.getPokerLobbyLeftMenu = function(){
         return $('#side_lobby span');
+    };
+
+    this.waitForPayoutsToSettle = function(d) {
+        var payout = this.getPayoutsLeftLiMenu();
+        if (d === "show"){
+            payout.getAttribute('class').then(function(b){
+                if (b != ''){
+                    console.log('Must sleep for payouts to settle');
+                    browser.sleep(2000);
+                };
+            });
+        } else {
+            payout.isDisplayed().then(function(b){
+                if (b === 'ng-hide'){
+                    console.log('Must sleep for payouts to settle');
+                    browser.sleep(2000);
+                };
+            });
+        };
     };
 
     //  ---

@@ -14,7 +14,7 @@ describe('addClub', function() {
         console.log('\n**********  test spec: ' + __filename + '  **********')
 
         browser.get(testData.login_url)
-        browser.driver.manage().window().maximize();
+//        browser.driver.manage().window().maximize();
 
     });
 
@@ -49,6 +49,8 @@ describe('addClub', function() {
 
         lobby.getCreateClubButton().click();
 
+        page.waitForModalNotPresent();
+
         var heading = lobby.getClubHeading();
 
         var expected_heading = club_name + '-Tournaments (0)'
@@ -74,7 +76,9 @@ describe('addClub', function() {
 
         lobby.getCreateTournamentButtonModal().click();
 
-        headings = lobby.getAllTournamentHeadings();
+        page.waitForModalNotPresent();
+
+        headings = lobby.getAllTournamentHeadings(1);
         expect(headings).toContain(tournament_name);
 
         expect(lobby.getRegisterButton().isDisplayed()).toBe(true);
@@ -97,18 +101,24 @@ describe('addClub', function() {
         lobby.getEnterTournamentNameInput().clear();
         lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
 
+        lobby.selectManagePayouts(true);
+
+        expect(lobby.getTournBuyInInput().isPresent()).toBe(true);
+
         lobby.getManageRegistration().click();
 
         lobby.getCreateTournamentButtonModal().click();
 
-        headings = lobby.getAllTournamentHeadings();
+        headings = lobby.getAllTournamentHeadings(1);
         expect(headings).toContain(tournament_name);
 
         lobby.getFirstOpenTournamentButton().click();
 
+//        tourn.waitForPayoutsToSettle('show');
+
         expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
-        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(false);
-        expect(tourn.getPayoutsLeftMenu().isDisplayed()).toBe(true);
+        expect(tourn.getPlayersLeftLiMenu().getAttribute('class')).toBe('ng-hide');
+        expect(tourn.getPayoutsLeftLiMenu().getAttribute('class')).toBeFalsy();
         expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
         expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
 
@@ -134,18 +144,22 @@ describe('addClub', function() {
         lobby.getEnterTournamentNameInput().clear();
         lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
 
-        lobby.getTournManagePayouts().click();
+        lobby.selectManagePayouts(false);
+
+        expect(lobby.getTournBuyInInput().isPresent()).toBe(false);
 
         lobby.getCreateTournamentButtonModal().click();
 
-        headings = lobby.getAllTournamentHeadings();
+        headings = lobby.getAllTournamentHeadings(1);
         expect(headings).toContain(tournament_name);
 
         lobby.getFirstOpenTournamentButton().click();
 
+//        tourn.waitForPayoutsToSettle('hide');
+
         expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
-        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
-        expect(tourn.getPayoutsLeftMenu().isDisplayed()).toBe(false);
+        expect(tourn.getPlayersLeftLiMenu().getAttribute('class')).toBeFalsy();
+        expect(tourn.getPayoutsLeftLiMenu().getAttribute('class')).toBe('ng-hide');
         expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
         expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
 
