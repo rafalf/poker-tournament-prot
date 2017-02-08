@@ -33,7 +33,7 @@ exports.config = {
             '../tests/registerTourn.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/createDeleteCT.spec.js']
+        dev: ['../tests/registerTourn.spec.js']
     },
 
    onPrepare: function() {

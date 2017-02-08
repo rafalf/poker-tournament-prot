@@ -13,8 +13,7 @@ describe('addClub', function() {
 
         console.log('\n**********  test spec: ' + __filename + '  **********')
 
-        browser.get(testData.login_url)
-//        browser.driver.manage().window().maximize();
+        browser.get(testData.login_url);
 
     });
 
@@ -36,7 +35,7 @@ describe('addClub', function() {
 
         lobby.closeCreateClubModalIfPresent();
 
-        var title = lobby.getWelcomeHeading();
+        var title = lobby.getWelcomeHeading("test.blindvalet");
 
         expect(title).toBe('Welcome test.blindvalet');
 

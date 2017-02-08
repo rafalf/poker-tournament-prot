@@ -94,6 +94,10 @@ var tournamentPage = function (){
         return $("#btn_tourn_register_close");
     };
 
+    this.getAddPlayerAsMemberCheckbox = function(){
+        return element(by.model('data.addToClub'));
+    };
+
 
 
 };

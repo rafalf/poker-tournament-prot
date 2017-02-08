@@ -1,4 +1,4 @@
-describe('addClub', function() {
+describe('register Players for Tournament', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -13,8 +13,7 @@ describe('addClub', function() {
 
         console.log('\n**********  test spec: ' + __filename + '  **********')
 
-        browser.get(testData.login_url)
-        browser.driver.manage().window().maximize();
+        browser.get(testData.login_url);
 
     });
 
@@ -31,7 +30,7 @@ describe('addClub', function() {
 
         page.waitForWelcomeHeading();
 
-        var title = lobby.getWelcomeHeading();
+        var title = lobby.getWelcomeHeading('test.blindvalet');
 
         expect(title).toBe('Welcome test.blindvalet');
 
@@ -46,6 +45,8 @@ describe('addClub', function() {
         lobby.getEnterClubPassword().sendKeys('pass');
 
         lobby.getCreateClubButton().click();
+
+        page.waitForModalNotPresent();
 
         // create a tournament
         lobby.getCreateTournamentButton().click();
@@ -103,6 +104,40 @@ describe('addClub', function() {
 
     });
 
+    it('should register 1 player as member', function(){
+
+        tourn.getRegisterPlayerButton().click();
+
+        tourn.enterPlayerName('New Player Name - Member');
+        tourn.getAddPlayerAsMemberCheckbox().click();
+        tourn.getRegisterButton().click();
+
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+
+    });
+
+    it('should get an alert that member exists', function(){
+
+        tourn.getRegisterPlayerButton().click();
+        tourn.enterPlayerName("New Player Name - Member");
+        tourn.getAddPlayerAsMemberCheckbox().click();
+        tourn.getRegisterButton().click();
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
+
+        page.getDismissAlert().click();
+
+    });
+
+//    it('should pause', function(){
+//
+//        browser.pause();
+//        browser.debugger();
+//
+//    });
 
 
 });

@@ -3,3 +3,5 @@ confs/node_modules
 *.html
 *.json
 confs/reports
+node_modules/
+.DS_Store

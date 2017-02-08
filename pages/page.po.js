@@ -30,6 +30,10 @@ var Page = function (){
         browser.wait(EC.presenceOf($('#launchBtn')), 10000, 'Welcome header failed to load');
     };
 
+    this.getDismissAlert = function(){
+        return $('.alert-window #btn_clear_alerts')
+    };
+
     // fb booklet
     this.waitForFbBooklet = function () {
         browser.wait(EC.presenceOf(this.getFbLoginInput()), 10000, 'Fb booklet failed to load');

@@ -22,7 +22,9 @@ var lobbyPage = function (){
 
     // Left side button - down the page
     this.getCreateTournamentButton = function(){
-        return $('.float-buttons-left button:nth-of-type(2)');
+        var s = ".float-buttons-left button:nth-of-type(2)"
+        browser.wait(EC.elementToBeClickable($(s)), 5000);
+        return $(s);
     };
 
     this.getInviteMembersButton = function(){
@@ -143,7 +145,7 @@ var lobbyPage = function (){
     };
 
     this.getTournKnockouts = function(){
-        return  element(by.model('tournParams.trackKnockouts'));
+        return element(by.model('tournParams.trackKnockouts'));
     };
 
     this.getManageRegistration = function(){
@@ -161,12 +163,20 @@ var lobbyPage = function (){
     };
 
 
-    this.getWelcomeHeading = function(){
-        var title = $('#welcomeHdr');
-        title.getText().then(function(t){
-            console.log("Text: " + t)
-        });
-        return title.getText();
+    this.getWelcomeHeading = function(e){
+
+        if (!e) {
+            var title = $('#welcomeHdr');
+            title.getText().then(function(t){
+                console.log("Text: " + t)
+            });
+            return title.getText();
+        } else {
+            console.log('wait for heading:' + e)
+            browser.wait(EC.presenceOf(element(by.cssContainingText('#welcomeHdr', e))), 5000,
+                'Expected heading not present');
+            return $('#welcomeHdr').getText();
+        };
     };
 
     this.getClubHeading = function(){
