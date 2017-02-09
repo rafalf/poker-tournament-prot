@@ -78,6 +78,7 @@ describe('register Players for Tournament', function() {
         tourn.getCloseButton().click();
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(20);
 
     });
 
@@ -115,6 +116,7 @@ describe('register Players for Tournament', function() {
         tourn.getCloseButton().click();
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
 
     });
 
@@ -127,11 +129,51 @@ describe('register Players for Tournament', function() {
         tourn.getCloseButton().click();
 
         expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
 
         page.getDismissAlert().click();
 
     });
 
+
+    it('should unregister member', function () {
+
+        tourn.getActionsOnPlayerButton().click();
+        tourn.getUnregisterPlayerButton().click();
+        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+
+    });
+
+
+    it('should add member from the list of members', function(){
+
+        tourn.getRegisterPlayerButton().click();
+        tourn.getClubMemberTab().click();
+        tourn.getMember("New Player Name - Member").click();
+        tourn.getRegisterMemberButton().click();
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
+
+    });
+
+
+    it('should register himself', function(){
+
+        tourn.getRegisterPlayerButton().click();
+        tourn.getClubMemberTab().click();
+        tourn.getMember(testData.user_name).click();
+        tourn.getRegisterMemberButton().click();
+        tourn.getCloseButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe("Players(17)");
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(17);
+
+    });
+
+
+//
 //    it('should pause', function(){
 //
 //        browser.pause();

@@ -69,9 +69,18 @@ var tournamentPage = function (){
         return h;
     };
 
+    this.getPlayersAllPlayersRows = function(){
+        p = $$('[id^="btn_tourn_player"]>td:nth-of-type(1)');
+        p.getText().then(function(players){
+            console.log('Players: ' + players)
+        });
+        return p;
+    };
+
     this.getActionsOnPlayerButton = function(){
         return $('#btn_tourn_open_playerActions');
     };
+
 
     this.getUnregisterPlayerButton = function(){
         return $('#btn_tourn_unregisterPlayer');
@@ -88,6 +97,19 @@ var tournamentPage = function (){
 
     this.getRegisterButton = function(){
         return $("#btn_tourn_registerNew");
+    };
+
+    this.getRegisterMemberButton = function(){
+        return $("#btn_tourn_registerMember");
+    };
+
+
+    this.getClubMemberTab = function(){
+        return $("#tab_club_member div");
+    };
+
+    this.getMember = function(memberName){
+        return element(by.cssContainingText('td', memberName))
     };
 
     this.getCloseButton = function(){
