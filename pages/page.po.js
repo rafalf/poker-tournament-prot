@@ -30,6 +30,14 @@ var Page = function (){
         browser.wait(EC.presenceOf($('#launchBtn')), 10000, 'Welcome header failed to load');
     };
 
+    this.waitForModalNotPresent = function () {
+        browser.wait(EC.not(EC.presenceOf($('.modal-dialog')), 5000, 'Modal still displays'));
+    };
+
+    this.waitForModalPresent = function () {
+        browser.wait(EC.presenceOf($('.modal-dialog')), 5000, 'Modal did not load');
+    };
+
     this.getDismissAlert = function(){
         return $('.alert-window #btn_clear_alerts')
     };
@@ -37,10 +45,6 @@ var Page = function (){
     // fb booklet
     this.waitForFbBooklet = function () {
         browser.wait(EC.presenceOf(this.getFbLoginInput()), 10000, 'Fb booklet failed to load');
-    };
-
-    this.waitForModalNotPresent = function () {
-        browser.wait(EC.not(EC.presenceOf($('.modal-dialog')), 5000, 'Modal still displays'));
     };
 
     this.getFbLoginInput = function () {

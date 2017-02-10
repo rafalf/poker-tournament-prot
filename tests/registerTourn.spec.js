@@ -173,6 +173,54 @@ describe('register Players for Tournament', function() {
     });
 
 
+    it('should deregister 1 player on leaderboard', function () {
+
+
+        tourn.getLeaderBoardTab().click();
+
+        tourn.getActionsOnPlayerButton().click();
+
+        tourn.getUnregisterPlayerButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
+
+    });
+
+    it('should close player action on leaderboard', function () {
+
+
+        tourn.getLeaderBoardTab().click();
+
+        tourn.getActionsOnPlayerButton().click();
+
+        tourn.getClosePlayerActionButton().click();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
+
+    });
+
+
+    it('should open tourn log and delete a player registration', function () {
+
+
+        tourn.getTournLog().click();
+
+        page.waitForModalPresent();
+
+        tourn.getLogUndoButton().click();
+
+        tourn.getLogCloseButton().click();
+
+        page.waitForModalNotPresent();
+
+        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+        expect(tourn.getPlayersAllPlayersRows().count()).toBe(15);
+
+    });
+
+
 //
 //    it('should pause', function(){
 //

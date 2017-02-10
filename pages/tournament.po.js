@@ -77,6 +77,15 @@ var tournamentPage = function (){
         return p;
     };
 
+    this.getLeaderBoardTab = function(){
+        return $('#btn_tourn_leaderboardTab');
+    };
+
+    this.getTournLog = function(){
+        return $('#btn_tourn_open_TournLog');
+    };
+
+    // actions
     this.getActionsOnPlayerButton = function(){
         return $('#btn_tourn_open_playerActions');
     };
@@ -84,6 +93,21 @@ var tournamentPage = function (){
 
     this.getUnregisterPlayerButton = function(){
         return $('#btn_tourn_unregisterPlayer');
+    };
+
+    this.getClosePlayerActionButton = function(){
+        return $('#btn_tourn_close_playerActions');
+    };
+
+
+    // log
+
+    this.getLogUndoButton = function(){
+        return $('#btn_tourn_undoLogEntry');
+    };
+
+    this.getLogCloseButton = function(){
+        return $('#btn_tourn_close_tournLog');
     };
 
 
