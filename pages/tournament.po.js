@@ -56,7 +56,7 @@ var tournamentPage = function (){
         };
     };
 
-    //  Blinds table
+    //  Blind structure table
     // *************************************************************************
 
     this.getBlindsTableRowData = function(row){
@@ -83,15 +83,89 @@ var tournamentPage = function (){
     };
 
     this.getAllEditTournLevelButtons = function () {
-        return $$('#btn_tourn_edit_level')
+        return $$('#btn_tourn_edit_level');
     };
 
     this.getAllTournLevelDelIcon = function () {
-        return $$('#btn_tourn_delete_level')
+        return $$('#btn_tourn_delete_level');
+    };
+
+    this.getAllTournLevelSaveIcon = function () {
+        return $$('#btn_tourn_saveLevel');
+    };
+
+    this.getTournLevelTimeInput = function () {
+        return element(by.model('appData.levelToChange.levelTime'));
+    };
+
+    this.enterTournLevelTime = function (value) {
+        var i = this.getTournLevelTimeInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournSmallBlindInput = function () {
+        return element(by.model('appData.levelToChange.sb'));
+    };
+
+    this.enterTournSmallBlind = function (value) {
+        var i = this.getTournSmallBlindInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournBigBlindInput = function () {
+        return element(by.model('appData.levelToChange.bb'));
+    };
+
+    this.enterTournBigBlind = function (value) {
+        var i = this.getTournBigBlindInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournAddLevelButton = function () {
+        return $('#btn_tourn_add_level');
+    };
+
+    this.enterTournNewLevelTime = function (value) {
+        var i = element(by.model('appData.newLevel.levelTime'))
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.enterTournNewLevelSmallBlind = function (value) {
+        var i = element(by.model('appData.newLevel.sb'))
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournCreateNewLevelIcon = function(){
+        return $('#btn_tourn_create_level');
     };
 
     this.getRegisterPlayerButton = function(){
         return $('#btn_tourn_open_manualRegister');
+    };
+
+    this.getTournAddBreakButton = function () {
+        return $('#btn_tourn_add_break');
+    };
+
+    this.enterTournNewBreakTime = function (value) {
+        var i = element(by.model('appData.newBreak.levelTime'))
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.enterTournNewBreakAfterLevel = function (value) {
+        var i = element(by.model('appData.newBreak.afterLevel'))
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournCreateBreakIcon = function(){
+        return $('#btn_tourn_create_break');
     };
 
     this.getOpenTournButton = function(){

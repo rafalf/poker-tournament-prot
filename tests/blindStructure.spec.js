@@ -80,7 +80,7 @@ describe('blind structure case', function() {
             expect(headings).toContain(tournament_name);
         });
 
-        it('should open tourn, check blinds table', function () {
+        it('should open tourn, check blind table', function () {
 
             lobby.getFirstOpenTournamentButton().click();
 
@@ -99,14 +99,14 @@ describe('blind structure case', function() {
             expect(tourn.getBlindsTableCell(24, 3).getText()).toBe('12000');
         });
 
-        it('should edit blinds - delete one level', function () {
+        it('should edit blind - delete one level', function () {
 
             tourn.getPencilBlinds().click();
             tourn.getAllEditTournLevelButtons().first().click();
             tourn.getAllTournLevelDelIcon().first().click();
         });
 
-        it('should check blinds table', function () {
+        it('should check blind table - one level deleted', function () {
 
             expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
             expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('12');
@@ -115,8 +115,93 @@ describe('blind structure case', function() {
             expect(tourn.getBlindsTableCell(23, 1).getText()).toBe('25 min');
             expect(tourn.getBlindsTableCell(23, 2).getText()).toBe('6000');
             expect(tourn.getBlindsTableCell(23, 3).getText()).toBe('12000');
-
         });
 
+        it('should edit blind - edit one level', function () {
+
+            tourn.getPencilBlinds().click();
+            tourn.getAllEditTournLevelButtons().first().click();
+            tourn.enterTournLevelTime('60');
+            tourn.enterTournSmallBlind('20');
+            tourn.enterTournBigBlind('35');
+            tourn.getAllTournLevelSaveIcon().first().click();
+        });
+
+        it('should check blind table - one level edited', function () {
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('15');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('30');
+
+            expect(tourn.getBlindsTableCell(2, 1).getText()).toBe('60 min');
+            expect(tourn.getBlindsTableCell(2, 2).getText()).toBe('20');
+            expect(tourn.getBlindsTableCell(2, 3).getText()).toBe('35');
+
+            expect(tourn.getBlindsTableCell(23, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(23, 2).getText()).toBe('6000');
+            expect(tourn.getBlindsTableCell(23, 3).getText()).toBe('12000');
+        });
+
+        it('should add new level', function () {
+
+            tourn.getTournAddLevelButton().click();
+            tourn.enterTournNewLevelTime('120');
+            tourn.enterTournNewLevelSmallBlind('8000');
+            tourn.getTournCreateNewLevelIcon().click();
+        });
+
+        it('should check blind table - new level added', function () {
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('15');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('30');
+
+            expect(tourn.getBlindsTableCell(2, 1).getText()).toBe('60 min');
+            expect(tourn.getBlindsTableCell(2, 2).getText()).toBe('20');
+            expect(tourn.getBlindsTableCell(2, 3).getText()).toBe('35');
+
+            expect(tourn.getBlindsTableCell(23, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(23, 2).getText()).toBe('6000');
+            expect(tourn.getBlindsTableCell(23, 3).getText()).toBe('12000');
+
+            expect(tourn.getBlindsTableCell(24, 1).getText()).toBe('120 min');
+            expect(tourn.getBlindsTableCell(24, 2).getText()).toBe('8000');
+            expect(tourn.getBlindsTableCell(24, 3).getText()).toBe('16000');
+        });
+
+        it('should add a break', function () {
+
+            tourn.getTournAddBreakButton().click();
+            tourn.enterTournNewBreakTime('15');
+            tourn.enterTournNewBreakAfterLevel('1');
+            tourn.getTournCreateBreakIcon().click();
+        });
+
+        it('should check blind table - break added', function () {
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('15');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('30');
+
+            expect(tourn.getBlindsTableCell(2, 1).getText()).toBe('15 min');
+            expect(tourn.getBlindsTableCell(2, 2).getText()).toBe('Break');
+        });
+
+        it('should edit blind - delete break', function () {
+
+            tourn.getAllEditTournLevelButtons().get(1).click();
+            tourn.getAllTournLevelDelIcon().first().click();
+        });
+
+        it('should check blind table - break deleted', function () {
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('15');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('30');
+
+            expect(tourn.getBlindsTableCell(2, 1).getText()).toBe('60 min');
+            expect(tourn.getBlindsTableCell(2, 2).getText()).toBe('20');
+            expect(tourn.getBlindsTableCell(2, 3).getText()).toBe('35');
+        });
     });
 });

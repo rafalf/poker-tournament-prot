@@ -34,7 +34,7 @@ exports.config = {
             '../tests/blindStructure.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/registerTourn.spec.js']
+        dev: ['../tests/blindStructure.spec.js']
     },
 
    onPrepare: function() {
