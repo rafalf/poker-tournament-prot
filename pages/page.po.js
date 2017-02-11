@@ -16,6 +16,13 @@ var Page = function (){
         });
     };
 
+    this.getDismissAlert = function(){
+        return $('.alert-window #btn_clear_alerts')
+    };
+
+    // waiters
+    // **************************
+    
     this.switchToMainWindow = function(){
         browser.getAllWindowHandles().then(function(handles){
             browser.switchTo().window(handles[0]); // 0 or 1 to switch between the 2 open windows
@@ -38,11 +45,17 @@ var Page = function (){
         browser.wait(EC.presenceOf($('.modal-dialog')), 5000, 'Modal did not load');
     };
 
-    this.getDismissAlert = function(){
-        return $('.alert-window #btn_clear_alerts')
+    // wait until
+    // **************************
+
+    this.waitUntilElementClickable = function(element){
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element), 5000);
     };
 
     // fb booklet
+    // **************************
+    
     this.waitForFbBooklet = function () {
         browser.wait(EC.presenceOf(this.getFbLoginInput()), 10000, 'Fb booklet failed to load');
     };
@@ -59,8 +72,9 @@ var Page = function (){
         return $('[name="login"]');
     };
 
-
     // google login
+    // **************************
+    
     this.waitForGoogle = function () {
         browser.wait(EC.presenceOf(this.getGoogleEmailInput()), 10000, 'Google login failed to load');
     };

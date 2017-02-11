@@ -1,4 +1,4 @@
-describe('addClub', function() {
+describe('add/delete club and tournament case', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -12,13 +12,13 @@ describe('addClub', function() {
     beforeAll(function(){
 
         console.log('\n**********  test spec: ' + __filename + '  **********')
-
         browser.get(testData.login_url);
 
     });
 
-    afterEach(function () {
-        console.log('\n**********')
+    afterAll(function () {
+        console.log('\n**********');
+        browser.restart();
     });
 
     it('should add a new club', function() {

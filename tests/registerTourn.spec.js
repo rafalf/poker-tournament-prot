@@ -1,4 +1,4 @@
-describe('register Players for Tournament', function() {
+describe('register players for a tournament case', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -10,11 +10,13 @@ describe('register Players for Tournament', function() {
     var testData = require("../confs/test.json");
 
     beforeAll(function(){
-
         console.log('\n**********  test spec: ' + __filename + '  **********')
-
         browser.get(testData.login_url);
+    });
 
+    afterAll(function () {
+        console.log('\n**********')
+        browser.restart();
     });
 
 
@@ -79,17 +81,14 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(20);
-
     });
 
     it('should close register modal', function () {
 
         tourn.getRegisterPlayerButton().click();
-
         tourn.getCloseButton().click();
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
-
     });
 
     it('should deregister 5 players', function () {
@@ -102,7 +101,6 @@ describe('register Players for Tournament', function() {
         }
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
-
     });
 
     it('should register 1 player as member', function(){
@@ -117,7 +115,6 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
-
     });
 
     it('should get an alert that member exists', function(){
@@ -132,7 +129,6 @@ describe('register Players for Tournament', function() {
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
 
         page.getDismissAlert().click();
-
     });
 
 
@@ -141,7 +137,6 @@ describe('register Players for Tournament', function() {
         tourn.getActionsOnPlayerButton().click();
         tourn.getUnregisterPlayerButton().click();
         expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
-
     });
 
 
@@ -155,7 +150,6 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
-
     });
 
 
@@ -169,7 +163,6 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe("Players(17)");
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(17);
-
     });
 
 
@@ -184,7 +177,6 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
-
     });
 
     it('should close player action on leaderboard', function () {
@@ -198,18 +190,18 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
-
     });
 
 
     it('should open tourn log and delete a player registration', function () {
 
-
         tourn.getTournLog().click();
 
         page.waitForModalPresent();
 
-        tourn.getLogUndoButton().click();
+        page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+
+        tourn.getAllLogUndoButtons().first().click();
 
         tourn.getLogCloseButton().click();
 
@@ -217,17 +209,6 @@ describe('register Players for Tournament', function() {
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(15);
-
     });
-
-
-//
-//    it('should pause', function(){
-//
-//        browser.pause();
-//        browser.debugger();
-//
-//    });
-
 
 });

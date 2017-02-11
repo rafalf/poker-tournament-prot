@@ -1,4 +1,4 @@
-describe('loginSocial', function() {
+describe('login with fb and gmail case', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -12,12 +12,11 @@ describe('loginSocial', function() {
         console.log('\n**********  test spec: ' + __filename + '  **********')
 
         browser.get(testData.login_url)
-
-        browser.driver.manage().window().maximize();
     });
 
     afterEach(function () {
 
+        browser.ignoreSynchronization = false;
         browser.restart()
 
         console.log('\n**********')

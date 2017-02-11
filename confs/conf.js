@@ -30,7 +30,8 @@ exports.config = {
         regression: [
             '../tests/loginSocial.spec.js',
             '../tests/createDeleteCT.spec.js',
-            '../tests/registerTourn.spec.js'
+            '../tests/registerTourn.spec.js',
+            '../tests/blindStructure.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
         dev: ['../tests/registerTourn.spec.js']

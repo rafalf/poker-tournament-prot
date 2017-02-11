@@ -100,6 +100,11 @@ var lobbyPage = function (){
         return $("[name='duration']");
     };
 
+    this.enterTournDuration  = function(value){
+        this.getTournDurationInput().clear();
+        this.getTournDurationInput().sendKeys(value);
+    };
+
     this.getTournBuyInInput = function(){
         return $("[name='buyin']");
     };
@@ -108,9 +113,24 @@ var lobbyPage = function (){
         return $("[name='initSmallBlind']");
     };
 
+    this.enterTournamentSmallBlind  = function(value){
+        this.getTournSmallBlindInput().clear();
+        this.getTournSmallBlindInput().sendKeys(value);
+    };
+
     this.getTournStartStackInput = function(){
         return $("[name='startingStack']");
     };
+
+    this.enterTournStartStack  = function(value){
+        this.getTournStartStackInput().clear();
+        this.getTournStartStackInput().sendKeys(value);
+    };
+
+    this.selectChipSet = function (value) {
+        element(by.cssContainingText('select>option', value)).click();
+
+    }
 
     // checkboxes
     //--------------------------------------------------------------------------
@@ -143,6 +163,36 @@ var lobbyPage = function (){
             });
         };
     };
+
+    this.getTournAntes = function(){
+        return element(by.model('tournParams.antes'));
+    };
+
+    this.selectAntes = function(checked){
+
+        // true = select
+        // false = deselect
+
+        var p = this.getTournAntes()
+        if (checked === true){
+            p.isSelected().then(function(s){
+                if (s === false) {
+                    p.click();
+                } else {
+                    console.log('antes already checked')
+                };
+            });
+        } else {
+            p.isSelected().then(function(s){
+                if (s === true) {
+                    p.click();
+                } else {
+                    console.log('antes already unchecked')
+                };
+            });
+        };
+    };
+    
 
     this.getTournKnockouts = function(){
         return element(by.model('tournParams.trackKnockouts'));

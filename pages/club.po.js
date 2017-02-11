@@ -25,7 +25,8 @@ var clubPage = function (){
                 lobby.getSettingsClubButton().click();
                 $('#btn_open_delete_club').click();
                 $('#btn_delete_club').click();
-                console.log('club deleted')
+                console.log('club deleted. index: ' + i)
+                browser.sleep(1000);
             };
         });
     };
