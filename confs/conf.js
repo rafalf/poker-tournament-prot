@@ -8,10 +8,9 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome',
          chromeOptions: {
-            args: ['--window-size=1600,1200'] // THIS!
+            args: ['--window-size=1600,1200']
         }
     },
-
 
     framework: 'jasmine',
 
@@ -31,14 +30,14 @@ exports.config = {
             '../tests/loginSocial.spec.js',
             '../tests/createDeleteCT.spec.js',
             '../tests/registerTourn.spec.js',
-            '../tests/blindStructure.spec.js'
+            '../tests/blindStructure.spec.js',
+            '../tests/tournParameters.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/blindStructure.spec.js']
+        dev: ['../tests/tournParameters.spec.js']
     },
 
    onPrepare: function() {
-
        jasmine.getEnv().addReporter(new SpecReporter());
        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
            savePath: './reports/',

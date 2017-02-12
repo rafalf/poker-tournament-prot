@@ -168,7 +168,6 @@ var tournamentPage = function (){
         i.sendKeys(value);
     };
 
-
     this.getTournCreateNewLevelIcon = function(){
         return $('#btn_tourn_create_level');
     };
@@ -224,6 +223,61 @@ var tournamentPage = function (){
     this.getTournLog = function(){
         return $('#btn_tourn_open_TournLog');
     };
+
+    //  parameters
+    // *************************************************************************
+
+    this.getTournExpectedRebuysInput = function () {
+        return $(' input')
+    };
+
+    this.enterTournExpectedRebuys = function (value) {
+        var i = this.getTournExpectedRebuysInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournRebuyChipsInput = function () {
+        return $(' input')
+    };
+
+    this.enterTournRebuyChips = function (value) {
+        var i = this.getTournRebuyChipsInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournExpectedAddonsInput = function () {
+        return $(' input')
+    };
+
+    this.enterTournExpectedAddons = function (value) {
+        var i = this.getTournExpectedAddonsInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    this.getTournAddonChipsInput = function () {
+        return $(' input')
+    };
+
+    this.enterTournAddonChips = function (value) {
+        var i = this.getTournAddonChipsInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+
+    // checkboxes
+
+    this.getTournAntesCheckbox = function () {
+        return $('#antes')
+    };
+
+    this.getTournRebuyCheckbox = function () {
+        return $('#rebuyTournament')
+    };
+
 
     // actions
     // *************************************************************************
