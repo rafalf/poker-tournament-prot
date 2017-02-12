@@ -68,9 +68,24 @@ var tournamentPage = function (){
         // });
         return row;
     };
-    
+
     this.getBlindsTableCell = function (row, col) {
         var r = this.getBlindsTableRowData(row);
+        return r.get(col);
+    };
+
+    this.getBlindsTableNotHiddenRowData = function(row){
+        var row = $$("span:not(.ng-hide) .blinds-table tbody>tr:nth-of-type(" + row + ")>td.ng-scope:not(.ng-hide)");
+        // row.each(function (element, index) {
+        //     element.getText().then(function(t) {
+        //         console.log("Col: " + index, " Cell: " + t);
+        //     });
+        // });
+        return row;
+    };
+
+    this.getBlindsTableNotHiddenCell = function (row, col) {
+        var r = this.getBlindsTableNotHiddenRowData(row);
         return r.get(col);
     };
 
@@ -81,6 +96,9 @@ var tournamentPage = function (){
     this.getCalcBlinds = function(){
         return $('span:not(.ng-hide) .tourn-main-left .fa-calculator');
     };
+
+    // edit level
+    // ---------------------------------------------
 
     this.getAllEditTournLevelButtons = function () {
         return $$('#btn_tourn_edit_level');
@@ -139,6 +157,17 @@ var tournamentPage = function (){
         i.clear();
         i.sendKeys(value);
     };
+
+    this.getTournAnteInput = function () {
+        return element(by.model('appData.levelToChange.ante'));
+    };
+
+    this.enterTournAnte = function (value) {
+        var i = this.getTournAnteInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
 
     this.getTournCreateNewLevelIcon = function(){
         return $('#btn_tourn_create_level');

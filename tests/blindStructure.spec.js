@@ -10,18 +10,17 @@ describe('blind structure case', function() {
 
     var tournament_name = 'Tournament-' + page.getRandomNumber();
 
-    beforeAll(function(){
-        console.log('\n**********  test spec: ' + __filename + '  **********')
-        browser.get(testData.login_url);
-    });
+    describe('blind structure - no antes, no rebuy', function(){
 
-    afterAll(function () {
-        console.log('\n**********')
-        browser.restart();
-    });
+        beforeAll(function(){
+            console.log('\n**********  test spec: ' + __filename + '  **********')
+            browser.get(testData.login_url);
+        });
 
-
-    describe('blind structure - no antes', function(){
+        afterAll(function () {
+            console.log('\n**********')
+            browser.restart();
+        });
 
         it('should log in', function () {
 
@@ -70,6 +69,10 @@ describe('blind structure case', function() {
             lobby.enterTournamentSmallBlind('10');
             lobby.enterTournStartStack('1500');
             lobby.selectAntes(false);
+            lobby.selectRebuyTourn(false);
+
+            expect(lobby.getEnterTourRebuyChipsInput().isDisplayed()).toBeFalsy();
+            expect(lobby.getEnterTourAddonChipsInput().isDisplayed()).toBeFalsy();
         });
 
         it('should create a tournament', function () {
@@ -78,22 +81,25 @@ describe('blind structure case', function() {
 
             headings = lobby.getAllTournamentHeadings();
             expect(headings).toContain(tournament_name);
-        });
-
-        it('should open tourn, check blind table', function () {
 
             lobby.getFirstOpenTournamentButton().click();
+        });
+
+        it('should check blind table', function () {
 
             expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
             expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
             expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
 
             expect(tourn.getBlindsTableRowData(1).count()).toBe(4);
+            expect(tourn.getBlindsTableNotHiddenRowData(1).count()).toBe(3);
 
+            expect(tourn.getBlindsTableCell(1, 0).getText()).toBe('1');
             expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('25 min');
             expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('10');
             expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('20');
 
+            expect(tourn.getBlindsTableCell(24, 0).getText()).toBe('24');
             expect(tourn.getBlindsTableCell(24, 1).getText()).toBe('25 min');
             expect(tourn.getBlindsTableCell(24, 2).getText()).toBe('6000');
             expect(tourn.getBlindsTableCell(24, 3).getText()).toBe('12000');
@@ -203,5 +209,122 @@ describe('blind structure case', function() {
             expect(tourn.getBlindsTableCell(2, 2).getText()).toBe('20');
             expect(tourn.getBlindsTableCell(2, 3).getText()).toBe('35');
         });
+    });
+
+
+    describe('blind structure - antes, rebuy', function(){
+
+        beforeAll(function(){
+            console.log('\n**********  test spec: ' + __filename + '  **********')
+            browser.get(testData.login_url);
+        });
+
+        afterAll(function () {
+            console.log('\n**********')
+            browser.restart();
+        });
+
+        it('should log in', function () {
+
+            login.getConnectEmailButton().click();
+
+            login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+            login.getLoginPasswordInput().sendKeys(testData.password);
+
+            login.getLoginButton().click();
+        });
+
+        it('should verify heading', function () {
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('test.blindvalet');
+            expect(title).toBe('Welcome test.blindvalet');
+
+            lobby.closeCreateClubModalIfPresent();
+        });
+
+        it('should create a new club', function (){
+            lobby.getAddClubMenu().click();
+
+            var club_name = "Club-" + page.getRandomNumber();
+            lobby.getEnterClubNameInput().sendKeys(club_name);
+            lobby.getEnterClubPassword().sendKeys('pass');
+            lobby.getCreateClubButton().click();
+            page.waitForModalNotPresent();
+        });
+
+        it('should open a tournament modal', function() {
+
+            lobby.getCreateTournamentButton().click();
+
+            lobby.getEnterTournamentNameInput().clear();
+            lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+        });
+
+        it('should enter tourn data: 150, 5, 100-25000, 10, 1500', function () {
+
+            lobby.enterTournPlayersInput('150');
+            lobby.enterTournDuration('5');
+            lobby.selectChipSet('100,500,1000,5000,25000');
+            lobby.selectAntes(true);
+            lobby.selectRebuyTourn(true);
+            lobby.enterTournRebuyChips('20000')
+            lobby.enterTournAddonChips('30000')
+
+            expect(lobby.getEnterTourRebuyChipsInput().isDisplayed()).toBeTruthy();
+            expect(lobby.getEnterTourAddonChipsInput().isDisplayed()).toBeTruthy();
+        });
+
+        it('should create a tournament', function () {
+
+            lobby.getCreateTournamentButtonModal().click();
+
+            headings = lobby.getAllTournamentHeadings();
+            expect(headings).toContain(tournament_name);
+
+            lobby.getFirstOpenTournamentButton().click();
+        });
+
+        it('should check blind table', function () {
+
+            expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
+            expect(tourn.getClockLeftMenu().isDisplayed()).toBe(true);
+            expect(tourn.getPokerLobbyLeftMenu().isDisplayed()).toBe(true);
+
+            expect(tourn.getBlindsTableRowData(1).count()).toBe(4);
+            expect(tourn.getBlindsTableNotHiddenRowData(1).count()).toBe(4);
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('11 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('100');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('200');
+
+            expect(tourn.getBlindsTableNotHiddenCell(1, 3).getText()).toBe('-');
+
+            expect(tourn.getBlindsTableCell(28, 1).getText()).toBe('11 min');
+            expect(tourn.getBlindsTableCell(28, 2).getText()).toBe('250000');
+            expect(tourn.getBlindsTableCell(28, 3).getText()).toBe('500000');
+
+            expect(tourn.getBlindsTableNotHiddenCell(28, 3).getText()).toBe('75000');
+        });
+
+        it('should edit blind - edit ante', function () {
+
+            tourn.getPencilBlinds().click();
+            tourn.getAllEditTournLevelButtons().first().click();
+            tourn.enterTournAnte('100.5');
+            tourn.getAllTournLevelSaveIcon().first().click();
+        });
+
+        it('should check blind table', function () {
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('11 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('100');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('200');
+
+            expect(tourn.getBlindsTableNotHiddenCell(1, 3).getText()).toBe('100.5');
+        });
+
     });
 });

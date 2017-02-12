@@ -129,8 +129,25 @@ var lobbyPage = function (){
 
     this.selectChipSet = function (value) {
         element(by.cssContainingText('select>option', value)).click();
+    };
 
-    }
+    this.getEnterTourRebuyChipsInput = function(){
+        return element(by.model('tournParams.rebuyChips'));
+    };
+
+    this.enterTournRebuyChips  = function(value){
+        this.getEnterTourRebuyChipsInput().clear();
+        this.getEnterTourRebuyChipsInput().sendKeys(value);
+    };
+
+    this.getEnterTourAddonChipsInput = function(){
+        return element(by.model('tournParams.addonChips'));
+    };
+
+    this.enterTournAddonChips  = function(value){
+        this.getEnterTourAddonChipsInput().clear();
+        this.getEnterTourAddonChipsInput().sendKeys(value);
+    };
 
     // checkboxes
     //--------------------------------------------------------------------------
@@ -205,6 +222,31 @@ var lobbyPage = function (){
 
     this.getRebuyTournament = function(){
         return element(by.model('tournParams.rebuyTournament'));
+    };
+
+    this.selectRebuyTourn = function(checked){
+
+        // true = select
+        // false = deselect
+
+        var p = this.getRebuyTournament()
+        if (checked === true){
+            p.isSelected().then(function(s){
+                if (s === false) {
+                    p.click();
+                } else {
+                    console.log('rebuy already checked')
+                };
+            });
+        } else {
+            p.isSelected().then(function(s){
+                if (s === true) {
+                    p.click();
+                } else {
+                    console.log('rebuy already unchecked')
+                };
+            });
+        };
     };
 
 

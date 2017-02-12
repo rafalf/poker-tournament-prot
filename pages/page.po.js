@@ -53,6 +53,16 @@ var Page = function (){
         browser.wait(EC.elementToBeClickable(element), 5000);
     };
 
+    this.waitUntilElementVisable = function(element){
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element), 5000);
+    };
+
+    this.waitUntilElementInvisable = function(element){
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.invisibilityOf(element), 5000);
+    };
+
     // fb booklet
     // **************************
     
