@@ -60,13 +60,18 @@ var tournamentPage = function (){
     // *************************************************************************
 
     this.getBlindsTableRowData = function(row){
-        var row = $$("span:not(.ng-hide) .blinds-table tbody>tr:nth-of-type(" + row + ")>td.ng-binding");
-        // row.each(function (element, index) {
+        var rows = $$("span:not(.ng-hide) .blinds-table tbody>tr:nth-of-type(" + row + ")>td.ng-binding");
+        // rows.each(function (element, index) {
         //     element.getText().then(function(t) {
         //         console.log("Col: " + index, " Cell: " + t);
         //     });
         // });
-        return row;
+        return rows;
+    };
+
+    this.getAllBlindsTableRows = function(row){
+        var rows = $$("span:not(.ng-hide) .blinds-table tbody>tr.ng-scope");
+        return rows;
     };
 
     this.getBlindsTableCell = function (row, col) {
@@ -227,55 +232,143 @@ var tournamentPage = function (){
     //  parameters
     // *************************************************************************
 
-    this.getTournExpectedRebuysInput = function () {
-        return $(' input')
+    this.getTournSmallBlindParamInput = function () {
+        return $('#row_init_small_blind input')
     };
 
-    this.enterTournExpectedRebuys = function (value) {
-        var i = this.getTournExpectedRebuysInput()
+    this.getTournSmallBlindParamPencil = function () {
+        return $('#row_init_small_blind .fa-pencil-square-o')
+    };
+
+    this.enterTournSmallBlindParam = function (value) {
+        var i = this.getTournSmallBlindParamInput()
         i.clear();
         i.sendKeys(value);
     };
 
-    this.getTournRebuyChipsInput = function () {
-        return $(' input')
+    // -
+
+    this.getTournStartingStackParamInput = function () {
+        return $('#row_starting_stack input')
     };
 
-    this.enterTournRebuyChips = function (value) {
-        var i = this.getTournRebuyChipsInput()
+    this.getTournStartingStackParamPencil = function () {
+        return $('#row_starting_stack .fa-pencil-square-o')
+    };
+
+    this.enterStartingStackParam = function (value) {
+        var i = this.getTournStartingStackParamInput()
         i.clear();
         i.sendKeys(value);
     };
 
-    this.getTournExpectedAddonsInput = function () {
-        return $(' input')
+    // -
+
+    this.getTournLevelTimeParamInput = function () {
+        return $('#row_level_time input');
     };
 
-    this.enterTournExpectedAddons = function (value) {
-        var i = this.getTournExpectedAddonsInput()
+    this.getTournLevelTimeParamPencil = function () {
+        return $('#row_level_time .fa-pencil-square-o');
+    };
+
+    this.enterTournLevelTimeParam = function (value, clear_keys) {
+        var i = this.getTournLevelTimeParamInput();
+        i.clear();
+        // for (var y = 0; y < clear_keys; y++){
+        //     i.sendKeys(protractor.Key.BACK_SPACE);
+        //     browser.sleep(500);
+        // };
+        i.sendKeys(value);
+        browser.sleep(1000);
+    };
+
+    // -
+    
+    this.getTournExpectedRebuysParamInput = function () {
+        return $('#row_exp_rebuys input');
+    };
+
+    this.getTournExpectedRebuysParamPencil = function () {
+        return $('#row_exp_rebuys .fa-pencil-square-o');
+    };
+
+    this.enterTournExpectedRebuysParam = function (value) {
+        var i = this.getTournExpectedRebuysParamInput()
         i.clear();
         i.sendKeys(value);
     };
 
-    this.getTournAddonChipsInput = function () {
-        return $(' input')
+    // -
+    
+    this.getTournRebuyChipsParamInput = function () {
+        return $('#row_rebuy_chips input')
     };
 
-    this.enterTournAddonChips = function (value) {
-        var i = this.getTournAddonChipsInput()
+    this.getTournRebuyChipsParamPencil = function () {
+        return $('#row_rebuy_chips .fa-pencil-square-o')
+    };
+
+    this.enterTournRebuyChipsParam = function (value) {
+        var i = this.getTournRebuyChipsParamInput()
         i.clear();
         i.sendKeys(value);
+    };
+
+    // -
+    
+    this.getTournExpectedAddonsParamInput = function () {
+        return $('#row_exp_addons input')
+    };
+
+    this.getTournExpectedAddonsParamPencil = function () {
+        return $('#row_exp_addons .fa-pencil-square-o')
+    };
+
+    this.enterTournExpectedAddonsParam = function (value) {
+        var i = this.getTournExpectedAddonsParamInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    // -
+    
+    this.getTournAddonChipsParamInput = function () {
+        return $('#row_addon_chips input')
+    };
+
+    this.getTournAddonChipsParamPencil = function () {
+        return $('#row_addon_chips .fa-pencil-square-o')
+    };
+
+    this.enterTournAddonChipsParam = function (value) {
+        var i = this.getTournAddonChipsParamInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    // -
+
+    this.getTournDurationInput = function () {
+        return $('#duration');
+    };
+
+    this.enterTournDurationParam = function (value) {
+        var i = this.getTournDurationInput();
+        i.clear();
+        i.sendKeys(value);
+        browser.sleep(1000);
     };
 
 
     // checkboxes
 
     this.getTournAntesCheckbox = function () {
-        return $('#antes')
+        return $('#antes');
     };
 
     this.getTournRebuyCheckbox = function () {
-        return $('#rebuyTournament')
+        return $('#rebuyTournament');
     };
 
 

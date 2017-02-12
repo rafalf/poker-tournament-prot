@@ -25,12 +25,10 @@ var clubPage = function (){
                 lobby.getSettingsClubButton().click();
                 $('#btn_open_delete_club').click();
                 $('#btn_delete_club').click();
-                console.log('club deleted. index: ' + i)
-                browser.sleep(1000);
+                browser.sleep(2000);
             };
         });
     };
-
 };
 
 module.exports = new clubPage();

@@ -83,10 +83,10 @@ describe('tournament parameters case', function() {
         });
 
         it('should check parameters', function () {
-            // expect(tourn.getTournExpectedRebuysInput().isDisplayed()).toBeFalsy();
-            // expect(tourn.getTournRebuyChipsInput().isDisplayed()).toBeFalsy();
-            // expect(tourn.getTournExpectedAddonsInput().isDisplayed()).toBeFalsy();
-            // expect(tourn.getTournAddonChipsInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournExpectedRebuysParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournRebuyChipsParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournExpectedAddonsParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournAddonChipsParamInput().isDisplayed()).toBeFalsy();
 
             expect(tourn.getTournAntesCheckbox().isSelected()).toBe(false);
             expect(tourn.getTournRebuyCheckbox().isSelected()).toBe(false);
@@ -144,7 +144,7 @@ describe('tournament parameters case', function() {
             lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
         });
 
-        it('should enter tourn data: 150, 5, 100-25000, 10, 1500', function () {
+        it('should enter tourn data: 150, 1, 100-25000, 10, 1500', function () {
 
             lobby.enterTournPlayersInput('150');
             lobby.enterTournDuration('5');
@@ -165,16 +165,139 @@ describe('tournament parameters case', function() {
             lobby.getFirstOpenTournamentButton().click();
         });
 
-        it('should check parameters', function () {
-            // expect(tourn.getTournExpectedRebuysInput().isDisplayed()).toBeTruthy();
-            // expect(tourn.getTournRebuyChipsInput().isDisplayed()).toBeTruthy();
-            // expect(tourn.getTournExpectedAddonsInput().isDisplayed()).toBeTruthy();
-            // expect(tourn.getTournAddonChipsInput().isDisplayed()).toBeTruthy();
+        it('should verify parameters', function () {
+            expect(tourn.getTournExpectedRebuysParamInput().isDisplayed()).toBeTruthy();
+            expect(tourn.getTournRebuyChipsParamInput().isDisplayed()).toBeTruthy();
+            expect(tourn.getTournExpectedAddonsParamInput().isDisplayed()).toBeTruthy();
+            expect(tourn.getTournAddonChipsParamInput().isDisplayed()).toBeTruthy();
 
             expect(tourn.getTournAntesCheckbox().isSelected()).toBe(true);
             expect(tourn.getTournRebuyCheckbox().isSelected()).toBe(true);
+
+            expect(tourn.getAllBlindsTableRows().count()).toBe(28);
+
+            expect(tourn.getTournStartingStackParamInput().getAttribute('value')).toBe('20000');
+            expect(tourn.getTournLevelTimeParamInput().getAttribute('value')).toBe('11');
+            expect(tourn.getTournExpectedRebuysParamInput().getAttribute('value')).toBe('150');
+            expect(tourn.getTournRebuyChipsParamInput().getAttribute('value')).toBe('20000');
+            expect(tourn.getTournExpectedAddonsParamInput().getAttribute('value')).toBe('112');
+            expect(tourn.getTournAddonChipsParamInput().getAttribute('value')).toBe('30000');
         });
 
+        it('should turn off rebuy', function () {
 
+            expect(tourn.getTournExpectedRebuysParamPencil().isDisplayed()).toBe(true);
+            expect(tourn.getTournRebuyChipsParamPencil().isDisplayed()).toBe(true);
+            expect(tourn.getTournExpectedAddonsParamPencil().isDisplayed()).toBe(true)
+            expect(tourn.getTournAddonChipsParamPencil().isDisplayed()).toBe(true)
+
+            tourn.getTournRebuyCheckbox().click();
+            
+            expect(tourn.getTournExpectedRebuysParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournRebuyChipsParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournExpectedAddonsParamInput().isDisplayed()).toBeFalsy();
+            expect(tourn.getTournAddonChipsParamInput().isDisplayed()).toBeFalsy();
+
+        });
+
+        it('should set level time to 22', function () {
+            tourn.getTournSmallBlindParamPencil().click();
+            tourn.getTournStartingStackParamPencil().click();
+            tourn.getTournLevelTimeParamPencil().click();
+
+            browser.ignoreSynchronization = true;
+            tourn.enterTournLevelTimeParam(22, 2);
+            expect(tourn.getAllBlindsTableRows().count()).toBe(16);
+            browser.ignoreSynchronization = false;
+        });
+    });
+
+    describe('parameters - change duration', function(){
+
+        beforeAll(function(){
+            console.log('\n**********  test spec: ' + __filename + '  **********')
+            browser.get(testData.login_url);
+        });
+
+        afterAll(function () {
+            console.log('\n**********')
+            browser.restart();
+        });
+
+        it('should log in', function () {
+
+            login.getConnectEmailButton().click();
+
+            login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+            login.getLoginPasswordInput().sendKeys(testData.password);
+
+            login.getLoginButton().click();
+        });
+
+        it('should verify heading', function () {
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('test.blindvalet');
+            expect(title).toBe('Welcome test.blindvalet');
+
+            lobby.closeCreateClubModalIfPresent();
+        });
+
+        it('should create a new club', function (){
+            lobby.getAddClubMenu().click();
+
+            var club_name = "Club-" + page.getRandomNumber();
+            lobby.getEnterClubNameInput().sendKeys(club_name);
+            lobby.getEnterClubPassword().sendKeys('pass');
+            lobby.getCreateClubButton().click();
+            page.waitForModalNotPresent();
+        });
+
+        it('should open a tournament modal', function() {
+
+            lobby.getCreateTournamentButton().click();
+
+            lobby.getEnterTournamentNameInput().clear();
+            lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+        });
+
+        it('should enter tourn data: 150, 1, 100-25000, 10, 1500', function () {
+
+            lobby.enterTournPlayersInput('150');
+            lobby.enterTournDuration('5');
+            lobby.selectChipSet('100,500,1000,5000,25000');
+            lobby.selectAntes(false);
+            lobby.selectRebuyTourn(false);
+        });
+
+        it('should create a tournament', function () {
+
+            lobby.getCreateTournamentButtonModal().click();
+
+            headings = lobby.getAllTournamentHeadings();
+            expect(headings).toContain(tournament_name);
+
+            lobby.getFirstOpenTournamentButton().click();
+        });
+
+        it('should set duration to an hour and 10 mins level', function () {
+
+            expect(tourn.getAllBlindsTableRows().count()).toBe(29);
+            expect(tourn.getTournDurationInput().getAttribute('value')).toBe('5');
+
+            tourn.getTournLevelTimeParamPencil().click();
+
+            browser.ignoreSynchronization = true;
+
+            tourn.enterTournLevelTimeParam(10, 2);
+            tourn.enterTournDurationParam(1);
+
+            expect(tourn.getAllBlindsTableRows().count()).toBe(7);
+            expect(tourn.getTournDurationInput().getAttribute('value')).toBe('1');
+
+            browser.ignoreSynchronization = false;
+        });
     });
 });
