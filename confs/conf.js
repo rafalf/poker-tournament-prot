@@ -24,7 +24,8 @@ exports.config = {
 
     suites: {
         smoke: ['../tests/loginSocial.spec.js',
-                '../tests/createDeleteCT.spec.js'
+                '../tests/createDeleteCT.spec.js',
+                '../tests/signup.spec.js'
                 ],
         regression: [
             '../tests/loginSocial.spec.js',
@@ -34,7 +35,7 @@ exports.config = {
             '../tests/tournParameters.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/tournParameters.spec.js']
+        dev: ['../tests/signup.spec.js']
     },
 
    onPrepare: function() {

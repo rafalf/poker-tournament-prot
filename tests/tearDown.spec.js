@@ -10,15 +10,12 @@ describe('tearDown', function() {
 
     beforeEach(function(){
 
-        console.log('\n**********  test spec: ' + __filename + '  **********')
+        console.log('\n-->  test spec: ' + __filename)
         browser.get(testData.login_url)
-
     });
 
     afterEach(function () {
-
-        console.log('\n**********')
-
+        console.log('\n--->');
     });
 
     // it('should delete all tournaments', function() {

@@ -19,6 +19,7 @@ var loginPage = function (){
     };
 
     // Connect with modal functions
+    // ***************************************************
 
     this.getLoginEmailInput = function(){
         return element(by.model('appData.loginEmail'));

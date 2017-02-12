@@ -10,12 +10,12 @@ describe('register players for a tournament case', function() {
     var testData = require("../confs/test.json");
 
     beforeAll(function(){
-        console.log('\n**********  test spec: ' + __filename + '  **********')
+        console.log('\n-->  test spec: ' + __filename)
         browser.get(testData.login_url);
     });
 
     afterAll(function () {
-        console.log('\n**********')
+        console.log('\n--->');
         browser.restart();
     });
 

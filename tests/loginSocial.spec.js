@@ -9,8 +9,7 @@ describe('login with fb and gmail case', function() {
 
     beforeEach(function(){
 
-        console.log('\n**********  test spec: ' + __filename + '  **********')
-
+        console.log('\n-->  test spec: ' + __filename)
         browser.get(testData.login_url)
     });
 
@@ -18,8 +17,7 @@ describe('login with fb and gmail case', function() {
 
         browser.ignoreSynchronization = false;
         browser.restart()
-
-        console.log('\n**********')
+        console.log('\n--->');
     });
 
     it('should login with fb', function() {

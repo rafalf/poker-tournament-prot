@@ -3,7 +3,7 @@ var Page = function (){
     var EC = protractor.ExpectedConditions;
 
     this.getRandomString = function() {
-        return Math.random().toString(36).slice(2);
+        return (Math.random() + 1).toString(36).substring(7);
     }
 
     this.getRandomNumber = function() {

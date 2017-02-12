@@ -354,6 +354,17 @@ var lobbyPage = function (){
     this.getSettingsClubButton = function(){
         return $('.lobby-club button.btn-link');
     };
+
+
+    // Signed up
+    // *************************************************************************
+    this.getEmailVerifyHeading = function(){
+        return $('.email-verify');
+    };
+
+    this.getEmailResendButton = function(){
+        return $('#btn_resend_verification');
+    };
 };
 
 module.exports = new lobbyPage();
