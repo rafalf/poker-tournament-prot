@@ -63,6 +63,13 @@ var Page = function (){
         browser.wait(EC.invisibilityOf(element), 5000);
     };
 
+    // launch
+    // **************************
+
+    this.getLaunchButton = function () {
+        return $('#launchBtn');
+    };
+
     // fb booklet
     // **************************
     

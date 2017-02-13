@@ -28,10 +28,18 @@ var lobbyPage = function (){
     };
 
     this.getInviteMembersButton = function(){
-        return $('.float-buttons-left button:nth-of-type(1)');
+        var s = '.float-buttons-left button:nth-of-type(1)';
+        browser.wait(EC.elementToBeClickable($(s)), 5000);
+        return $(s);
     };
 
+    this.getAllClubs = function () {
+        var clubs = $$('.lobby-club select>option');
+
+    }
+
     // Add club modal functions
+    // *************************************************************************
 
     this.waitForCreateClub = function () {
         browser.wait(EC.presenceOf(this.getEnterClubNameInput()), 10000, 'Lobby failed to load');
@@ -53,16 +61,39 @@ var lobbyPage = function (){
         return $('#btn_cancel_create_club');
     };
 
+    this.getEnterClubIdInput = function(){
+        return $('#input_join_club')
+    };
+
+    this.enterClubId = function (club_id) {
+        club_id.then(function (id) {
+            $('#input_join_club').sendKeys(id);
+        });
+    };
+
     this.closeCreateClubModalIfPresent = function () {
         this.getCancelClubButton().isPresent().then(function (result) {
             if (result){
                 console.log('Add club present')
                 $('#btn_cancel_create_club').click();
-            }
+            };
+        });
+    };
 
-        })
+    // Invite members
+    // *************************************************************************
 
-    }
+    this.getClubId = function(){
+        var id = $('.modal-body>p:nth-of-type(1)>strong').getText();
+        id.then(function (t) {
+            console.log('club id: ' + t);
+        });
+        return id;
+    };
+
+    this.getCloseInviteModalButton = function(){
+        return $("#btn_close_invite_modal");
+    };
 
 
     // *************************************************************************

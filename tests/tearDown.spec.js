@@ -40,11 +40,29 @@ describe('tearDown', function() {
     //
     // });
 
-    it('should delete all clubs', function() {
+    it('should delete all clubs - user 1', function() {
 
         login.getConnectEmailButton().click();
 
         login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+        login.getLoginPasswordInput().sendKeys(testData.password);
+
+        login.getLoginButton().click();
+
+        page.waitForWelcomeHeading();
+
+        lobby.closeCreateClubModalIfPresent();
+
+        club.deleteAllClubs();
+
+    });
+
+    it('should delete all clubs - user 2', function() {
+
+        login.getConnectEmailButton().click();
+
+        login.getLoginEmailInput().sendKeys(testData.gmail_user2);
 
         login.getLoginPasswordInput().sendKeys(testData.password);
 
