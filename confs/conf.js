@@ -36,7 +36,7 @@ exports.config = {
             '../tests/joinClub.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/joinClub.spec.js']
+        dev: ['../tests/createDeleteCT.spec.js']
     },
 
    onPrepare: function() {

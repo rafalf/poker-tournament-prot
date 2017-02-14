@@ -51,7 +51,7 @@ describe('add/delete club and tournament case', function() {
         expect(heading).toBe(expected_heading);
     });
 
-    it('should grab club id, logout, login as user 2 and enter club id to join', function() {
+    it('should grab club id, logout, login as user 2', function() {
 
         lobby.getInviteMembersButton().click();
 
@@ -74,6 +74,9 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForWelcomeHeading();
 
+        var title = lobby.getWelcomeHeading("test.blind.valet");
+        expect(title).toBe('Welcome test.blind.valet');
+        
         lobby.closeCreateClubModalIfPresent();
 
         lobby.getAddClubMenu().click();

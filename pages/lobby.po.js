@@ -23,12 +23,11 @@ var lobbyPage = function (){
     // Left side button - down the page
 
     this.getCreateTourButton = function(){
-        var s = ".float-buttons-left button:nth-of-type(2)"
-        return $(s);
+        return $(".float-buttons-left button:nth-of-type(2)");
     };
 
     this.getCreateTournamentButton = function(){
-        var s = this.getCreateTourButton;
+        var s = ".float-buttons-left button:nth-of-type(2)"
         browser.wait(EC.elementToBeClickable($(s)), 5000);
         return $(s);
     };
