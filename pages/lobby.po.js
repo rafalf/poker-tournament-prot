@@ -21,8 +21,14 @@ var lobbyPage = function (){
     };
 
     // Left side button - down the page
-    this.getCreateTournamentButton = function(){
+
+    this.getCreateTourButton = function(){
         var s = ".float-buttons-left button:nth-of-type(2)"
+        return $(s);
+    };
+
+    this.getCreateTournamentButton = function(){
+        var s = this.getCreateTourButton;
         browser.wait(EC.elementToBeClickable($(s)), 5000);
         return $(s);
     };
@@ -72,12 +78,16 @@ var lobbyPage = function (){
     };
 
     this.closeCreateClubModalIfPresent = function () {
-        this.getCancelClubButton().isPresent().then(function (result) {
+        this.getQuickStartButton().isPresent().then(function (result) {
             if (result){
                 console.log('Add club present')
-                $('#btn_cancel_create_club').click();
+                browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
             };
         });
+    };
+
+    this.getQuickStartButton = function(){
+        return $('#btn_quick_start');
     };
 
     // Invite members
@@ -283,6 +293,10 @@ var lobbyPage = function (){
 
     this.getCreateTournamentButtonModal = function(){
         return $('#btn_create_tourn');
+    };
+
+    this.getCancelTournamentButtonModal = function(){
+        return $('#btn_cancel_create_tourn');
     };
 
 

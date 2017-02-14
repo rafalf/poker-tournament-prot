@@ -10,12 +10,13 @@ describe('tearDown', function() {
 
     beforeEach(function(){
 
-        console.log('\n-->  test spec: ' + __filename)
+        console.log('\n-->  test spec: ' + __filename);
         browser.get(testData.login_url)
     });
 
     afterEach(function () {
         console.log('\n--->');
+        browser.restart()
     });
 
     // it('should delete all tournaments', function() {
@@ -52,11 +53,20 @@ describe('tearDown', function() {
 
         page.waitForWelcomeHeading();
 
+        var title = lobby.getWelcomeHeading("test.blindvalet");
+        expect(title).toBe('Welcome test.blindvalet');
+
         lobby.closeCreateClubModalIfPresent();
 
         club.deleteAllClubs();
 
+        lobby.closeCreateClubModalIfPresent();
+
+        expect(lobby.getQuickStartButton().isPresent()).toBeFalsy();
+        expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
+
     });
+
 
     it('should delete all clubs - user 2', function() {
 
@@ -70,10 +80,16 @@ describe('tearDown', function() {
 
         page.waitForWelcomeHeading();
 
+        var title = lobby.getWelcomeHeading("test.blind.valet");
+        expect(title).toBe('Welcome test.blind.valet');
+
         lobby.closeCreateClubModalIfPresent();
 
         club.deleteAllClubs();
 
-    });
+        lobby.closeCreateClubModalIfPresent();
 
+        expect(lobby.getQuickStartButton().isPresent()).toBeFalsy();
+        expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
+    });
 });

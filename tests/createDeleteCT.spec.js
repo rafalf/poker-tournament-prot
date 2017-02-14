@@ -36,7 +36,6 @@ describe('add/delete club and tournament case', function() {
         lobby.closeCreateClubModalIfPresent();
 
         var title = lobby.getWelcomeHeading("test.blindvalet");
-
         expect(title).toBe('Welcome test.blindvalet');
 
         lobby.getAddClubMenu().click();
