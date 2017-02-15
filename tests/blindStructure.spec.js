@@ -215,12 +215,12 @@ describe('blind structure case', function() {
     describe('blind structure - antes, rebuy', function(){
 
         beforeAll(function(){
-            console.log('\n**********  test spec: ' + __filename + '  **********')
+            console.log('\n-->  test spec: ' + __filename)
             browser.get(testData.login_url);
         });
 
         afterAll(function () {
-            console.log('\n**********')
+            console.log('\n--->');
             browser.restart();
         });
 

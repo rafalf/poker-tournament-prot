@@ -56,13 +56,10 @@ describe('tearDown', function() {
         var title = lobby.getWelcomeHeading("test.blindvalet");
         expect(title).toBe('Welcome test.blindvalet');
 
-        lobby.closeCreateClubModalIfPresent();
-
         club.deleteAllClubs();
 
         lobby.closeCreateClubModalIfPresent();
 
-        expect(lobby.getQuickStartButton().isPresent()).toBeFalsy();
         expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
 
     });
@@ -83,13 +80,10 @@ describe('tearDown', function() {
         var title = lobby.getWelcomeHeading("test.blind.valet");
         expect(title).toBe('Welcome test.blind.valet');
 
-        lobby.closeCreateClubModalIfPresent();
-
         club.deleteAllClubs();
 
         lobby.closeCreateClubModalIfPresent();
 
-        expect(lobby.getQuickStartButton().isPresent()).toBeFalsy();
         expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
     });
 });

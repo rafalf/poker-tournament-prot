@@ -9,6 +9,9 @@ describe('add/delete club and tournament case', function() {
 
     var testData = require("../confs/test.json");
 
+    var club_name = "Club-" + page.getRandomNumber();
+    var expected_heading = club_name + '-Tournaments (0)'
+
     beforeAll(function(){
 
         console.log('\n-->  test spec: ' + __filename)
@@ -33,11 +36,11 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForWelcomeHeading();
 
+        club.deleteAllClubs();
         lobby.closeCreateClubModalIfPresent();
 
         lobby.getAddClubMenu().click();
 
-        var club_name = "Club-" + page.getRandomNumber();
         lobby.getEnterClubNameInput().sendKeys(club_name);
 
         lobby.getEnterClubPassword().sendKeys('pass');
@@ -46,8 +49,7 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForModalNotPresent();
 
-        var heading = lobby.getClubHeading();
-        var expected_heading = club_name + '-Tournaments (0)'
+        var heading = lobby.getClubHeading(expected_heading);
         expect(heading).toBe(expected_heading);
     });
 
@@ -76,7 +78,7 @@ describe('add/delete club and tournament case', function() {
 
         var title = lobby.getWelcomeHeading("test.blind.valet");
         expect(title).toBe('Welcome test.blind.valet');
-        
+
         lobby.closeCreateClubModalIfPresent();
 
         lobby.getAddClubMenu().click();
@@ -85,11 +87,23 @@ describe('add/delete club and tournament case', function() {
     });
 
     it('should enter password and join club', function() {
+        
 
         page.waitUntilElementVisable(join.getEnterPassJoinInput());
 
         join.getEnterPassJoinInput().sendKeys('pass');
 
         page.getDismissAlert().click();
+        expect(page.getDismissAlert().isPresent()).toBe(false);
+    });
+
+    it('should check club joined, should not be able to delete club', function() {
+
+        var heading = lobby.getClubHeading(expected_heading);
+        expect(heading).toBe(expected_heading);
+        expect(lobby.getClubMembers().getText()).toBe('2 Members');
+
+        lobby.getSettingsClubButton().click();
+        expect(club.getTrashButton().isDisplayed()).toBeFalsy();
     });
 });

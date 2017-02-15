@@ -22,10 +22,13 @@ var clubPage = function (){
         $$('.club-select option.ng-binding').count().then(function (c) {
             console.log('clubs to delete: ' + c)
             for (var i = 0; i < c; i++) {
+                lobby.getClubHeading();
                 lobby.getSettingsClubButton().click();
+                browser.sleep(500);
                 $('#btn_open_delete_club').click();
+                browser.sleep(500);
                 $('#btn_delete_club').click();
-                browser.sleep(2000);
+                browser.sleep(1000);
             };
         });
     };

@@ -315,13 +315,27 @@ var lobbyPage = function (){
         };
     };
 
-    this.getClubHeading = function(){
-        var h = $('.lobby-tourn-title h3');
-        h.getText().then(function(t){
-            console.log("Text: " + t)
+    this.getClubHeading = function(exp){
+        $('.lobby-tourn-title h3').getText().then(function(t){
+            console.log("Club heading: " + t + " Exp: " + exp)
+            if (exp === undefined) {
+                if (t == '') {
+                    console.log('must sleep for heading');
+                    browser.sleep(2000);
+                };
+            } else {
+                if (t != exp) {
+                    console.log('must sleep for expected heading: ' + exp);
+                    browser.sleep(2000);
+                };
+            };
         });
-        return h.getText();
+        return $('.lobby-tourn-title h3').getText();
     };
+
+    this.getClubMembers = function(){
+        return $('.lobby-member-count');
+    }
 
     // Tournaments
     this.getAllTournamentHeadings = function(count){
