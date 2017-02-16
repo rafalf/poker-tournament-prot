@@ -8,6 +8,10 @@ var clubPage = function (){
         return $('#btn_delete_club');
     };
 
+    this.getCancelDeleteClubButton = function(){
+        return $('#btn_cancel_delete');
+    };
+
     this.getTrashButton = function(){
         return $('#btn_open_delete_club');
     };
@@ -32,6 +36,15 @@ var clubPage = function (){
             };
         });
     };
+
+    this.getClubPassword = function(){
+        return element(by.model('clubData.clubPass'));
+    };
+
+    this.getClubName = function(){
+        return element(by.model('clubData.clubName'));
+    };
+    
 };
 
 module.exports = new clubPage();

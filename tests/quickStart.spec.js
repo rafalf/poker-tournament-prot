@@ -38,6 +38,45 @@ describe('tearDown', function() {
 
         page.waitUntilElementVisable(lobby.getQuickStartButton());
         expect(lobby.getQuickStartButton().isPresent()).toBeTruthy();
+    });
 
+    it('should quick start - new club', function() {
+
+        lobby.getQuickStartButton().click();
+
+        var expected_heading = 'Club test.blindvalet-Tournaments (0)'
+        var heading = lobby.getClubHeading(expected_heading);
+
+        expect(heading).toBe(expected_heading);
+    });
+
+    it('should quick start - create tournament', function() {
+
+        page.waitUntilElementVisable(lobby.getEnterTournamentNameInput());
+
+        lobby.getEnterTournamentNameInput().clear();
+        lobby.getEnterTournamentNameInput().sendKeys('Quick Start!');
+
+        lobby.getCreateTournamentButtonModal().click();
+
+        page.waitForModalNotPresent();
+
+        headings = lobby.getAllTournamentHeadings(1);
+        expect(headings).toContain('Quick Start!');
+    });
+
+    it('club should have password', function() {
+
+        lobby.getSettingsClubButton().click();
+
+        expect(club.getClubPassword().getAttribute('value')).not.toBe('');
+        expect(club.getClubName().getAttribute('value')).toBe('Club test.blindvalet')
+    });
+
+    it('club not delete when delete cancelled', function() {
+
+        club.getTrashButton().click();
+        club.getCancelDeleteClubButton().click();
+        expect(club.getClubName().getAttribute('value')).toBe('Club test.blindvalet')
     });
 });
