@@ -70,6 +70,7 @@ describe('blind structure case', function() {
             lobby.enterTournStartStack('1500');
             lobby.selectAntes(false);
             lobby.selectRebuyTourn(false);
+            lobby.selectKnockouts(false);
 
             expect(lobby.getEnterTourRebuyChipsInput().isDisplayed()).toBeFalsy();
             expect(lobby.getEnterTourAddonChipsInput().isDisplayed()).toBeFalsy();
@@ -270,6 +271,7 @@ describe('blind structure case', function() {
             lobby.selectChipSet('100,500,1000,5000,25000');
             lobby.selectAntes(true);
             lobby.selectRebuyTourn(true);
+            lobby.selectKnockouts(false);
             lobby.enterTournRebuyChips('20000')
             lobby.enterTournAddonChips('30000')
 

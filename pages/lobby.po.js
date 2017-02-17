@@ -192,6 +192,35 @@ var lobbyPage = function (){
     // checkboxes
     //--------------------------------------------------------------------------
 
+    this.getTournManagePlayers = function(){
+        return element(by.model('tournParams.manageRegistrations'));
+    };
+
+    this.selectManagePlayers = function(checked){
+
+        // true = select
+        // false = deselect
+
+        var p = this.getTournManagePlayers()
+        if (checked === true){
+            p.isSelected().then(function(s){
+                if (s === false) {
+                    p.click();
+                } else {
+                    console.log('players already checked')
+                };
+            });
+        } else {
+            p.isSelected().then(function(s){
+                if (s === true) {
+                    p.click();
+                } else {
+                    console.log('players already unchecked')
+                };
+            });
+        };
+    };
+
     this.getTournManagePayouts = function(){
         return  $("#input_managePayouts");
     };
@@ -253,6 +282,31 @@ var lobbyPage = function (){
 
     this.getTournKnockouts = function(){
         return element(by.model('tournParams.trackKnockouts'));
+    };
+
+    this.selectKnockouts = function(checked){
+
+        // true = select
+        // false = deselect
+
+        var p = this.getTournKnockouts()
+        if (checked === true){
+            p.isSelected().then(function(s){
+                if (s === false) {
+                    p.click();
+                } else {
+                    console.log('knockouts already checked')
+                };
+            });
+        } else {
+            p.isSelected().then(function(s){
+                if (s === true) {
+                    p.click();
+                } else {
+                    console.log('knockouts already unchecked')
+                };
+            });
+        };
     };
 
     this.getManageRegistration = function(){

@@ -38,7 +38,7 @@ exports.config = {
             '../tests/quickStart.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/quickStart.spec.js']
+        dev: ['../tests/knockout.spec.js']
     },
 
    onPrepare: function() {

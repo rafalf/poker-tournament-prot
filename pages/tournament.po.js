@@ -69,9 +69,8 @@ var tournamentPage = function (){
         return rows;
     };
 
-    this.getAllBlindsTableRows = function(row){
-        var rows = $$("span:not(.ng-hide) .blinds-table tbody>tr.ng-scope");
-        return rows;
+    this.getAllBlindsTableRows = function(){
+        return $$("span:not(.ng-hide) .blinds-table tbody>tr.ng-scope");
     };
 
     this.getBlindsTableCell = function (row, col) {
@@ -101,6 +100,15 @@ var tournamentPage = function (){
     this.getCalcBlinds = function(){
         return $('span:not(.ng-hide) .tourn-main-left .fa-calculator');
     };
+
+
+    //  Players table
+    // *************************************************************************
+
+    this.getAllPlayersTableRows = function(){
+        return $$("[ng-show=\"appData.tournTab=='players'\"] table tbody>tr.ng-scope");
+    };
+
 
     // edit level
     // ---------------------------------------------
@@ -379,15 +387,33 @@ var tournamentPage = function (){
         return $('#btn_tourn_open_playerActions');
     };
 
+    this.getFirstActionsOnPlayerButton = function(){
+        return $$('#btn_tourn_open_playerActions').first();
+    };
+
 
     this.getUnregisterPlayerButton = function(){
         return $('#btn_tourn_unregisterPlayer');
+    };
+
+    this.getEliminationPlayerButton = function(){
+        return $('#btn_tourn_eliminationPlayer');
     };
 
     this.getClosePlayerActionButton = function(){
         return $('#btn_tourn_close_playerActions');
     };
 
+    // knockouts
+    // *************************************************************************
+
+    this.getSelectKnockoutPlayer = function(player){
+        return element(by.cssContainingText('select option', player))
+    };
+
+    this.getKnockoutButton = function(){
+        return $('#btn_tourn_knockout');
+    };
 
     // log
     // *************************************************************************
