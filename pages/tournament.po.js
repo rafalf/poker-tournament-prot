@@ -102,11 +102,21 @@ var tournamentPage = function (){
     };
 
 
-    //  Players table
+    //  Players & LeaderBoard table
     // *************************************************************************
 
     this.getAllPlayersTableRows = function(){
         return $$("[ng-show=\"appData.tournTab=='players'\"] table tbody>tr.ng-scope");
+    };
+
+
+    this.getPlayersTableCell = function(nthRow, nthCol){
+        var row = $("[ng-show=\"appData.tournTab=='players'\"] table tbody>tr.ng-scope:nth-of-type(" + nthRow + ")");
+        var cell = row.$("td:nth-of-type(" + nthCol + ")");
+        cell.getText().then(function (text_) {
+            console.log("Cell row: " + nthRow + ' Col: ' + nthCol + " Value: " + text_);
+        });
+        return cell.getText();
     };
 
 
@@ -185,14 +195,6 @@ var tournamentPage = function (){
         return $('#btn_tourn_create_level');
     };
 
-    this.getRegisterPlayerButton = function(){
-        return $('#btn_tourn_open_manualRegister');
-    };
-
-    this.getTournAddBreakButton = function () {
-        return $('#btn_tourn_add_break');
-    };
-
     this.enterTournNewBreakTime = function (value) {
         var i = element(by.model('appData.newBreak.levelTime'))
         i.clear();
@@ -229,13 +231,41 @@ var tournamentPage = function (){
         return p;
     };
 
-    this.getLeaderBoardTab = function(){
-        return $('#btn_tourn_leaderboardTab');
-    };
-
     this.getTournLog = function(){
         return $('#btn_tourn_open_TournLog');
     };
+
+    // Btns
+    // ------------------------------------------
+
+    this.getRegisterPlayerButton = function(){
+        return $('#btn_tourn_open_manualRegister');
+    };
+
+    this.getExportLeaderBoardButton = function(){
+        return $('#btn_tourn_export_leaderboard');
+    };
+
+    this.getDrawSeatsButton = function(){
+        return $('#btn_tourn_drawSeats');
+    };
+
+    this.getTournAddBreakButton = function () {
+        return $('#btn_tourn_add_break');
+    };
+
+    // tabs
+    // ------------------------------------------
+
+
+    this.getLeaderBoardTab = function () {
+        return $('#btn_tourn_leaderboardTab');
+    };
+
+    this.getPlayersTab = function () {
+        return $('#btn_tourn_playersTab');
+    };
+
 
     //  parameters
     // *************************************************************************
@@ -389,6 +419,10 @@ var tournamentPage = function (){
 
     this.getFirstActionsOnPlayerButton = function(){
         return $$('#btn_tourn_open_playerActions').first();
+    };
+
+    this.getLastActionsOnPlayerButton = function(){
+        return $$('#btn_tourn_open_playerActions').last();
     };
 
 

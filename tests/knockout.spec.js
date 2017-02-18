@@ -126,7 +126,7 @@ describe('knockouts in a tournament case', function() {
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(11);
     });
 
-    it('should eliminate member', function () {
+    it('should eliminate member by No 9', function () {
 
         tourn.getFirstActionsOnPlayerButton().click();
         tourn.getEliminationPlayerButton().click();
@@ -134,7 +134,7 @@ describe('knockouts in a tournament case', function() {
         tourn.getKnockoutButton().click();
     });
 
-    it('should eliminate non member', function () {
+    it('should eliminate non member by No 9', function () {
 
         tourn.getFirstActionsOnPlayerButton().click();
         tourn.getEliminationPlayerButton().click();
@@ -142,7 +142,117 @@ describe('knockouts in a tournament case', function() {
         tourn.getKnockoutButton().click();
     });
 
-    it('should verify players', function(){
+    it('should verify players table', function(){
         expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('Knockout Player Name1');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 5)).toBe('Actions');
+
+        expect(tourn.getPlayersTableCell(9, 1)).toBe('Knockout Player Name9');
+        expect(tourn.getPlayersTableCell(9, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(9, 4)).toBe('2');
+        expect(tourn.getPlayersTableCell(9, 5)).toBe('Actions');
+
+        // knocked out players
+        expect(tourn.getPlayersTableCell(10, 1)).toBe('Knockout Player Name0');
+        expect(tourn.getPlayersTableCell(10, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(10, 4)).toBe('');
+
+        expect(tourn.getPlayersTableCell(11, 1)).toBe('Knockout Player Name - Member');
+        expect(tourn.getPlayersTableCell(11, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(11, 4)).toBe('');
+    });
+
+    it('should eliminate non member by No 5', function () {
+
+        tourn.getFirstActionsOnPlayerButton().click();
+        tourn.getEliminationPlayerButton().click();
+        tourn.getSelectKnockoutPlayer('Knockout Player Name5').click();
+        tourn.getKnockoutButton().click();
+    });
+
+    it('should verify players table and btns', function(){
+
+        expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 5)).toBe('Actions');
+
+        expect(tourn.getPlayersTableCell(4, 1)).toBe('Knockout Player Name5');
+        expect(tourn.getPlayersTableCell(4, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(4, 4)).toBe('1');
+        expect(tourn.getPlayersTableCell(4, 5)).toBe('Actions');
+
+        expect(tourn.getPlayersTableCell(8, 1)).toBe('Knockout Player Name9');
+        expect(tourn.getPlayersTableCell(8, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(8, 4)).toBe('2');
+        expect(tourn.getPlayersTableCell(8, 5)).toBe('Actions');
+
+        // knocked out players
+        expect(tourn.getPlayersTableCell(9, 1)).toBe('Knockout Player Name1');
+        expect(tourn.getPlayersTableCell(9, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(9, 4)).toBe('');
+
+        expect(tourn.getPlayersTableCell(10, 1)).toBe('Knockout Player Name0');
+        expect(tourn.getPlayersTableCell(10, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(10, 4)).toBe('');
+
+        expect(tourn.getPlayersTableCell(11, 1)).toBe('Knockout Player Name - Member');
+        expect(tourn.getPlayersTableCell(11, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(11, 4)).toBe('');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeTruthy();
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeTruthy();
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeFalsy();
+    });
+
+    it('should eliminate all other players by No 2', function () {
+
+        for (var x = 0; x < 7; x++) {
+            tourn.getLastActionsOnPlayerButton().click();
+            tourn.getEliminationPlayerButton().click();
+            tourn.getSelectKnockoutPlayer('Knockout Player Name2').click();
+            tourn.getKnockoutButton().click();
+        } ;
+    });
+
+    it('should verify players table and btns', function(){
+
+        expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('7');
+
+        expect(tourn.getPlayersTableCell(11, 1)).toBe('Knockout Player Name - Member');
+        expect(tourn.getPlayersTableCell(11, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(11, 4)).toBe('');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
+    });
+
+    it('should verify leaderboard table and btn', function () {
+
+        tourn.getLeaderBoardTab().click();
+        expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('1');
+        expect(tourn.getPlayersTableCell(1, 2)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 5)).toBe('7');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
+    });
+
+    it('should click back on players tab', function () {
+
+        tourn.getPlayersTab().click();
     });
 });

@@ -35,7 +35,8 @@ exports.config = {
             '../tests/blindStructure.spec.js',
             '../tests/tournParameters.spec.js',
             '../tests/joinClub.spec.js',
-            '../tests/quickStart.spec.js'
+            '../tests/quickStart.spec.js',
+            '../tests/knockout.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
         dev: ['../tests/knockout.spec.js']
