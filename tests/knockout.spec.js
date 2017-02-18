@@ -251,8 +251,48 @@ describe('knockouts in a tournament case', function() {
         expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
     });
 
-    it('should click back on players tab', function () {
+    it('should turn off knockouts', function () {
+        tourn.getTournSettings().click();
 
+        expect(tourn.getKnockoutCheckbox().isSelected()).toBeTruthy();
+        tourn.getKnockoutCheckbox().click();
+
+        tourn.getSaveTournSettings().click();
+    });
+
+    it('should verify leaderboard table and btn - knockouts not displaying', function () {
+
+        tourn.getLeaderBoardTab().click();
+        expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('1');
+        expect(tourn.getPlayersTableCell(1, 2)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 5)).toBe('');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
+    });
+
+    it('should click on players tab', function () {
         tourn.getPlayersTab().click();
+    });
+
+    it('should verify players table and btns - knockouts not displaying', function(){
+
+        expect(tourn.getAllPlayersTableRows().count()).toBe(11);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+
+        expect(tourn.getPlayersTableCell(11, 1)).toBe('Knockout Player Name - Member');
+        expect(tourn.getPlayersTableCell(11, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(11, 4)).toBe('');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeFalsy()
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
     });
 });

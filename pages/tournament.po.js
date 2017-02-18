@@ -267,6 +267,21 @@ var tournamentPage = function (){
     };
 
 
+    // Tournament Settings (pseudo modal )
+    // *************************************************************************
+
+    this.getTournSettings = function () {
+        return $('#btn_tourn_open_tournSettings');
+    };
+
+    this.getSaveTournSettings = function () {
+        return $('#btn_tourn_save_tournSettings');
+    };
+
+    this.getKnockoutCheckbox = function () {
+        return element(by.model('appData.trackKnockouts'))
+    };
+
     //  parameters
     // *************************************************************************
 
