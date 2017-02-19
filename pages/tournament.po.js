@@ -418,7 +418,7 @@ var tournamentPage = function (){
     // -
 
     this.getTournBuyInInput = function () {
-        return element(by.model('tournament.params.buyin'))
+        return $('#row_buy-in input');
     };
 
     this.enterTournBuyInParam = function (value) {
@@ -431,15 +431,28 @@ var tournamentPage = function (){
     // -
 
     this.getTournPlacesPaidInput = function () {
-        return element(by.model(''))
+        return $('#row_places_paid input')
     };
 
     this.getTournPlacesPaidParamPencil = function () {
-        return $('')
+        return $('#row_places_paid .fa-pencil-square-o')
     };
 
     this.enterTournPlacesPaidParam = function (value) {
         var i = this.getTournPlacesPaidInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+
+    // -
+
+    this.getTournAddedPrizeInput = function () {
+        return $('#row_addon_prize input')
+    };
+
+    this.enterTournAddedPrizeParam = function (value) {
+        var i = this.getTournAddedPrizeInput()
         i.clear();
         i.sendKeys(value);
     };
@@ -517,9 +530,53 @@ var tournamentPage = function (){
 
     this.getLogCell = function (nthRow, nthCol) {
         var row = $(".table tr[id*='log']:nth-of-type(" + nthRow + ")");
-        var cel = row.$("td:nth-of-type(" + nthCol + ")")
+        var cel = row.$("td:nth-of-type(" + nthCol + ")");
         return cel.getText();
     };
+
+    //  Payouts
+    // *************************************************************************
+
+    this.getAllPayoutsRows = function(){
+        return $$("table#payouts>tbody tr:not(.ng-hide)");
+    };
+
+    this.getPayoutsCell = function (nthRow, nthCell) {
+        var row = $('table#payouts>tbody tr:not(.ng-hide):nth-of-type(' + nthRow + ')');
+        var cell = row.$('td:nth-of-type(' + nthCell + ')');
+        return cell.getText();
+    };
+
+
+    // edited
+    // -------
+    this.getPayoutsEditedCellInput = function (nthRow, nthCell) {
+        var row = $('table#payouts>tbody tr:not(.ng-hide):nth-of-type(' + nthRow + ')');
+        return row.$('td:nth-of-type(' + nthCell + ') input');
+    };
+
+    this.enterPayoutsCellInput = function (nthRow, value) {
+        var row = $('table#payouts>tbody tr:not(.ng-hide):nth-of-type(' + nthRow + ')');
+        var cell = row.$('td:nth-of-type(3) input');
+        cell.clear();
+        cell.sendKeys(value)
+    };
+
+    // info box
+    // -------
+
+    this.getPrizePoolInfoBox = function () {
+        return $('#infobox_prizepool .bv-infobox-value').getText();
+    };
+
+    this.getPlayersInfoBox = function () {
+        return $('#infobox_players .bv-infobox-value').getText();
+    };
+
+    this.getPayoutsPencil = function () {
+        return $('.payouts-table .btn-group .fa-pencil-square-o')
+    };
+    
 
     // *************************************************************************
     //  Register a player modal
