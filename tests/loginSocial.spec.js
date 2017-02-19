@@ -79,7 +79,6 @@ describe('login with fb and gmail case', function() {
         page.waitForWelcomeHeading();
 
         var title = lobby.getWelcomeHeading('akiro kurosava');
-
         expect(title).toBe('Welcome akiro kurosava');
 
         lobby.getGetLogoutButton().click();

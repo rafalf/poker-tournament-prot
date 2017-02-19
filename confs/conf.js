@@ -40,7 +40,7 @@ exports.config = {
             '../tests/knockout.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/knockout.spec.js']
+        dev: ['../tests/registerTourn.spec.js']
     },
 
    onPrepare: function() {

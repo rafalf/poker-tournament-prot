@@ -93,11 +93,9 @@ describe('register players for a tournament case', function() {
     it('should deregister 5 players', function () {
 
         for (var i = 0; i < 5; i++){
-
-            tourn.getActionsOnPlayerButton().click();
-
+            tourn.getFirstActionsOnPlayerButton().click();
             tourn.getUnregisterPlayerButton().click();
-        }
+        };
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
     });
@@ -131,9 +129,9 @@ describe('register players for a tournament case', function() {
     });
 
 
-    it('should unregister member', function () {
+    it('should unregister 1 member', function () {
 
-        tourn.getActionsOnPlayerButton().click();
+        tourn.getFirstActionsOnPlayerButton().click();
         tourn.getUnregisterPlayerButton().click();
         expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
     });
@@ -192,7 +190,7 @@ describe('register players for a tournament case', function() {
     });
 
 
-    it('should open tourn log and delete a player registration', function () {
+    it('should open tourn log and undo player registration', function () {
 
         tourn.getTournLog().click();
 

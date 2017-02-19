@@ -24,13 +24,17 @@ describe('sign up case', function() {
 
         login.getConnectEmailButton().click();
 
-        login.getSignUpEmailInput().sendKeys(page.getRandomString() + "@gmail.com");
+        var user = page.getRandomAlphabeticString(10)
+        login.getSignUpEmailInput().sendKeys(user + "@protractor.com");
 
         login.getSignUpPasswordInput().sendKeys('password');
 
         login.getSignUpButton().click();
 
         page.waitForWelcomeHeading();
+
+        var title = lobby.getWelcomeHeading(user);
+        expect(title).toBe("Welcome " + user);
 
         expect(lobby.getEmailVerifyHeading().isDisplayed()).toBe(true);
 

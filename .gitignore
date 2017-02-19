@@ -5,3 +5,4 @@ confs/node_modules
 confs/reports
 node_modules/
 .DS_Store
+reports

@@ -81,6 +81,7 @@ describe('knockouts in a tournament case', function() {
         lobby.selectRebuyTourn(false);
         lobby.selectManagePlayers(true);
         lobby.selectKnockouts(true);
+        lobby.selectManagePayouts(false);
     });
 
     it('should create a tournament', function () {
@@ -294,5 +295,73 @@ describe('knockouts in a tournament case', function() {
         expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeFalsy()
         expect(tourn.getDrawSeatsButton().isDisplayed()).toBeFalsy()
         expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeTruthy();
+    });
+
+    it('should verify tourn log and undo knockout ', function () {
+
+        tourn.getTournLog().click();
+
+        page.waitForModalPresent();
+
+        page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+
+        // 10 elim, 11 reg + create
+        expect(tourn.getAllLogRows().count()).toBe(22);
+
+        expect(tourn.getLogCell(1, 2)).toBe('Elimination: Knockout Player Name3')
+        expect(tourn.getLogCell(2, 2)).toBe('Elimination: Knockout Player Name4')
+        expect(tourn.getLogCell(21, 2)).toBe('Register: Knockout Player Name0')
+        expect(tourn.getLogCell(22, 2)).toBe('Create Tournament')
+
+        // 2 recent eliminations
+        tourn.getAllLogUndoButtons().first().click();
+        tourn.getAllLogUndoButtons().first().click();
+
+        // first registration
+        tourn.getAllLogUndoButtons().last().click();
+
+        expect(tourn.getAllLogRows().count()).toBe(22);
+        expect(tourn.getLogCell(1, 2)).toBe('Elimination: Knockout Player Name3')
+        expect(tourn.getLogCell(2, 2)).toBe('Elimination: Knockout Player Name4')
+
+        tourn.getLogCloseButton().click();
+
+        page.waitForModalNotPresent();
+    });
+
+    it('should verify players table and btns - undo 2 eliminations and 1 reg', function(){
+
+        expect(tourn.getAllPlayersTableRows().count()).toBe(10);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('Knockout Player Name3');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 5)).toBe('Actions');
+
+        expect(tourn.getPlayersTableCell(2, 1)).toBe('Knockout Player Name4');
+        expect(tourn.getPlayersTableCell(2, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(2, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(2, 5)).toBe('Actions');
+
+        expect(tourn.getPlayersTableCell(3, 1)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(3, 3)).toBe('25000');
+        expect(tourn.getPlayersTableCell(3, 4)).toBe('');
+        expect(tourn.getPlayersTableCell(3, 5)).toBe('Actions');
+    });
+
+    it('should verify leaderboard table and btn - undo 2 eliminations and 1 reg', function () {
+
+        tourn.getLeaderBoardTab().click();
+        expect(tourn.getAllPlayersTableRows().count()).toBe(10);
+
+        expect(tourn.getPlayersTableCell(1, 1)).toBe('1');
+        expect(tourn.getPlayersTableCell(1, 2)).toBe('Knockout Player Name2');
+        expect(tourn.getPlayersTableCell(1, 3)).toBe('');
+        expect(tourn.getPlayersTableCell(1, 4)).toBe('25000');
+        expect(tourn.getPlayersTableCell(1, 6)).toBe('Actions');
+
+        expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeTruthy()
+        expect(tourn.getDrawSeatsButton().isDisplayed()).toBeTruthy()
+        expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeFalsy();
     });
 });

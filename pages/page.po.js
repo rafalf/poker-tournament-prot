@@ -4,6 +4,15 @@ var Page = function (){
 
     this.getRandomString = function() {
         return (Math.random() + 1).toString(36).substring(7);
+    };
+
+    this.getRandomAlphabeticString = function(length) {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz";
+        for(var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
     }
 
     this.getRandomNumber = function() {

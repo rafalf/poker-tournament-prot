@@ -1,5 +1,7 @@
 var tournamentPage = function (){
 
+
+    var page = require('../pages/page.po.js')
     var EC = protractor.ExpectedConditions;
 
     this.waitForTournament = function () {
@@ -433,7 +435,9 @@ var tournamentPage = function (){
     };
 
     this.getFirstActionsOnPlayerButton = function(){
-        return $$('#btn_tourn_open_playerActions').first();
+        var first = $$('#btn_tourn_open_playerActions').first();
+        page.waitUntilElementClickable(first);
+        return first;
     };
 
     this.getLastActionsOnPlayerButton = function(){
@@ -464,7 +468,7 @@ var tournamentPage = function (){
         return $('#btn_tourn_knockout');
     };
 
-    // log
+    // Tourn log
     // *************************************************************************
 
     this.getLogUndoButton = function(){
@@ -479,6 +483,15 @@ var tournamentPage = function (){
         return $('#btn_tourn_close_tournLog');
     };
 
+    this.getAllLogRows = function(){
+        return $$(".table tr[id*='log']");
+    };
+
+    this.getLogCell = function (nthRow, nthCol) {
+        var row = $(".table tr[id*='log']:nth-of-type(" + nthRow + ")");
+        var cel = row.$("td:nth-of-type(" + nthCol + ")")
+        return cel.getText();
+    };
 
     // *************************************************************************
     //  Register a player modal

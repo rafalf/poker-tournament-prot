@@ -362,8 +362,8 @@ var lobbyPage = function (){
             });
             return title.getText();
         } else {
-            console.log('wait for heading:' + e)
-            browser.wait(EC.presenceOf(element(by.cssContainingText('#welcomeHdr', e))), 5000,
+            console.log('wait for heading: ' + e)
+            browser.wait(EC.presenceOf(element(by.cssContainingText('#welcomeHdr', e))), 7000,
                 'Expected heading not present');
             return $('#welcomeHdr').getText();
         };
