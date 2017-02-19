@@ -457,6 +457,30 @@ var tournamentPage = function (){
         i.sendKeys(value);
     };
 
+    // -
+
+    this.getTournRebuyCostInput = function () {
+        return $('#row_rebuy_cost input')
+    };
+
+    this.enterTournRebuyCostParam = function (value) {
+        var i = this.getTournRebuyCostInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+    // -
+
+    this.getTournAddOnInput = function () {
+        return $('#row_addon_cost input')
+    };
+
+    this.enterTournAddOnParam = function (value) {
+        var i = this.getTournAddOnInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
     // checkboxes
 
     this.getTournAntesCheckbox = function () {
@@ -573,8 +597,20 @@ var tournamentPage = function (){
         return $('#infobox_players .bv-infobox-value').getText();
     };
 
+    this.getRebuysInfoBox = function () {
+        return $('#infobox_rebuys .bv-infobox-value').getText();
+    };
+
+    this.getAddOnsInfoBox = function () {
+        return $('#infobox_addons .bv-infobox-value').getText();
+    };
+
     this.getPayoutsPencil = function () {
         return $('.payouts-table .btn-group .fa-pencil-square-o')
+    };
+
+    this.getPayoutsCalc = function () {
+        return $('.payouts-table .btn-group .fa-calculator')
     };
     
 
