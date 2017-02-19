@@ -149,6 +149,11 @@ var lobbyPage = function (){
         return $("[name='buyin']");
     };
 
+    this.enterTournBuyIn  = function(value){
+        this.getTournBuyInInput().clear();
+        this.getTournBuyInInput().sendKeys(value);
+    };
+
     this.getTournSmallBlindInput = function(){
         return $("[name='initSmallBlind']");
     };

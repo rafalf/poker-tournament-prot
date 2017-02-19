@@ -37,10 +37,11 @@ exports.config = {
             '../tests/joinClub.spec.js',
             '../tests/signup.spec.js',
             '../tests/quickStart.spec.js',
-            '../tests/knockout.spec.js'
+            '../tests/knockout.spec.js',
+            '../tests/payouts.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/registerTourn.spec.js']
+        dev: ['../tests/payouts.spec.js']
     },
 
    onPrepare: function() {

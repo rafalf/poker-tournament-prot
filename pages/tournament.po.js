@@ -415,6 +415,34 @@ var tournamentPage = function (){
         browser.sleep(1000);
     };
 
+    // -
+
+    this.getTournBuyInInput = function () {
+        return element(by.model('tournament.params.buyin'))
+    };
+
+    this.enterTournBuyInParam = function (value) {
+        var i = this.getTournBuyInInput()
+        i.clear();
+        i.sendKeys(value);
+    };
+
+
+    // -
+
+    this.getTournPlacesPaidInput = function () {
+        return element(by.model(''))
+    };
+
+    this.getTournPlacesPaidParamPencil = function () {
+        return $('')
+    };
+
+    this.enterTournPlacesPaidParam = function (value) {
+        var i = this.getTournPlacesPaidInput()
+        i.clear();
+        i.sendKeys(value);
+    };
 
     // checkboxes
 
