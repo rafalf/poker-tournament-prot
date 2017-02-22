@@ -288,17 +288,17 @@ var tournamentPage = function (){
     // *************************************************************************
 
     this.getTournSmallBlindParamInput = function () {
-        return $('#row_init_small_blind input')
+        return $('#row_init_small_blind input');
     };
 
     this.getTournSmallBlindParamPencil = function () {
-        return $('#row_init_small_blind .fa-pencil-square-o')
+        return $('#row_init_small_blind .fa-pencil-square-o');
     };
 
     this.enterTournSmallBlindParam = function (value) {
-        var i = this.getTournSmallBlindParamInput()
-        i.clear();
-        i.sendKeys(value);
+        var script_js = "document.getElementsByClassName('param-input').item(4).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournSmallBlindParamInput().sendKeys(protractor.Key.SPACE);
     };
 
     // -
@@ -311,10 +311,11 @@ var tournamentPage = function (){
         return $('#row_starting_stack .fa-pencil-square-o')
     };
 
+    this.getTournStartingStackParamCalc = function () {
+        return $('#row_starting_stack .fa-calculator')
+    };
+
     this.enterStartingStackParam = function (value) {
-        var i = this.getTournStartingStackParamInput()
-        i.clear();
-        i.sendKeys(value);
     };
 
     // -
@@ -327,15 +328,10 @@ var tournamentPage = function (){
         return $('#row_level_time .fa-pencil-square-o');
     };
 
-    this.enterTournLevelTimeParam = function (value, clear_keys) {
-        var i = this.getTournLevelTimeParamInput();
-        i.clear();
-        // for (var y = 0; y < clear_keys; y++){
-        //     i.sendKeys(protractor.Key.BACK_SPACE);
-        //     browser.sleep(500);
-        // };
-        i.sendKeys(value);
-        browser.sleep(1000);
+    this.enterTournLevelTimeParam = function (value) {
+        var script_js = "document.getElementsByClassName('param-input').item(6).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournLevelTimeParamInput().sendKeys(protractor.Key.SPACE);
     };
 
     // -
@@ -408,11 +404,14 @@ var tournamentPage = function (){
         return $('#duration');
     };
 
+    this.getTournIncrDurationButton = function () {
+        return $('#btn_tourn_bs_incr_duration');
+    };
+
     this.enterTournDurationParam = function (value) {
-        var i = this.getTournDurationInput();
-        i.clear();
-        i.sendKeys(value);
-        browser.sleep(1000);
+        var script_js = "document.getElementsByClassName('param-input').item(3).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournDurationInput().sendKeys(protractor.Key.SPACE);
     };
 
     // -
@@ -422,16 +421,16 @@ var tournamentPage = function (){
     };
 
     this.enterTournBuyInParam = function (value) {
-        var i = this.getTournBuyInInput()
-        i.clear();
-        i.sendKeys(value);
+        var script_js = "document.getElementsByClassName('param-input').item(15).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournBuyInInput().sendKeys(protractor.Key.SPACE);
     };
 
 
     // -
 
     this.getTournPlacesPaidInput = function () {
-        return $('#row_places_paid input')
+        return $('#row_places_paid input');
     };
 
     this.getTournPlacesPaidParamPencil = function () {
@@ -439,11 +438,13 @@ var tournamentPage = function (){
     };
 
     this.enterTournPlacesPaidParam = function (value) {
-        var i = this.getTournPlacesPaidInput()
-        i.clear();
-        i.sendKeys(value);
-    };
+        // var jq_script_ = "$('#row_places_paid input').value = 5;"
+        // browser.executeScript(jq_script_);
 
+        var script_js = "document.getElementsByClassName('param-input').item(14).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournPlacesPaidInput().sendKeys(protractor.Key.SPACE);
+    };
 
     // -
 
@@ -452,9 +453,9 @@ var tournamentPage = function (){
     };
 
     this.enterTournAddedPrizeParam = function (value) {
-        var i = this.getTournAddedPrizeInput()
-        i.clear();
-        i.sendKeys(value);
+        var script_js = "document.getElementsByClassName('param-input').item(18).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournAddedPrizeInput().sendKeys(protractor.Key.SPACE);
     };
 
     // -
@@ -471,12 +472,12 @@ var tournamentPage = function (){
 
     // -
 
-    this.getTournAddOnInput = function () {
+    this.getTournAddOnCostInput = function () {
         return $('#row_addon_cost input')
     };
 
-    this.enterTournAddOnParam = function (value) {
-        var i = this.getTournAddOnInput()
+    this.enterTournAddOnCostParam = function (value) {
+        var i = this.getTournAddOnCostInput()
         i.clear();
         i.sendKeys(value);
     };

@@ -165,7 +165,7 @@ describe('tournament parameters case', function() {
             lobby.getFirstOpenTournamentButton().click();
         });
 
-        it('should verify parameters', function () {
+        it('should verify parameters: blind rows: 28', function () {
             expect(tourn.getTournExpectedRebuysParamInput().isDisplayed()).toBeTruthy();
             expect(tourn.getTournRebuyChipsParamInput().isDisplayed()).toBeTruthy();
             expect(tourn.getTournExpectedAddonsParamInput().isDisplayed()).toBeTruthy();
@@ -200,14 +200,39 @@ describe('tournament parameters case', function() {
 
         });
 
-        it('should set level time to 22', function () {
-            tourn.getTournSmallBlindParamPencil().click();
+        it('should edit params, click on pencils', function () {
             tourn.getTournStartingStackParamPencil().click();
+            tourn.getTournSmallBlindParamPencil().click();
             tourn.getTournLevelTimeParamPencil().click();
 
             browser.ignoreSynchronization = true;
-            tourn.enterTournLevelTimeParam(22, 2);
-            expect(tourn.getAllBlindsTableRows().count()).toBe(16);
+        });
+
+        it('should set level time to 22: blind rows: 16', function () {
+            tourn.enterTournLevelTimeParam(22);
+        });
+
+        it('should set initial small blind: 200', function () {
+            tourn.enterTournSmallBlindParam(200);
+        });
+
+        it('verify blind table updated', function () {
+            expect(tourn.getAllBlindsTableRows().count()).toBe(17);
+        });
+
+        it('should set starting stack - calc', function () {
+            tourn.getTournStartingStackParamCalc().click();
+        });
+
+        it('verify blind table updated', function () {
+            expect(tourn.getAllBlindsTableRows().count()).toBe(15);
+
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('22 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('200');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('400');
+        });
+
+        it('should recover from synchronization', function () {
             browser.ignoreSynchronization = false;
         });
     });
@@ -282,21 +307,45 @@ describe('tournament parameters case', function() {
             lobby.getFirstOpenTournamentButton().click();
         });
 
-        it('should set duration to an hour and 10 mins level', function () {
 
+        it('should verify blind table and param', function () {
             expect(tourn.getAllBlindsTableRows().count()).toBe(29);
             expect(tourn.getTournDurationInput().getAttribute('value')).toBe('5');
+        });
 
+        it('should increase duration', function () {
+            tourn.getTournIncrDurationButton().click();
+        });
+
+        it('should verify blind table and param', function () {
+            expect(tourn.getAllBlindsTableRows().count()).toBe(28);
+            expect(tourn.getTournDurationInput().getAttribute('value')).toBe('5.5');
+        });
+
+        it('should edit params, click on pencils', function () {
+            tourn.getTournStartingStackParamPencil().click();
+            tourn.getTournSmallBlindParamPencil().click();
             tourn.getTournLevelTimeParamPencil().click();
 
             browser.ignoreSynchronization = true;
+        });
 
-            tourn.enterTournLevelTimeParam(10, 2);
+        it('should set duration to an hour and 10 mins level', function () {
+
+            tourn.enterTournLevelTimeParam(10);
             tourn.enterTournDurationParam(1);
+        });
 
+        it('should verify blind table and param', function () {
             expect(tourn.getAllBlindsTableRows().count()).toBe(7);
             expect(tourn.getTournDurationInput().getAttribute('value')).toBe('1');
 
+            expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('10 min');
+            expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('100');
+            expect(tourn.getBlindsTableCell(1, 3).getText()).toBe('200');
+        });
+
+        it('should recover from synchronization', function () {
             browser.ignoreSynchronization = false;
         });
     });

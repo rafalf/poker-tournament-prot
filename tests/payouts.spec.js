@@ -1,4 +1,4 @@
-describe('tournament parameters case', function() {
+describe('payouts case', function() {
 
     // pages
     var page = require('../pages/page.po.js');
@@ -74,7 +74,6 @@ describe('tournament parameters case', function() {
             lobby.selectRebuyTourn(false);
             lobby.selectKnockouts(true);
             lobby.selectManagePayouts(true);
-            
         });
 
         it('should create a tournament', function () {
@@ -123,7 +122,7 @@ describe('tournament parameters case', function() {
             expect(tourn.getPlayersAllPlayersRows().count()).toBe(10);
         });
 
-        it('should verify payouts with 10 players, 3 places paid', function () {
+        it('should verify payouts: 10 players, 3 places paid', function () {
             tourn.getPayoutsLeftMenu().click();
 
             expect(tourn.getTournBuyInInput().getAttribute('value')).toBe('100');
@@ -174,13 +173,13 @@ describe('tournament parameters case', function() {
             expect(tourn.getPlayersInfoBox()).toBe('10');
         });
         
-        xit('should add places paid', function () {
+        it('should add places paid', function () {
 
             tourn.getTournPlacesPaidParamPencil().click();
             tourn.enterTournPlacesPaidParam(4);
         });
 
-        xit('should verify payouts with 10 players, 4 places paid', function () {
+        it('should verify payouts: 10 players, 4 places paid', function () {
 
             expect(tourn.getAllPayoutsRows().count()).toBe(4);
 
@@ -279,13 +278,13 @@ describe('tournament parameters case', function() {
             expect(tourn.getTournRebuyCheckbox().isSelected()).toBe(true);
         });
 
-        it('should verify payouts with 0 players', function () {
+        it('should verify payouts: 0 players', function () {
             tourn.getPayoutsLeftMenu().click();
             expect(tourn.getTournBuyInInput().getAttribute('value')).toBe('100');
             expect(tourn.getTournPlacesPaidInput().getAttribute('value')).toBe('1');
             expect(tourn.getTournAddedPrizeInput().getAttribute('value')).toBe('0');
             expect(tourn.getTournRebuyCostInput().getAttribute('value')).toBe('100');
-            expect(tourn.getTournAddOnInput().getAttribute('value')).toBe('100');
+            expect(tourn.getTournAddOnCostInput().getAttribute('value')).toBe('100');
 
             expect(tourn.getAllPayoutsRows().count()).toBe(1);
 
@@ -309,7 +308,7 @@ describe('tournament parameters case', function() {
             expect(tourn.getPlayersAllPlayersRows().count()).toBe(6);
         });
 
-        it('should verify payouts with 6 players, 3 places paid', function () {
+        it('should verify payouts: 6 players, 2 places paid', function () {
             tourn.getPayoutsLeftMenu().click();
 
             expect(tourn.getTournBuyInInput().getAttribute('value')).toBe('100');
@@ -325,6 +324,66 @@ describe('tournament parameters case', function() {
             expect(tourn.getPlayersInfoBox()).toBe('6');
             expect(tourn.getRebuysInfoBox()).toBe('0');
             expect(tourn.getAddOnsInfoBox()).toBe('0');
+        });
+
+        it('should deduct places paid', function () {
+
+            tourn.getTournPlacesPaidParamPencil().click();
+            tourn.enterTournPlacesPaidParam(1);
+        });
+
+        it('should verify payouts: 6 players, 1 place paid', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getTournBuyInInput().getAttribute('value')).toBe('100');
+            expect(tourn.getTournPlacesPaidInput().getAttribute('value')).toBe('1');
+            expect(tourn.getTournAddedPrizeInput().getAttribute('value')).toBe('0');
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(1);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('600');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('600');
+            expect(tourn.getPlayersInfoBox()).toBe('6');
+            expect(tourn.getRebuysInfoBox()).toBe('0');
+            expect(tourn.getAddOnsInfoBox()).toBe('0');
+        });
+
+        it('should add prize - 1000', function () {
+            tourn.enterTournAddedPrizeParam(1000);
+        });
+
+        it('should verify payouts: 6 players, 1 place paid, 1000 prize', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(1);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('1600');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('1600');
+            expect(tourn.getPlayersInfoBox()).toBe('6');
+            expect(tourn.getRebuysInfoBox()).toBe('0');
+            expect(tourn.getAddOnsInfoBox()).toBe('0');
+        });
+
+        it('should increase buy in - 1000', function () {
+            tourn.enterTournBuyInParam(1000);
+        });
+
+        it('should verify payouts: 6 players, 1 place paid, 1000 prize, 1000 buyin', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(1);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('7000');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('7000');
+            expect(tourn.getPlayersInfoBox()).toBe('6');
+            expect(tourn.getRebuysInfoBox()).toBe('0');
+            expect(tourn.getAddOnsInfoBox()).toBe('0');
+
+            expect(tourn.getTournRebuyCostInput().getAttribute('value')).toBe('1000');
+            expect(tourn.getTournAddOnCostInput().getAttribute('value')).toBe('1000');
         });
     });
 });
