@@ -35,6 +35,14 @@ var tournamentPage = function (){
         return $('#side_clock span');
     };
 
+    this.getClockLeftLiMenu = function(){
+        return $('li#side_clock');
+    };
+
+    this.getSeatingLeftLiMenu = function(){
+        return $('li#side_seating');
+    };
+
     this.getPokerLobbyLeftMenu = function(){
         return $('#side_lobby span');
     };
@@ -227,9 +235,9 @@ var tournamentPage = function (){
 
     this.getPlayersAllPlayersRows = function(){
         p = $$('[id^="btn_tourn_player"]>td:nth-of-type(1)');
-        p.getText().then(function(players){
-            console.log('Players: ' + players)
-        });
+        // p.getText().then(function(players){
+        //     console.log('Players: ' + players)
+        // });
         return p;
     };
 
@@ -282,6 +290,33 @@ var tournamentPage = function (){
 
     this.getKnockoutCheckbox = function () {
         return element(by.model('appData.trackKnockouts'))
+    };
+
+    // Draw Seats (pseudo modal )
+    // *************************************************************************
+
+    this.getCancelDrawSeats = function () {
+        return $('#btn_tourn_cancel_drawSeats');
+    };
+
+    this.getConfirmDrawSeats = function () {
+        return $('#btn_tourn_confirm_drawSeats');
+    };
+
+    this.getDecreasePlayersPerTableBtn = function () {
+        return $('#btn_tourn_decr_perTable');
+    };
+
+    this.getIncreasePlayersPerTableBtn = function () {
+        return $('#btn_tourn_incr_perTable');
+    };
+
+    this.getAddExtraSeatBtn = function () {
+        return $('#btn_tourn_incr_extraSeats');
+    };
+
+    this.getSeatsDrawMathText = function () {
+        return $('[ng-show="appData.confirmSeatDraw"] h5.ng-binding').getText();
     };
 
     //  parameters

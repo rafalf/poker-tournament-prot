@@ -64,16 +64,17 @@ describe('payouts case', function() {
 
         it('should enter tourn data: 100000, 10, 1-500, 10, 1500, buy-in:100, no rebuy', function () {
 
+            lobby.selectAntes(true);
+            lobby.selectRebuyTourn(false);
+            lobby.selectKnockouts(true);
+            lobby.selectManagePayouts(true);
+            
             lobby.enterTournPlayersInput('100000');
             lobby.enterTournDuration('10');
             lobby.selectChipSet('1,5,25,100,500');
             lobby.enterTournamentSmallBlind('10');
             lobby.enterTournStartStack('1500');
             lobby.enterTournBuyIn('100')
-            lobby.selectAntes(true);
-            lobby.selectRebuyTourn(false);
-            lobby.selectKnockouts(true);
-            lobby.selectManagePayouts(true);
         });
 
         it('should create a tournament', function () {
@@ -246,16 +247,18 @@ describe('payouts case', function() {
 
         it('should enter tourn data: 100000, 10, 1-500, 10, 1500, buy-in:100, no rebuy', function () {
 
+            lobby.selectAntes(true);
+            lobby.selectRebuyTourn(true);
+            lobby.selectKnockouts(true);
+            lobby.selectManagePayouts(true);
+            
             lobby.enterTournPlayersInput('100000');
             lobby.enterTournDuration('10');
             lobby.selectChipSet('1,5,25,100,500');
             lobby.enterTournamentSmallBlind('10');
             lobby.enterTournStartStack('1500');
-            lobby.enterTournBuyIn('100')
-            lobby.selectAntes(true);
-            lobby.selectRebuyTourn(true);
-            lobby.selectKnockouts(true);
-            lobby.selectManagePayouts(true);
+            lobby.enterTournBuyIn('100');
+
         });
 
         it('should create a tournament', function () {

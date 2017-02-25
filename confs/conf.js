@@ -38,10 +38,11 @@ exports.config = {
             '../tests/signup.spec.js',
             '../tests/quickStart.spec.js',
             '../tests/knockout.spec.js',
-            '../tests/payouts.spec.js'
+            '../tests/payouts.spec.js',
+            '../tests/seating.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/tournParameters.spec.js']
+        dev: ['../tests/seating.spec.js']
     },
 
    onPrepare: function() {
