@@ -67,16 +67,17 @@ describe('seating case', function() {
 
         tourn.getPlayersLeftMenu().click();
 
-        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true)
+        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
 
-        tourn.getRegisterPlayerButton().click();
+        for (var rounds = 0; rounds < 4; rounds++) {
 
-        for (var i = 0; i < 40; i++) {
-            tourn.enterPlayerName('Seating ' + i);
-            tourn.getRegisterButton().click();
+            tourn.getRegisterPlayerButton().click();
+            for (var i = 0; i < 10; i++) {
+                tourn.enterPlayerName('Seating ' + i);
+                tourn.getRegisterButton().click();
+            };
+            tourn.getCloseButton().click();
         };
-
-        tourn.getCloseButton().click();
 
         expect(tourn.getPlayersCountHeading()).toBe('Players(40)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(40);
@@ -109,8 +110,56 @@ describe('seating case', function() {
         expect(tourn.getSeatsDrawMathText()).toBe('(40  + 6) / 9 = 6 Tables');
     });
 
-    it('should confirm seats', function () {
+    it('should confirm seats and verfiy tables count', function () {
         tourn.getConfirmDrawSeats().click();
         expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(true);
+        expect(tourn.getAllSeatsTables().count()).toBe(6);
+    });
+
+    it('should remove extra seats and set 8 pl/table - verify table', function () {
+        tourn.getDrawSeatsFinalButton().click();
+
+        for (var i = 0; i < 6; i++){
+            tourn.getSubstrExtraSeatBtn().click();
+        };
+
+        tourn.getDecreasePlayersPerTableBtn().click();
+        tourn.getConfirmDrawSeats().click();
+
+        expect(tourn.getAllSeatsTables().count()).toBe(5);
+
+        expect(tourn.getAllPlayersPerTable(1).count()).toBe(8);
+        expect(tourn.getAllPlayersPerTable(2).count()).toBe(8);
+        expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
+        expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
+        expect(tourn.getAllPlayersPerTable(5).count()).toBe(8);
+
+        expect(tourn.getAllPlayersPerTable(1).first().getText()).toContain('Seating')
+        expect(tourn.getAllPlayersPerTable(1).last().getText()).toContain('Seating')
+    });
+
+    it('should open tourn log and undo latest drew seats', function () {
+
+        tourn.getTournLog().click();
+
+        page.waitForModalPresent();
+
+        page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+
+        tourn.getAllLogUndoButtons().first().click();
+
+        tourn.getLogCloseButton().click();
+
+        page.waitForModalNotPresent();
+    });
+
+    it('should verfiy seats tables', function () {
+        expect(tourn.getAllSeatsTables().count()).toBe(6);
+
+        expect(tourn.getAllPlayersPerTable(1).count()).toBe(9);
+        expect(tourn.getAllPlayersPerTable(2).count()).toBe(9);
+        expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
+        expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
+        expect(tourn.getAllPlayersPerTable(5).count()).toBe(9);
     });
 });

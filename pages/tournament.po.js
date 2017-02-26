@@ -260,6 +260,14 @@ var tournamentPage = function (){
         return $('#btn_tourn_drawSeats');
     };
 
+    this.getDrawSeatsFinalButton = function(){
+        return $('#btn_tourn_seating_finalTableDraw');
+    };
+
+    this.getSeatsAddTableButton = function(){
+        return $('#btn_tourn_addTable');
+    };
+
     this.getTournAddBreakButton = function () {
         return $('#btn_tourn_add_break');
     };
@@ -315,9 +323,25 @@ var tournamentPage = function (){
         return $('#btn_tourn_incr_extraSeats');
     };
 
+    this.getSubstrExtraSeatBtn = function () {
+        return $('#btn_tourn_decr_extraSeats');
+    };
+
     this.getSeatsDrawMathText = function () {
         return $('[ng-show="appData.confirmSeatDraw"] h5.ng-binding').getText();
     };
+
+    this.getAllSeatsTables = function () {
+        return $$('.seating-grid .seat-card');
+
+    };
+
+    this.getAllPlayersPerTable = function (nth) {
+        return $$('.seating-grid .seat-card:nth-of-type(' + nth + ') .seating-table-player');
+
+    };
+
+
 
     //  parameters
     // *************************************************************************
