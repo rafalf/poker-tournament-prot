@@ -29,6 +29,10 @@ var Page = function (){
         return $('.alert-window #btn_clear_alerts')
     };
 
+    this.getNthAlert = function(nth){
+        return $$('.alert-warning').get(nth)
+    };
+
     // waiters
     // **************************
     

@@ -43,6 +43,10 @@ var tournamentPage = function (){
         return $('li#side_seating');
     };
 
+    this.getSeatingLeftMenu = function(){
+        return $('li#side_seating span');
+    };
+
     this.getPokerLobbyLeftMenu = function(){
         return $('#side_lobby span');
     };
@@ -266,6 +270,14 @@ var tournamentPage = function (){
 
     this.getSeatsAddTableButton = function(){
         return $('#btn_tourn_addTable');
+    };
+
+    this.getSeatsBreakTableButton = function(){
+        return $('#btn_tourn_seating_breakTable');
+    };
+
+    this.getSeatsBalanceTableButton = function(){
+        return $('#btn_tourn_seating_balanceTables');
     };
 
     this.getTournAddBreakButton = function () {

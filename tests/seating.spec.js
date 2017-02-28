@@ -9,157 +9,317 @@ describe('seating case', function() {
 
     var testData = require("../confs/test.json");
 
-    beforeAll(function(){
-        console.log('\n-->  test spec: ' + __filename)
-        browser.get(testData.login_url);
+
+    describe('seating case - 40 players', function() {
+
+
+        beforeAll(function(){
+            console.log('\n-->  test spec: ' + __filename)
+            browser.get(testData.login_url);
+        });
+
+        afterAll(function () {
+            console.log('\n--->');
+            browser.restart()
+        });
+
+
+        it('should create a new tournament and add 40 players', function() {
+
+            login.getConnectEmailButton().click();
+
+            login.getLoginEmailInput().sendKeys(testData.gmail_user);
+
+            login.getLoginPasswordInput().sendKeys(testData.password);
+
+            login.getLoginButton().click();
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('test.blindvalet');
+            expect(title).toBe('Welcome test.blindvalet');
+
+            lobby.closeCreateClubModalIfPresent();
+
+            // create a club
+            lobby.getAddClubMenu().click();
+
+            var club_name = "Club-" + page.getRandomNumber();
+            lobby.getEnterClubNameInput().sendKeys(club_name);
+
+            lobby.getEnterClubPassword().sendKeys('pass');
+
+            lobby.getCreateClubButton().click();
+
+            page.waitForModalNotPresent();
+
+            // create a tournament
+            lobby.getCreateTournamentButton().click();
+
+            var tournament_name = 'Tournament-' + page.getRandomNumber();
+            lobby.getEnterTournamentNameInput().clear();
+            lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+
+            lobby.enterTournPlayersInput('40');
+
+            lobby.getCreateTournamentButtonModal().click();
+
+            headings = lobby.getAllTournamentHeadings(tournament_name);
+            expect(headings).toContain(tournament_name);
+
+            lobby.getFirstOpenTournamentButton().click();
+
+            tourn.getPlayersLeftMenu().click();
+
+            expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
+
+            for (var rounds = 0; rounds < 4; rounds++) {
+
+                tourn.getRegisterPlayerButton().click();
+                for (var i = 0; i < 10; i++) {
+                    tourn.enterPlayerName('Seating ' + i);
+                    tourn.getRegisterButton().click();
+                };
+                tourn.getCloseButton().click();
+            };
+
+            expect(tourn.getPlayersCountHeading()).toBe('Players(40)');
+            expect(tourn.getPlayersAllPlayersRows().count()).toBe(40);
+        });
+
+        it('should verify left side menu', function () {
+            expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(false);
+            expect(tourn.getClockLeftLiMenu().isDisplayed()).toBe(true);
+        });
+
+        it('should cancel draw seats', function () {
+            tourn.getDrawSeatsButton().click();
+            tourn.getCancelDrawSeats().click();
+            expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(false);
+        });
+
+        it('should decrease/increase players per table', function () {
+            tourn.getDrawSeatsButton().click();
+            expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 9 = 5 Tables');
+            tourn.getDecreasePlayersPerTableBtn().click();
+            expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 8 = 5 Tables');
+            tourn.getIncreasePlayersPerTableBtn().click();
+            expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 9 = 5 Tables');
+        });
+
+        it('should add 6 extra seats', function () {
+            for (var x = 0; x < 6; x++) {
+                tourn.getAddExtraSeatBtn().click();
+            };
+            expect(tourn.getSeatsDrawMathText()).toBe('(40  + 6) / 9 = 6 Tables');
+        });
+
+        it('should confirm seats and verfiy tables count', function () {
+            tourn.getConfirmDrawSeats().click();
+            expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(true);
+            expect(tourn.getAllSeatsTables().count()).toBe(6);
+        });
+
+        it('should remove extra seats and set 8 pl/table - verify table', function () {
+            tourn.getDrawSeatsFinalButton().click();
+
+            for (var i = 0; i < 6; i++){
+                tourn.getSubstrExtraSeatBtn().click();
+            };
+
+            tourn.getDecreasePlayersPerTableBtn().click();
+            tourn.getConfirmDrawSeats().click();
+
+            expect(tourn.getAllSeatsTables().count()).toBe(5);
+
+            expect(tourn.getAllPlayersPerTable(1).count()).toBe(8);
+            expect(tourn.getAllPlayersPerTable(2).count()).toBe(8);
+            expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
+            expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
+            expect(tourn.getAllPlayersPerTable(5).count()).toBe(8);
+
+            expect(tourn.getAllPlayersPerTable(1).first().getText()).toContain('Seating')
+            expect(tourn.getAllPlayersPerTable(1).last().getText()).toContain('Seating')
+
+            expect(tourn.getSeatsBalanceTableButton().isDisplayed()).toBe(false);
+        });
+
+        it('should open tourn log and undo latest drew seats', function () {
+
+            tourn.getTournLog().click();
+
+            page.waitForModalPresent();
+
+            page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+
+            tourn.getAllLogUndoButtons().first().click();
+
+            tourn.getLogCloseButton().click();
+
+            page.waitForModalNotPresent();
+        });
+
+        it('should verfiy seats tables', function () {
+            expect(tourn.getAllSeatsTables().count()).toBe(6);
+
+            expect(tourn.getAllPlayersPerTable(1).count()).toBe(9);
+            expect(tourn.getAllPlayersPerTable(2).count()).toBe(9);
+            expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
+            expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
+            expect(tourn.getAllPlayersPerTable(5).count()).toBe(9);
+        });
     });
 
-    afterAll(function () {
-        console.log('\n--->');
-        browser.restart();
-    });
+    describe('seating case: 8 + 1 + 5 players', function() {
 
 
-    it('should create a new tournament and add 40 players', function() {
+        beforeAll(function () {
+            console.log('\n-->  test spec: ' + __filename)
+            browser.get(testData.login_url);
+        });
 
-        login.getConnectEmailButton().click();
+        afterAll(function () {
+            console.log('\n--->');
+            browser.restart();
+        });
 
-        login.getLoginEmailInput().sendKeys(testData.gmail_user);
 
-        login.getLoginPasswordInput().sendKeys(testData.password);
+        it('should create a new tournament and add 8 players', function () {
 
-        login.getLoginButton().click();
+            login.getConnectEmailButton().click();
 
-        page.waitForWelcomeHeading();
+            login.getLoginEmailInput().sendKeys(testData.gmail_user);
 
-        var title = lobby.getWelcomeHeading('test.blindvalet');
-        expect(title).toBe('Welcome test.blindvalet');
+            login.getLoginPasswordInput().sendKeys(testData.password);
 
-        lobby.closeCreateClubModalIfPresent();
+            login.getLoginButton().click();
 
-        // create a club
-        lobby.getAddClubMenu().click();
+            page.waitForWelcomeHeading();
 
-        var club_name = "Club-" + page.getRandomNumber();
-        lobby.getEnterClubNameInput().sendKeys(club_name);
+            var title = lobby.getWelcomeHeading('test.blindvalet');
+            expect(title).toBe('Welcome test.blindvalet');
 
-        lobby.getEnterClubPassword().sendKeys('pass');
+            lobby.closeCreateClubModalIfPresent();
 
-        lobby.getCreateClubButton().click();
+            // create a club
+            lobby.getAddClubMenu().click();
 
-        page.waitForModalNotPresent();
+            var club_name = "Club-" + page.getRandomNumber();
+            lobby.getEnterClubNameInput().sendKeys(club_name);
 
-        // create a tournament
-        lobby.getCreateTournamentButton().click();
+            lobby.getEnterClubPassword().sendKeys('pass');
 
-        var tournament_name = 'Tournament-' + page.getRandomNumber();
-        lobby.getEnterTournamentNameInput().clear();
-        lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
+            lobby.getCreateClubButton().click();
 
-        lobby.enterTournPlayersInput('40');
+            page.waitForModalNotPresent();
 
-        lobby.getCreateTournamentButtonModal().click();
+            // create a tournament
+            lobby.getCreateTournamentButton().click();
 
-        headings = lobby.getAllTournamentHeadings(tournament_name);
-        expect(headings).toContain(tournament_name);
+            var tournament_name = 'Tournament-' + page.getRandomNumber();
+            lobby.getEnterTournamentNameInput().clear();
+            lobby.getEnterTournamentNameInput().sendKeys(tournament_name);
 
-        lobby.getFirstOpenTournamentButton().click();
+            lobby.enterTournPlayersInput('13');
 
-        tourn.getPlayersLeftMenu().click();
+            lobby.getCreateTournamentButtonModal().click();
 
-        expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
+            headings = lobby.getAllTournamentHeadings(tournament_name);
+            expect(headings).toContain(tournament_name);
 
-        for (var rounds = 0; rounds < 4; rounds++) {
+            lobby.getFirstOpenTournamentButton().click();
+
+            tourn.getPlayersLeftMenu().click();
+
+            expect(tourn.getPlayersLeftMenu().isDisplayed()).toBe(true);
 
             tourn.getRegisterPlayerButton().click();
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 8; i++) {
                 tourn.enterPlayerName('Seating ' + i);
                 tourn.getRegisterButton().click();
-            };
+            }
             tourn.getCloseButton().click();
-        };
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(40)');
-        expect(tourn.getPlayersAllPlayersRows().count()).toBe(40);
-    });
+            expect(tourn.getPlayersCountHeading()).toBe('Players(8)');
+        });
 
-    it('should verify left side menu', function () {
-        expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(false);
-        expect(tourn.getClockLeftLiMenu().isDisplayed()).toBe(true);
-    });
+        it('draw seats', function () {
+            tourn.getDrawSeatsButton().click();
+            tourn.getConfirmDrawSeats().click();
+            expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(true);
+            expect(tourn.getAllSeatsTables().count()).toBe(1);
+        });
 
-    it('should cancel draw seats', function () {
-        tourn.getDrawSeatsButton().click();
-        tourn.getCancelDrawSeats().click();
-        expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(false);
-    });
+        it('should add 1 player: not enough tables for 2', function () {
+            tourn.getPlayersLeftMenu().click();
+            tourn.getRegisterPlayerButton().click();
 
-    it('should decrease/increase players per table', function () {
-        tourn.getDrawSeatsButton().click();
-        expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 9 = 5 Tables');
-        tourn.getDecreasePlayersPerTableBtn().click();
-        expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 8 = 5 Tables');
-        tourn.getIncreasePlayersPerTableBtn().click();
-        expect(tourn.getSeatsDrawMathText()).toBe('(40  + 0) / 9 = 5 Tables');
-    });
+            for (var i = 0; i < 2; i++) {
+                tourn.enterPlayerName('Extra Seat - Add 1 - ' + i);
+                tourn.getRegisterButton().click();
+            };
 
-    it('should add 6 extra seats', function () {
-        for (var x = 0; x < 6; x++) {
-            tourn.getAddExtraSeatBtn().click();
-        };
-        expect(tourn.getSeatsDrawMathText()).toBe('(40  + 6) / 9 = 6 Tables');
-    });
+            tourn.getCloseButton().click();
+            expect(tourn.getPlayersAllPlayersRows().count()).toBe(9);
 
-    it('should confirm seats and verfiy tables count', function () {
-        tourn.getConfirmDrawSeats().click();
-        expect(tourn.getSeatingLeftLiMenu().isDisplayed()).toBe(true);
-        expect(tourn.getAllSeatsTables().count()).toBe(6);
-    });
+            page.getDismissAlert().click();
 
-    it('should remove extra seats and set 8 pl/table - verify table', function () {
-        tourn.getDrawSeatsFinalButton().click();
+        });
 
-        for (var i = 0; i < 6; i++){
-            tourn.getSubstrExtraSeatBtn().click();
-        };
+        it('add 2 tables', function () {
 
-        tourn.getDecreasePlayersPerTableBtn().click();
-        tourn.getConfirmDrawSeats().click();
+            tourn.getSeatingLeftMenu().click()
+            
+            tourn.getSeatsAddTableButton().click();
 
-        expect(tourn.getAllSeatsTables().count()).toBe(5);
+            page.getDismissAlert().click();
+            
+            tourn.getSeatsAddTableButton().click();
 
-        expect(tourn.getAllPlayersPerTable(1).count()).toBe(8);
-        expect(tourn.getAllPlayersPerTable(2).count()).toBe(8);
-        expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
-        expect(tourn.getAllPlayersPerTable(3).count()).toBe(8);
-        expect(tourn.getAllPlayersPerTable(5).count()).toBe(8);
+            page.getDismissAlert().click();
 
-        expect(tourn.getAllPlayersPerTable(1).first().getText()).toContain('Seating')
-        expect(tourn.getAllPlayersPerTable(1).last().getText()).toContain('Seating')
-    });
+            expect(tourn.getAllSeatsTables().count()).toBe(3);
+            expect(tourn.getSeatsBalanceTableButton().isDisplayed()).toBe(false);
 
-    it('should open tourn log and undo latest drew seats', function () {
+        });
 
-        tourn.getTournLog().click();
+        it('should add 5 players', function () {
+            tourn.getPlayersLeftMenu().click();
 
-        page.waitForModalPresent();
+            tourn.getRegisterPlayerButton().click();
 
-        page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+            for (var i = 0; i < 5; i++) {
+                tourn.enterPlayerName('Extra Seat - Add 2 - ' + i);
+                tourn.getRegisterButton().click();
+            };
 
-        tourn.getAllLogUndoButtons().first().click();
+            tourn.getCloseButton().click();
+            expect(tourn.getPlayersAllPlayersRows().count()).toBe(14);
 
-        tourn.getLogCloseButton().click();
+            page.getDismissAlert().click();
+        });
 
-        page.waitForModalNotPresent();
-    });
+        it('should go to seats', function () {
+            tourn.getSeatingLeftMenu().click();
+            expect(tourn.getAllSeatsTables().count()).toBe(3);
+        });
 
-    it('should verfiy seats tables', function () {
-        expect(tourn.getAllSeatsTables().count()).toBe(6);
+        it('should break table', function () {
+            tourn.getSeatsBreakTableButton().click();
+            expect(tourn.getAllSeatsTables().count()).toBe(2);
 
-        expect(tourn.getAllPlayersPerTable(1).count()).toBe(9);
-        expect(tourn.getAllPlayersPerTable(2).count()).toBe(9);
-        expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
-        expect(tourn.getAllPlayersPerTable(3).count()).toBe(9);
-        expect(tourn.getAllPlayersPerTable(5).count()).toBe(9);
+            expect(page.getNthAlert(0).getText()).toContain('Breaking table:');
+            expect(page.getNthAlert(1).getText()).toContain('Seat Assignment');
+            page.getDismissAlert().click();
+        });
+
+        it('should balance table', function () {
+            expect(tourn.getSeatsBalanceTableButton().isDisplayed()).toBe(true);
+            tourn.getSeatsBalanceTableButton().click();
+            expect(tourn.getAllSeatsTables().count()).toBe(2);
+
+            expect(page.getNthAlert(0).getText()).toContain('Seat Assignment');
+            page.getDismissAlert().click();
+        });
     });
 });
