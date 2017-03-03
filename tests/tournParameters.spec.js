@@ -338,7 +338,6 @@ describe('tournament parameters case', function() {
 
         it('should verify blind table and param', function () {
             expect(tourn.getAllBlindsTableRows().count()).toBe(7);
-            expect(tourn.getTournDurationInput().getAttribute('value')).toBe('1');
 
             expect(tourn.getBlindsTableCell(1, 1).getText()).toBe('10 min');
             expect(tourn.getBlindsTableCell(1, 2).getText()).toBe('100');

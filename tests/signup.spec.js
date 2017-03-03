@@ -34,7 +34,7 @@ describe('sign up case', function() {
         page.waitForWelcomeHeading();
 
         var title = lobby.getWelcomeHeading(user);
-        expect(title).toBe("Welcome " + user);
+        expect(title).toContain(user);
 
         expect(lobby.getEmailVerifyHeading().isDisplayed()).toBe(true);
 

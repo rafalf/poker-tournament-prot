@@ -78,7 +78,7 @@ describe('tearDown', function() {
         page.waitForWelcomeHeading();
 
         var title = lobby.getWelcomeHeading("test.blind.valet");
-        expect(title).toBe('Welcome test.blind.valet');
+        expect(title).toContain('test.blind.valet');
 
         club.deleteAllClubs();
 
