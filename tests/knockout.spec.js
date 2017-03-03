@@ -34,7 +34,7 @@ describe('knockouts in a tournament case', function() {
         page.waitForWelcomeHeading();
 
         var title = lobby.getWelcomeHeading('test.blindvalet');
-        expect(title).toBe('Welcome test.blindvalet');
+        expect(title).toContain('test.blindvalet');
 
         lobby.closeCreateClubModalIfPresent();
 
