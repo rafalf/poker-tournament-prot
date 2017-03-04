@@ -10,7 +10,6 @@ describe('add/delete club and tournament case', function() {
     var testData = require("../confs/test.json");
 
     var club_name = "Club-" + page.getRandomNumber();
-    var expected_heading = club_name + '-Tournaments (0)'
 
     beforeAll(function(){
 
@@ -50,8 +49,8 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForModalNotPresent();
 
-        var heading = lobby.getClubHeading(expected_heading);
-        expect(heading).toBe(expected_heading);
+        var heading = lobby.getClubHeading();
+        expect(heading).toContain(club_name);
     });
 
     it('should grab club id, logout, login as user 2', function() {
@@ -77,7 +76,7 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForWelcomeHeading();
 
-        var title = lobby.getWelcomeHeading("test.blind.valet");
+        var title = lobby.getWelcomeHeading('test.blind.valet');
         expect(title).toContain('test.blind.valet');
 
         lobby.closeCreateClubModalIfPresent();
@@ -95,17 +94,30 @@ describe('add/delete club and tournament case', function() {
 
         join.getEnterPassJoinInput().sendKeys('pass');
 
-        page.getDismissAlert().click();
+        page.getDismissAlertClickable().click();
         expect(page.getDismissAlert().isPresent()).toBe(false);
     });
 
     it('should check club joined, should not be able to delete club', function() {
 
-        var heading = lobby.getClubHeading(expected_heading);
-        expect(heading).toBe(expected_heading);
-        expect(lobby.getClubMembers().getText()).toBe('2 Members');
+        var heading = lobby.getClubHeading();
+        expect(heading).toContain(club_name);
+        expect(lobby.getClubMembers().getText()).toContain('2');
 
         lobby.getSettingsClubButton().click();
         expect(club.getTrashButton().isDisplayed()).toBeFalsy();
+
+        club.getCloseClubPage().click();
+    });
+
+    it('change language to de', function() {
+        lobby.getLanguageBtn().click();
+        page.selectLanguageDe();
+        page.getBtnBack().click();
+    });
+
+    it('verify de', function() {
+        var title = lobby.getWelcomeHeading("Willkommen test.blind.valet");
+        expect(title).toContain('Willkommen test.blind.valet');
     });
 });

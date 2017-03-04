@@ -28,7 +28,7 @@ exports.config = {
         smoke: ['../tests/loginSocial.spec.js',
                 '../tests/createDeleteCT.spec.js',
                 '../tests/signup.spec.js',
-                '../tests/registerTourn.spec.js'
+                '../tests/joinClub.spec.js'
                 ],
         regression: [
             '../tests/loginSocial.spec.js',
@@ -44,7 +44,7 @@ exports.config = {
             '../tests/seating.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/registerTourn.spec.js']
+        dev: ['../tests/createDeleteCT.spec.js']
     },
 
    onPrepare: function() {

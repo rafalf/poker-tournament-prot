@@ -44,6 +44,10 @@ var clubPage = function (){
     this.getClubName = function(){
         return element(by.model('clubData.clubName'));
     };
+
+    this.getCloseClubPage = function(){
+        return $('#btn_close_club_page')
+    };
     
 };
 

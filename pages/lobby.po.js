@@ -9,11 +9,10 @@ var lobbyPage = function (){
         return $('.lobby-left img');
     };
 
-
     this.getAddClubMenu = function(){
-        var el = $('.tourn-menu-cont ul:nth-of-type(1) img');
-        page.waitUntilElementVisable(el)
-        return el;
+        var el_add = $('.tourn-menu-cont ul:nth-of-type(1) img');
+        page.waitUntilElementClickable(el_add)
+        return el_add;
     };
 
     this.getProfileMenu = function(){
@@ -39,14 +38,21 @@ var lobbyPage = function (){
     };
 
     this.getInviteMembersButton = function(){
-        var s = '.float-buttons-left button:nth-of-type(1)';
-        browser.wait(EC.elementToBeClickable($(s)), 5000);
-        return $(s);
+        var s = $('.float-buttons-left button:nth-of-type(1)');
+        browser.wait(EC.elementToBeClickable(s), 5000);
+        return s;
     };
 
     this.getAllClubs = function () {
-        var clubs = $$('.lobby-club select>option');
+        return $$('.lobby-club select>option');
 
+    }
+
+    // Language
+    // *************************************************************************
+
+    this.getLanguageBtn = function () {
+        return $('#btn_lobby_go_profile');
     }
 
     // Add club modal functions
@@ -67,7 +73,7 @@ var lobbyPage = function (){
     };
 
     this.getCreateClubButton = function(){
-        return $('#btn_create_club')
+        return $('#btn_create_club');
     };
 
     this.getCancelClubButton = function(){
@@ -382,14 +388,18 @@ var lobbyPage = function (){
         if (!e) {
             var title = $('#welcomeHdr');
             title.getText().then(function(t){
-                console.log("Text: " + t)
+                console.log("APP: Heading: " + t)
             });
             return title.getText();
         } else {
-            console.log('wait for heading: ' + e)
-            browser.wait(EC.presenceOf(element(by.cssContainingText('#welcomeHdr', e))), 7000,
+            console.log('TEST: Wait for heading: ' + e)
+            browser.wait(EC.presenceOf(element(by.cssContainingText('#welcomeHdr', e))), 5000,
                 'Expected heading not present');
-            return $('#welcomeHdr').getText();
+            var title = $('#welcomeHdr');
+            title.getText().then(function(t){
+                console.log("APP: Heading: " + t)
+            });
+            return title.getText();
         };
     };
 

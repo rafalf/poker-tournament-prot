@@ -44,10 +44,8 @@ describe('quick start case', function() {
 
         lobby.getQuickStartButton().click();
 
-        var expected_heading = 'Club test.blindvalet-Tournaments (0)'
-        var heading = lobby.getClubHeading(expected_heading);
-
-        expect(heading).toBe(expected_heading);
+        var heading = lobby.getClubHeading();
+        expect(heading).toContain('(0)');
     });
 
     it('should quick start - create tournament', function() {
@@ -73,10 +71,12 @@ describe('quick start case', function() {
         expect(club.getClubName().getAttribute('value')).toBe('Club test.blindvalet')
     });
 
-    it('club not delete when delete cancelled', function() {
+    it('clubs dont get deleted when delete cancelled', function() {
 
         club.getTrashButton().click();
         club.getCancelDeleteClubButton().click();
         expect(club.getClubName().getAttribute('value')).toBe('Club test.blindvalet')
+
+        club.getCloseClubPage().click();
     });
 });

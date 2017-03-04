@@ -40,7 +40,21 @@ describe('add/delete club and tournament case', function() {
         expect(title).toContain('test.blindvalet');
     });
 
+    it('change language to en', function() {
+        lobby.getLanguageBtn().click();
+        page.selectLanguageEn();
+        page.getBtnBack().click();
+    });
+
+    it('verify en', function() {
+        var title = lobby.getWelcomeHeading("Welcome test.blindvalet");
+        expect(title).toContain('Welcome test.blindvalet');
+    });
+
     it('should add a new club', function() {
+
+        lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         lobby.getAddClubMenu().click();
 
@@ -54,9 +68,7 @@ describe('add/delete club and tournament case', function() {
         page.waitForModalNotPresent();
 
         var heading = lobby.getClubHeading();
-
-        var expected_heading = club_name + '-Tournaments (0)'
-        expect(heading).toBe(expected_heading);
+        expect(heading).toContain(club_name);
     });
 
     it('should delete all tournaments', function() {

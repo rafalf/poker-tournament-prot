@@ -82,7 +82,7 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
+        expect(tourn.getPlayersCountHeading()).toContain('(20)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(20);
     });
 
@@ -92,7 +92,7 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(20)');
+        expect(tourn.getPlayersCountHeading()).toContain('(20)');
     });
 
     it('should deregister 5 players', function () {
@@ -102,7 +102,7 @@ describe('register players for a tournament case', function() {
             tourn.getUnregisterPlayerButton().click();
         };
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+        expect(tourn.getPlayersCountHeading()).toContain('(15)');
     });
 
     it('should register 1 player as member', function(){
@@ -116,7 +116,7 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersCountHeading()).toContain('(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
     });
 
@@ -129,10 +129,10 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
+        expect(tourn.getPlayersCountHeading()).toContain("(16)");
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
 
-        page.getDismissAlert().click();
+        page.getDismissAlertClickable().click();
     });
 
 
@@ -140,7 +140,7 @@ describe('register players for a tournament case', function() {
 
         tourn.getFirstActionsOnPlayerButton().click();
         tourn.getUnregisterPlayerButton().click();
-        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+        expect(tourn.getPlayersCountHeading()).toContain('(15)');
     });
 
 
@@ -153,7 +153,7 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe("Players(16)");
+        expect(tourn.getPlayersCountHeading()).toContain("(16)");
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
     });
 
@@ -167,7 +167,7 @@ describe('register players for a tournament case', function() {
         tourn.getCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe("Players(17)");
+        expect(tourn.getPlayersCountHeading()).toContain("(17)");
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(17);
     });
 
@@ -181,7 +181,7 @@ describe('register players for a tournament case', function() {
 
         tourn.getUnregisterPlayerButton().click();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersCountHeading()).toContain('(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
     });
 
@@ -194,7 +194,7 @@ describe('register players for a tournament case', function() {
 
         tourn.getClosePlayerActionButton().click();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(16)');
+        expect(tourn.getPlayersCountHeading()).toContain('(16)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(16);
     });
 
@@ -212,7 +212,7 @@ describe('register players for a tournament case', function() {
         tourn.getLogCloseButton().click();
         page.waitForModalNotPresent();
 
-        expect(tourn.getPlayersCountHeading()).toBe('Players(15)');
+        expect(tourn.getPlayersCountHeading()).toContain('(15)');
         expect(tourn.getPlayersAllPlayersRows().count()).toBe(15);
     });
 

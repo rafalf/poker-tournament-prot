@@ -268,7 +268,7 @@ describe('seating case', function() {
             tourn.getCloseButton().click();
             expect(tourn.getPlayersAllPlayersRows().count()).toBe(9);
 
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
 
         });
 
@@ -278,11 +278,11 @@ describe('seating case', function() {
             
             tourn.getSeatsAddTableButton().click();
 
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
             
             tourn.getSeatsAddTableButton().click();
 
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
 
             expect(tourn.getAllSeatsTables().count()).toBe(3);
             expect(tourn.getSeatsBalanceTableButton().isDisplayed()).toBe(false);
@@ -302,7 +302,7 @@ describe('seating case', function() {
             tourn.getCloseButton().click();
             expect(tourn.getPlayersAllPlayersRows().count()).toBe(14);
 
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
         });
 
         it('should go to seats', function () {
@@ -316,7 +316,7 @@ describe('seating case', function() {
 
             expect(page.getNthAlert(0).getText()).toContain('Breaking table:');
             expect(page.getNthAlert(1).getText()).toContain('Seat Assignment');
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
         });
 
         it('should balance table', function () {
@@ -325,7 +325,7 @@ describe('seating case', function() {
             expect(tourn.getAllSeatsTables().count()).toBe(2);
 
             expect(page.getNthAlert(0).getText()).toContain('Seat Assignment');
-            page.getDismissAlert().click();
+            page.getDismissAlertClickable().click();
         });
     });
 });

@@ -26,7 +26,13 @@ var Page = function (){
     };
 
     this.getDismissAlert = function(){
-        return $('.alert-window #btn_clear_alerts')
+        return $('.alert-window #btn_clear_alerts');
+    };
+
+    this.getDismissAlertClickable = function(){
+        var al = this.getDismissAlert();
+        this.waitUntilElementVisable(al);
+        return al;
     };
 
     this.getNthAlert = function(nth){
@@ -128,6 +134,23 @@ var Page = function (){
     this.getGoogleSignInButton = function () {
         return $('#signIn');
     };
+
+    // Profile Po
+
+    this.selectLanguageDe = function () {
+        element(by.model('profData.selLang')).click()
+        element(by.cssContainingText('option', 'Deutsch')).click();
+    };
+
+    this.selectLanguageEn = function () {
+        element(by.model('profData.selLang')).click()
+        element(by.cssContainingText('option', 'English')).click();
+    };
+
+    this.getBtnBack = function () {
+        return $('#btn_prof_back');
+    };
+
 
 };
 
