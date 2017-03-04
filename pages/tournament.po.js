@@ -703,16 +703,22 @@ var tournamentPage = function (){
     };
 
     this.getRegisterMemberButton = function(){
-        return $("#btn_tourn_registerMember");
+        var el_reg = $("#btn_tourn_registerMember");
+        page.waitUntilElementClickable(el_reg);
+        return el_reg;
     };
 
 
     this.getClubMemberTab = function(){
-        return $("#tab_club_member div");
+        var el_club = $("#tab_club_member div");
+        page.waitUntilElementClickable(el_club);
+        return el_club;
     };
 
     this.getMember = function(memberName){
-        return element(by.cssContainingText('td', memberName))
+        var el_mem = element(by.cssContainingText('td', memberName));
+        page.waitUntilElementClickable(el_mem);
+        return el_mem;
     };
 
     this.getCloseButton = function(){
