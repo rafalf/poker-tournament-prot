@@ -1,3 +1,5 @@
+var page = require('./page.po.js');
+
 var loginPage = function (){
 
     var EC = protractor.ExpectedConditions;
@@ -22,6 +24,7 @@ var loginPage = function (){
     // ***************************************************
 
     this.getLoginEmailInput = function(){
+        page.waitUntilElementVisable(element(by.model('appData.loginEmail')))
         return element(by.model('appData.loginEmail'));
     };
 

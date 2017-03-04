@@ -7,84 +7,100 @@ describe('login with fb and gmail case', function() {
 
     var testData = require("../confs/test.json");
 
-    beforeEach(function(){
 
-        console.log('\n-->  test spec: ' + __filename)
-        browser.get(testData.login_url)
+    describe('login with fb', function () {
+
+        beforeAll(function(){
+
+            console.log('\n-->  test spec: ' + __filename)
+            browser.get(testData.login_url)
+        });
+
+        afterAll(function () {
+
+            browser.ignoreSynchronization = false;
+            browser.restart()
+            console.log('\n--->');
+        });
+
+        it('should login with fb', function() {
+
+            login.getConnectFbButton().click();
+
+            // non angular page
+            // fb booklet
+            browser.ignoreSynchronization = true;
+
+            page.switchToNewWindow();
+
+            page.waitForFbBooklet();
+
+            page.getFbLoginInput().sendKeys(testData.gmail_user);
+
+            page.getFbPasswordInput().sendKeys(testData.password);
+
+            page.getFbLoginButton().click();
+
+            page.switchToMainWindow();
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('PoTe Kurosava');
+            expect(title).toContain('PoTe Kurosava');
+        });
+
+        it('should see log out', function () {
+            expect(lobby.getGetLogoutButton().isPresent()).toBeTruthy();
+        });
     });
 
-    afterEach(function () {
+    describe('login with gmail', function () {
 
-        browser.ignoreSynchronization = false;
-        browser.restart()
-        console.log('\n--->');
+        beforeAll(function(){
+
+            console.log('\n-->  test spec: ' + __filename)
+            browser.get(testData.login_url)
+        });
+
+        afterAll(function () {
+
+            browser.ignoreSynchronization = false;
+            browser.restart()
+            console.log('\n--->');
+        });
+
+        it('should login with gmail', function() {
+
+            login.getConnectGoogleButton().click();
+
+            // non angular page
+            // fb booklet
+            browser.ignoreSynchronization = true;
+
+            page.switchToNewWindow();
+
+            page.waitForGoogle();
+
+            page.getGoogleEmailInput().sendKeys(testData.gmail_user);
+
+            page.getGoogleNextButton().click();
+
+            page.waitForPassInput();
+
+            page.getGooglePasswordInput().sendKeys(testData.password);
+
+            page.getGoogleSignInButton().click();
+
+            page.switchToMainWindow();
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('akiro kurosava');
+            expect(title).toContain('akiro kurosava');
+        });
+
+        it('should see log out', function () {
+            expect(lobby.getGetLogoutButton().isPresent()).toBeTruthy();
+        });
     });
-
-    it('should login with fb', function() {
-
-        login.getConnectFbButton().click();
-
-        // non angular page
-        // fb booklet
-        browser.ignoreSynchronization = true;
-
-        page.switchToNewWindow();
-
-        page.waitForFbBooklet();
-
-        page.getFbLoginInput().sendKeys(testData.gmail_user);
-
-        page.getFbPasswordInput().sendKeys(testData.password);
-
-        page.getFbLoginButton().click();
-
-        page.switchToMainWindow();
-
-        page.waitForWelcomeHeading();
-
-        var title = lobby.getWelcomeHeading('PoTe Kurosava');
-        expect(title).toContain('PoTe Kurosava');
-
-        lobby.getGetLogoutButton().click();
-
-        page.waitForLaunchWindow();
-
-    });
-
-
-    it('should login with gmail', function() {
-
-        login.getConnectGoogleButton().click();
-
-        // non angular page
-        // fb booklet
-        browser.ignoreSynchronization = true;
-
-        page.switchToNewWindow();
-
-        page.waitForGoogle();
-
-        page.getGoogleEmailInput().sendKeys(testData.gmail_user);
-
-        page.getGoogleNextButton().click();
-
-        page.waitForPassInput();
-
-        page.getGooglePasswordInput().sendKeys(testData.password);
-
-        page.getGoogleSignInButton().click();
-
-        page.switchToMainWindow();
-
-        page.waitForWelcomeHeading();
-
-        var title = lobby.getWelcomeHeading('akiro kurosava');
-        expect(title).toContain('akiro kurosava');
-
-        lobby.getGetLogoutButton().click();
-
-        page.waitForLaunchWindow();
-
-    });
-
 });

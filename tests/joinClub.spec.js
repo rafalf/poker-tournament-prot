@@ -38,6 +38,7 @@ describe('add/delete club and tournament case', function() {
 
         club.deleteAllClubs();
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         lobby.getAddClubMenu().click();
 
@@ -80,6 +81,7 @@ describe('add/delete club and tournament case', function() {
         expect(title).toContain('test.blind.valet');
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         lobby.getAddClubMenu().click();
 

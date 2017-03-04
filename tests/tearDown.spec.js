@@ -11,35 +11,15 @@ describe('tearDown', function() {
     beforeEach(function(){
 
         console.log('\n-->  test spec: ' + __filename);
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
         browser.get(testData.login_url)
+
     });
 
     afterEach(function () {
         console.log('\n--->');
         browser.restart()
     });
-
-    // it('should delete all tournaments', function() {
-    //
-    //     login.getConnectEmailButton().click();
-    //
-    //     login.getLoginEmailInput().sendKeys(testData.gmail_user);
-    //
-    //     login.getLoginPasswordInput().sendKeys(testData.password);
-    //
-    //     login.getLoginButton().click();
-    //
-    //     page.waitForWelcomeHeading();
-    //
-    //     lobby.closeCreateClubModalIfPresent();
-    //
-    //     lobby.deleteAllTournaments();
-    //
-    //     lobby.getGetLogoutButton().click();
-    //
-    //     page.waitForLaunchWindow();
-    //
-    // });
 
     it('should delete all clubs - user 1', function() {
 
@@ -59,9 +39,9 @@ describe('tearDown', function() {
         club.deleteAllClubs();
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
-
     });
 
 
@@ -83,6 +63,7 @@ describe('tearDown', function() {
         club.deleteAllClubs();
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         expect(lobby.getCreateTourButton().isDisplayed()).toBeFalsy();
     });

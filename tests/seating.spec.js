@@ -40,6 +40,7 @@ describe('seating case', function() {
             expect(title).toContain('test.blindvalet');
 
             lobby.closeCreateClubModalIfPresent();
+            expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
             // create a club
             lobby.getAddClubMenu().click();
@@ -63,6 +64,8 @@ describe('seating case', function() {
             lobby.enterTournPlayersInput('40');
 
             lobby.getCreateTournamentButtonModal().click();
+
+            page.waitForModalNotPresent();
 
             headings = lobby.getAllTournamentHeadings(tournament_name);
             expect(headings).toContain(tournament_name);
@@ -200,6 +203,7 @@ describe('seating case', function() {
             expect(title).toContain('test.blindvalet');
 
             lobby.closeCreateClubModalIfPresent();
+            expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
             // create a club
             lobby.getAddClubMenu().click();
@@ -223,6 +227,8 @@ describe('seating case', function() {
             lobby.enterTournPlayersInput('13');
 
             lobby.getCreateTournamentButtonModal().click();
+
+            page.waitForModalNotPresent();
 
             headings = lobby.getAllTournamentHeadings(tournament_name);
             expect(headings).toContain(tournament_name);

@@ -12,6 +12,7 @@ exports.config = {
         }
     },
 
+    directConnect: true,
     framework: 'jasmine',
 
     // Jasmine-node.
@@ -19,7 +20,8 @@ exports.config = {
         // onComplete: null,
         isVerbose: true,
         showColors: true,
-        includeStackTrace: true
+        includeStackTrace: true,
+        defaultTimeoutInterval: 90000
     },
 
     suites: {
@@ -31,18 +33,18 @@ exports.config = {
         regression: [
             '../tests/loginSocial.spec.js',
             '../tests/createDeleteCT.spec.js',
+            '../tests/quickStart.spec.js',
+            '../tests/joinClub.spec.js',
             '../tests/registerTourn.spec.js',
             '../tests/blindStructure.spec.js',
             '../tests/tournParameters.spec.js',
-            '../tests/joinClub.spec.js',
             '../tests/signup.spec.js',
-            '../tests/quickStart.spec.js',
             '../tests/knockout.spec.js',
             '../tests/payouts.spec.js',
             '../tests/seating.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/seating.spec.js']
+        dev: ['../tests/createDeleteCT.spec.js']
     },
 
    onPrepare: function() {

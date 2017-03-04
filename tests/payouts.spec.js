@@ -42,6 +42,7 @@ describe('payouts case', function() {
             expect(title).toContain('test.blindvalet');
 
             lobby.closeCreateClubModalIfPresent();
+            expect(lobby.getQuickStartButton().isPresent()).toBe(false);
         });
 
         it('should create a new club', function (){
@@ -80,6 +81,8 @@ describe('payouts case', function() {
         it('should create a tournament', function () {
 
             lobby.getCreateTournamentButtonModal().click();
+
+            page.waitForModalNotPresent();
 
             headings = lobby.getAllTournamentHeadings(tournament_1);
             expect(headings).toContain(tournament_1);
@@ -225,6 +228,7 @@ describe('payouts case', function() {
             expect(title).toContain('test.blindvalet');
 
             lobby.closeCreateClubModalIfPresent();
+            expect(lobby.getQuickStartButton().isPresent()).toBe(false);
         });
 
         it('should create a new club', function (){
@@ -264,6 +268,8 @@ describe('payouts case', function() {
         it('should create a tournament', function () {
 
             lobby.getCreateTournamentButtonModal().click();
+
+            page.waitForModalNotPresent();
 
             headings = lobby.getAllTournamentHeadings(tournament_2);
             expect(headings).toContain(tournament_2);

@@ -36,6 +36,7 @@ describe('register players for a tournament case', function() {
         expect(title).toContain('test.blindvalet');
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         // create a club
         lobby.getAddClubMenu().click();
@@ -59,6 +60,8 @@ describe('register players for a tournament case', function() {
         lobby.enterTournPlayersInput('20');
 
         lobby.getCreateTournamentButtonModal().click();
+
+        page.waitForModalNotPresent();
 
         headings = lobby.getAllTournamentHeadings();
         expect(headings).toContain(tournament_name);

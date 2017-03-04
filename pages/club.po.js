@@ -28,9 +28,9 @@ var clubPage = function (){
             for (var i = 0; i < c; i++) {
                 lobby.getClubHeading();
                 lobby.getSettingsClubButton().click();
-                browser.sleep(500);
+                browser.sleep(1000);
                 $('#btn_open_delete_club').click();
-                browser.sleep(500);
+                browser.sleep(1000);
                 $('#btn_delete_club').click();
                 browser.sleep(1000);
             };

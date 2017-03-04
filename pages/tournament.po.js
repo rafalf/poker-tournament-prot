@@ -273,7 +273,9 @@ var tournamentPage = function (){
     };
 
     this.getSeatsBreakTableButton = function(){
-        return $('#btn_tourn_seating_breakTable');
+        var el = $('#btn_tourn_seating_breakTable');
+        page.waitUntilElementVisable(el);
+        return el;
     };
 
     this.getSeatsBalanceTableButton = function(){

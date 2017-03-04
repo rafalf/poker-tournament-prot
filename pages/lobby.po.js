@@ -1,3 +1,5 @@
+var page = require('./page.po.js');
+
 var lobbyPage = function (){
 
     var EC = protractor.ExpectedConditions;
@@ -9,7 +11,9 @@ var lobbyPage = function (){
 
 
     this.getAddClubMenu = function(){
-        return $('.tourn-menu-cont ul:nth-of-type(1) img');
+        var el = $('.tourn-menu-cont ul:nth-of-type(1) img');
+        page.waitUntilElementVisable(el)
+        return el;
     };
 
     this.getProfileMenu = function(){
@@ -17,7 +21,9 @@ var lobbyPage = function (){
     };
 
     this.getGetLogoutButton = function(){
-        return element(by.css('.lobby-left-bottom'));
+        var el_logout = element(by.css('.lobby-left-bottom'));
+        page.waitUntilElementClickable(el_logout);
+        return el_logout;
     };
 
     // Left side button - down the page
@@ -51,7 +57,9 @@ var lobbyPage = function (){
     };
 
     this.getEnterClubNameInput = function(){
-        return element(by.model('clubName'));
+        var el = element(by.model('clubName'));
+        page.waitUntilElementVisable(el)
+        return el;
     };
 
     this.getEnterClubPassword = function(){
@@ -77,10 +85,21 @@ var lobbyPage = function (){
     };
 
     this.closeCreateClubModalIfPresent = function () {
-        this.getQuickStartButton().isPresent().then(function (result) {
-            if (result){
-                console.log('Add club present')
+        this.getQuickStartButton().isPresent().then(function (resultOutter) {
+            if (resultOutter){
+                console.log('Add a club - quick start present (1)')
                 browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+                browser.sleep(500);
+
+                $('#btn_quick_start').isPresent().then(function (resultInner) {
+                    if (resultInner) {
+                        console.log('Add a club - quick start present (2)')
+                        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+                        browser.sleep(500);
+                    } else {
+                        console.log('Add a club - quick start escaped')
+                    };
+             });
             };
         });
     };
@@ -380,12 +399,12 @@ var lobbyPage = function (){
             if (exp === undefined) {
                 if (t == '') {
                     console.log('must sleep for heading');
-                    browser.sleep(2000);
+                    browser.sleep(3000);
                 };
             } else {
                 if (t != exp) {
                     console.log('must sleep for expected heading: ' + exp);
-                    browser.sleep(2000);
+                    browser.sleep(3000);
                 };
             };
         });

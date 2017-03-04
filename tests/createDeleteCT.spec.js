@@ -21,7 +21,7 @@ describe('add/delete club and tournament case', function() {
         browser.restart();
     });
 
-    it('should add a new club', function() {
+    it('should login', function() {
 
         login.getConnectEmailButton().click();
 
@@ -34,9 +34,13 @@ describe('add/delete club and tournament case', function() {
         page.waitForWelcomeHeading();
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         var title = lobby.getWelcomeHeading("test.blindvalet");
         expect(title).toContain('test.blindvalet');
+    });
+
+    it('should add a new club', function() {
 
         lobby.getAddClubMenu().click();
 
@@ -53,18 +57,16 @@ describe('add/delete club and tournament case', function() {
 
         var expected_heading = club_name + '-Tournaments (0)'
         expect(heading).toBe(expected_heading);
-
     });
 
     it('should delete all tournaments', function() {
-
         lobby.deleteAllTournaments();
-
     });
 
     it('should create a new tournament and delete it', function() {
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false)
 
         lobby.getCreateTournamentButton().click();
 
@@ -86,12 +88,12 @@ describe('add/delete club and tournament case', function() {
         lobby.deleteFirstTournament();
 
         expect(headings.count()).toBe(0);
-
     });
 
     it('should create a new tournament - manage players opt out', function() {
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false)
 
         lobby.getCreateTournamentButton().click();
 
@@ -107,12 +109,12 @@ describe('add/delete club and tournament case', function() {
 
         lobby.getCreateTournamentButtonModal().click();
 
+        page.waitForModalNotPresent();
+
         headings = lobby.getAllTournamentHeadings(1);
         expect(headings).toContain(tournament_name);
 
         lobby.getFirstOpenTournamentButton().click();
-
-//        tourn.waitForPayoutsToSettle('show');
 
         expect(tourn.getBlindStructLeftMenu().isDisplayed()).toBe(true);
         expect(tourn.getPlayersLeftLiMenu().getAttribute('class')).toBe('ng-hide');
@@ -129,12 +131,12 @@ describe('add/delete club and tournament case', function() {
         lobby.deleteFirstTournament();
 
         expect(headings.count()).toBe(0);
-
     });
 
     it('should create a new tournament - payouts opt out', function() {
 
         lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         lobby.getCreateTournamentButton().click();
 
@@ -147,6 +149,8 @@ describe('add/delete club and tournament case', function() {
         expect(lobby.getTournBuyInInput().isPresent()).toBe(false);
 
         lobby.getCreateTournamentButtonModal().click();
+
+        page.waitForModalNotPresent();
 
         headings = lobby.getAllTournamentHeadings(1);
         expect(headings).toContain(tournament_name);
@@ -178,8 +182,7 @@ describe('add/delete club and tournament case', function() {
         club.deleteClub();
 
         lobby.closeCreateClubModalIfPresent();
-
-        lobby.closeCreateClubModalIfPresent();
+        expect(lobby.getQuickStartButton().isPresent()).toBe(false);
 
         lobby.getGetLogoutButton().click();
 

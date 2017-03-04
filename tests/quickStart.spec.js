@@ -1,4 +1,4 @@
-describe('tearDown', function() {
+describe('quick start case', function() {
 
     // pages
     var page = require('../pages/page.po.js');
