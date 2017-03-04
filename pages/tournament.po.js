@@ -291,7 +291,9 @@ var tournamentPage = function (){
 
 
     this.getLeaderBoardTab = function () {
-        return $('#btn_tourn_leaderboardTab');
+        var el_tab = $('#btn_tourn_leaderboardTab');
+        page.waitUntilElementClickable(el_tab);
+        return el_tab;
     };
 
     this.getPlayersTab = function () {
