@@ -49,7 +49,7 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForModalNotPresent();
 
-        var heading = lobby.getClubHeading();
+        var heading = lobby.getClubHeading(club_name);
         expect(heading).toContain(club_name);
     });
 
@@ -100,7 +100,7 @@ describe('add/delete club and tournament case', function() {
 
     it('should check club joined, should not be able to delete club', function() {
 
-        var heading = lobby.getClubHeading();
+        var heading = lobby.getClubHeading(club_name);
         expect(heading).toContain(club_name);
         expect(lobby.getClubMembers().getText()).toContain('2');
 
