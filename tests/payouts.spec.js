@@ -10,6 +10,7 @@ describe('payouts case', function() {
 
     var tournament_1 = 'Tournament-' + page.getRandomNumber();
     var tournament_2 = 'Tournament-' + page.getRandomNumber();
+    var tournament_3 = 'Tournament-' + page.getRandomNumber();
 
     describe('payouts - no rebuy', function(){
 
@@ -197,7 +198,7 @@ describe('payouts case', function() {
         });
     });
 
-    describe('payouts - rebuy', function(){
+    describe('payouts - rebuy: no rebuy added', function(){
 
         beforeAll(function(){
             console.log('\n-->  test spec: ' + __filename)
@@ -249,7 +250,7 @@ describe('payouts case', function() {
             lobby.getEnterTournamentNameInput().sendKeys(tournament_2);
         });
 
-        it('should enter tourn data: 100000, 10, 1-500, 10, 1500, buy-in:100, no rebuy', function () {
+        it('should enter tourn data: 100000, 10, 1-500, 10, 1500, buy-in:100, rebuy', function () {
 
             lobby.selectAntes(true);
             lobby.selectRebuyTourn(true);
@@ -393,6 +394,164 @@ describe('payouts case', function() {
 
             expect(tourn.getTournRebuyCostInput().getAttribute('value')).toBe('1000');
             expect(tourn.getTournAddOnCostInput().getAttribute('value')).toBe('1000');
+        });
+    });
+
+
+    describe('payouts - rebuy: rebuy added', function(){
+
+        beforeAll(function(){
+            console.log('\n-->  test spec: ' + __filename)
+            browser.get(testData.login_url);
+        });
+
+        afterAll(function () {
+            console.log('\n--->');
+            browser.restart();
+        });
+
+        it('should log in', function () {
+
+            login.getConnectEmailButton().click();
+            login.getLoginEmailInput().sendKeys(testData.gmail_user);
+            login.getLoginPasswordInput().sendKeys(testData.password);
+            login.getLoginButton().click();
+        });
+
+        it('should verify heading', function () {
+
+            page.waitForWelcomeHeading();
+
+            var title = lobby.getWelcomeHeading('test.blindvalet');
+            expect(title).toContain('test.blindvalet');
+
+            lobby.closeCreateClubModalIfPresent();
+            expect(lobby.getQuickStartButton().isPresent()).toBe(false);
+        });
+
+        it('should create a new club', function (){
+            lobby.getAddClubMenu().click();
+
+            var club_name = "Club-" + page.getRandomNumber();
+            lobby.getEnterClubNameInput().sendKeys(club_name);
+            lobby.getEnterClubPassword().sendKeys('pass');
+            lobby.getCreateClubButton().click();
+            page.waitForModalNotPresent();
+        });
+
+        it('should open a tournament modal', function() {
+
+            lobby.getCreateTournamentButton().click();
+
+            lobby.getEnterTournamentNameInput().clear();
+            lobby.getEnterTournamentNameInput().sendKeys(tournament_3);
+        });
+
+        it('should enter tourn data: 100000, 10, 1-500, 10, 1500, buy-in:150, rebuy:150', function () {
+
+            lobby.selectAntes(true);
+            lobby.selectRebuyTourn(true);
+            lobby.selectKnockouts(true);
+            lobby.selectManagePayouts(true);
+
+            lobby.enterTournPlayersInput('100000');
+            lobby.enterTournDuration('10');
+            lobby.selectChipSet('1,5,25,100,500');
+            lobby.enterTournamentSmallBlind('10');
+            lobby.enterTournStartStack('1500');
+            lobby.enterTournBuyIn('150');
+        });
+
+        it('should create a tournament', function () {
+
+            lobby.getCreateTournamentButtonModal().click();
+
+            page.waitForModalNotPresent();
+
+            headings = lobby.getAllTournamentHeadings(tournament_3);
+            expect(headings).toContain(tournament_3);
+
+            lobby.getFirstOpenTournamentButton().click();
+        });
+
+        it('should register 10 players', function () {
+
+            tourn.getPlayersLeftMenu().click();
+
+            tourn.getRegisterPlayerButton().click();
+
+            for (var i = 0; i < 10; i++) {
+                tourn.enterPlayerName('Rebuy Player Name' + i);
+                tourn.getRegisterButton().click();
+            };
+
+            tourn.getCloseButton().click();
+
+            expect(tourn.getPlayersCountHeading()).toBe('Players(10)');
+        });
+
+        it('should add 2 rebuys', function () {
+
+            tourn.getFirstActionsOnPlayerButton().click();
+            expect(tourn.getAddOnPlayerButton().isDisplayed()).toBeTruthy();
+            tourn.getRebuyButton().click();
+
+            tourn.getFirstActionsOnPlayerButton().click();
+            expect(tourn.getAddOnPlayerButton().isDisplayed()).toBeTruthy();
+            tourn.getRebuyButton().click();
+
+            expect(tourn.getAllRebuys().first().getText()).toBe('2');
+            expect(tourn.getAllAddOnCheck().first().isDisplayed()).toBe(false);
+        });
+
+        it('should add addon', function () {
+
+            tourn.getFirstActionsOnPlayerButton().click();
+            expect(tourn.getAddOnPlayerButton().isDisplayed()).toBeTruthy();
+            tourn.getAddOnPlayerButton().click();
+
+            tourn.getFirstActionsOnPlayerButton().click();
+            expect(tourn.getAddOnPlayerButton().isDisplayed()).toBeFalsy();
+
+            tourn.getClosePlayerActionButton().click();
+
+            expect(tourn.getAllRebuys().first().getText()).toBe('2');
+            expect(tourn.getAllAddOnCheck().first().isDisplayed()).toBe(true);
+        });
+
+        it('should verify payouts: 2 rebuys (x150), 1 addon', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(3);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('1000');
+            expect(tourn.getPayoutsCell(2, 2)).toBe('600');
+            expect(tourn.getPayoutsCell(3, 2)).toBe('350');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('1950');
+            expect(tourn.getPlayersInfoBox()).toBe('10');
+            expect(tourn.getRebuysInfoBox()).toBe('2');
+            expect(tourn.getAddOnsInfoBox()).toBe('1');
+        });
+
+        it('should increase rebuy and addons to 300', function () {
+            tourn.enterTournRebuyCostParam('300');
+            tourn.enterTournAddOnCostParam('300');
+        });
+
+        it('should verify payouts: 2 rebuys (x300), 1 addon (x300)', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(3);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('1225');
+            expect(tourn.getPayoutsCell(2, 2)).toBe('750');
+            expect(tourn.getPayoutsCell(3, 2)).toBe('425');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('2400');
+            expect(tourn.getPlayersInfoBox()).toBe('10');
+            expect(tourn.getRebuysInfoBox()).toBe('2');
+            expect(tourn.getAddOnsInfoBox()).toBe('1');
         });
     });
 });

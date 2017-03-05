@@ -67,7 +67,7 @@ describe('add/delete club and tournament case', function() {
 
         page.waitForModalNotPresent();
 
-        var heading = lobby.getClubHeading();
+        var heading = lobby.getClubHeading(club_name);
         expect(heading).toContain(club_name);
     });
 
@@ -95,11 +95,33 @@ describe('add/delete club and tournament case', function() {
 
         expect(lobby.getRegisterButton().isDisplayed()).toBe(true);
 
-        expect(headings.count()).toBe(1);
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(1);
+    });
+
+    it('should register on tourn card ', function () {
+
+        expect(lobby.getRegisteredPlayersOnCard().getText()).toContain('0');
+        lobby.getRegisterButton().click();
+        expect(lobby.getRegisteredPlayersOnCard().getText()).toContain('1');
+    });
+
+    it('should deregister on tourn card ', function () {
+
+        expect(lobby.getUnRegisterButton().isDisplayed()).toBeTruthy();
+        expect(lobby.getRegisterButton().isDisplayed()).toBeFalsy();
+
+        lobby.getUnRegisterButton().click();
+
+        expect(lobby.getUnRegisterButton().isDisplayed()).toBeFalsy();
+        expect(lobby.getRegisterButton().isDisplayed()).toBeTruthy();
+
+        expect(lobby.getRegisteredPlayersOnCard().getText()).toContain('0');
+    });
+
+    it('should delete tournament', function () {
 
         lobby.deleteFirstTournament();
-
-        expect(headings.count()).toBe(0);
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(0);
     });
 
     it('should create a new tournament - manage players opt out', function() {
@@ -138,11 +160,11 @@ describe('add/delete club and tournament case', function() {
 
         expect(lobby.getRegisterButton().isDisplayed()).toBe(false);
 
-        expect(headings.count()).toBe(1);
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(1);
 
         lobby.deleteFirstTournament();
 
-        expect(headings.count()).toBe(0);
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(0);
     });
 
     it('should create a new tournament - payouts opt out', function() {
@@ -181,12 +203,11 @@ describe('add/delete club and tournament case', function() {
 
         expect(lobby.getRegisterButton().isDisplayed()).toBe(true);
 
-        expect(headings.count()).toBe(1);
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(1);
 
         lobby.deleteFirstTournament();
 
-        expect(headings.count()).toBe(0);
-
+        expect(lobby.getAllTournamentHeadingsCount()).toBe(0);
     });
 
     it('should delete club', function () {
@@ -199,7 +220,6 @@ describe('add/delete club and tournament case', function() {
         lobby.getGetLogoutButton().click();
 
         page.waitForLaunchWindow();
-
     });
 
 });

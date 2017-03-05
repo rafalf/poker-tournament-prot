@@ -397,7 +397,7 @@ var lobbyPage = function (){
                 'Expected heading not present');
             var title = $('#welcomeHdr');
             title.getText().then(function(t){
-                console.log("APP: Heading: " + t)
+                console.log("APP: Heading displays: " + t)
             });
             return title.getText();
         };
@@ -406,7 +406,7 @@ var lobbyPage = function (){
     this.getClubHeading = function(exp){
         $('.lobby-tourn-title h3').getText().then(function(t){
             console.log("Club heading: " + t + " Exp: " + exp)
-            if (exp === undefined) {
+            if (exp == undefined) {
                 if (t == '') {
                     console.log('must sleep for heading');
                     browser.sleep(3000);
@@ -442,6 +442,10 @@ var lobbyPage = function (){
             };
         });
         return $$('.lobby-card h5').getText();
+    };
+
+    this.getAllTournamentHeadingsCount = function(){
+        return $$('.lobby-card h5').count();
     };
 
     this.getAllDeleteTournamentButtons = function(){
@@ -486,6 +490,14 @@ var lobbyPage = function (){
 
     this.getRegisterButton = function(){
         return $('#btn_registerTourn');
+    };
+
+    this.getRegisteredPlayersOnCard = function(){
+        return $('[ng-show="tournament.params.manageRegistrations"]');
+    };
+
+    this.getUnRegisterButton = function(){
+        return $('#btn_unregisterTourn');
     };
 
     this.getAllRegisterButtons = function(){

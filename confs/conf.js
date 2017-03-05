@@ -32,8 +32,8 @@ exports.config = {
                 ],
         regression: [
             '../tests/loginSocial.spec.js',
-            '../tests/createDeleteCT.spec.js',
             '../tests/quickStart.spec.js',
+            '../tests/createDeleteCT.spec.js',
             '../tests/joinClub.spec.js',
             '../tests/registerTourn.spec.js',
             '../tests/blindStructure.spec.js',
@@ -44,7 +44,7 @@ exports.config = {
             '../tests/seating.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/createDeleteCT.spec.js']
+        dev: ['../tests/payouts.spec.js']
     },
 
    onPrepare: function() {

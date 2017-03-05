@@ -133,6 +133,13 @@ var tournamentPage = function (){
         return cell.getText();
     };
 
+    this.getAllRebuys = function () {
+        return $$('[ng-show="player.rebuys"]');
+    };
+
+    this.getAllAddOnCheck = function () {
+        return $$('[ng-show="player.addon"] .fa-check');
+    };
 
     // edit level
     // ---------------------------------------------
@@ -540,9 +547,9 @@ var tournamentPage = function (){
     };
 
     this.enterTournRebuyCostParam = function (value) {
-        var i = this.getTournRebuyCostInput()
-        i.clear();
-        i.sendKeys(value);
+        var script_js = "document.getElementsByClassName('param-input').item(16).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournRebuyCostInput().sendKeys(protractor.Key.SPACE);
     };
 
     // -
@@ -552,9 +559,9 @@ var tournamentPage = function (){
     };
 
     this.enterTournAddOnCostParam = function (value) {
-        var i = this.getTournAddOnCostInput()
-        i.clear();
-        i.sendKeys(value);
+        var script_js = "document.getElementsByClassName('param-input').item(17).value = " + value + ";"
+        browser.executeScript(script_js);
+        this.getTournAddOnCostInput().sendKeys(protractor.Key.SPACE);
     };
 
     // checkboxes
@@ -592,6 +599,14 @@ var tournamentPage = function (){
 
     this.getEliminationPlayerButton = function(){
         return $('#btn_tourn_eliminationPlayer');
+    };
+
+    this.getRebuyButton = function(){
+        return $('#btn_tourn_rebuyPlayer');
+    };
+
+    this.getAddOnPlayerButton = function(){
+        return $('#btn_tourn_addonPlayer');
     };
 
     this.getClosePlayerActionButton = function(){

@@ -269,7 +269,6 @@ describe('seating case', function() {
             expect(tourn.getPlayersAllPlayersRows().count()).toBe(9);
 
             page.getDismissAlertClickable().click();
-
         });
 
         it('add 2 tables', function () {
@@ -286,7 +285,6 @@ describe('seating case', function() {
 
             expect(tourn.getAllSeatsTables().count()).toBe(3);
             expect(tourn.getSeatsBalanceTableButton().isDisplayed()).toBe(false);
-
         });
 
         it('should add 5 players', function () {
