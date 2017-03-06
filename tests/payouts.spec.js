@@ -553,5 +553,40 @@ describe('payouts case', function() {
             expect(tourn.getRebuysInfoBox()).toBe('2');
             expect(tourn.getAddOnsInfoBox()).toBe('1');
         });
+
+        it('should undo rebuys and addon', function () {
+
+            tourn.getTournLog().click();
+
+            page.waitForModalPresent();
+
+            page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+            tourn.getAllLogUndoButtons().first().click();
+
+            page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+            tourn.getAllLogUndoButtons().first().click();
+
+            page.waitUntilElementClickable(tourn.getAllLogUndoButtons().first());
+            tourn.getAllLogUndoButtons().first().click();
+
+            tourn.getLogCloseButton().click();
+            page.waitForModalNotPresent();
+        });
+
+        it('should verify payouts: 0 rebuys, 0 addons', function () {
+            tourn.getPayoutsLeftMenu().click();
+
+            expect(tourn.getAllPayoutsRows().count()).toBe(3);
+
+            expect(tourn.getPayoutsCell(1, 2)).toBe('750');
+            expect(tourn.getPayoutsCell(2, 2)).toBe('475');
+            expect(tourn.getPayoutsCell(3, 2)).toBe('275');
+
+            expect(tourn.getPrizePoolInfoBox()).toBe('1500');
+            expect(tourn.getPlayersInfoBox()).toBe('10');
+            expect(tourn.getRebuysInfoBox()).toBe('0');
+            expect(tourn.getAddOnsInfoBox()).toBe('0');
+        });
+
     });
 });
