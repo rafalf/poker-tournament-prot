@@ -5,6 +5,7 @@ describe('payouts case', function() {
     var login = require('../pages/login.po.js');
     var lobby = require('../pages/lobby.po.js');
     var tourn = require('../pages/tournament.po.js');
+    var clock = require('../pages/clock.po.js');
 
     var testData = require("../confs/test.json");
 
@@ -196,9 +197,29 @@ describe('payouts case', function() {
             expect(tourn.getPrizePoolInfoBox()).toBe('1000');
             expect(tourn.getPlayersInfoBox()).toBe('10')
         });
+
+        it('should go to clock and verify', function () {
+
+            tourn.getClockLeftMenu().click();
+            expect(clock.getBlindsClockTableCell(1, 1).getText()).toBe('10/20 (3)');
+            expect(clock.getBlindsClockTableCell(1, 2).getText()).toBe('25\'');
+            expect(clock.getBlindsClockTableCell(2, 1).getText()).toBe('12/24 (3)');
+            expect(clock.getBlindsClockTableCell(2, 2).getText()).toBe('25\'');
+
+            expect(clock.getClockPlayers().getText()).toBe('10/10');
+            expect(clock.getClockAverage().getText()).toBe('1500');
+
+            expect(clock.getAllClockPayoutsRows().count()).toBe(4);
+
+            expect(clock.getClockPayoutsTableCell(1, 0).getText()).toBe('1')
+            expect(clock.getClockPayoutsTableCell(1, 1).getText()).toBe('425')
+            expect(clock.getClockPayoutsTableCell(2, 1).getText()).toBe('275')
+            expect(clock.getClockPayoutsTableCell(3, 1).getText()).toBe('175')
+            expect(clock.getClockPayoutsTableCell(4, 1).getText()).toBe('125')
+        });
     });
 
-    describe('payouts - rebuy: no rebuy added', function(){
+    describe('payouts - rebuy: rebuy but not added', function(){
 
         beforeAll(function(){
             console.log('\n-->  test spec: ' + __filename)
@@ -395,8 +416,17 @@ describe('payouts case', function() {
             expect(tourn.getTournRebuyCostInput().getAttribute('value')).toBe('1000');
             expect(tourn.getTournAddOnCostInput().getAttribute('value')).toBe('1000');
         });
-    });
 
+        it('should go to clock and verify', function () {
+
+            tourn.getClockLeftMenu().click();
+            expect(clock.getClockPlayers().getText()).toBe('6/6');
+            expect(clock.getClockAverage().getText()).toBe('1500');
+
+            expect(clock.getAllClockPayoutsRows().count()).toBe(1);
+        });
+
+    });
 
     describe('payouts - rebuy: rebuy added', function(){
 
@@ -586,6 +616,15 @@ describe('payouts case', function() {
             expect(tourn.getPlayersInfoBox()).toBe('10');
             expect(tourn.getRebuysInfoBox()).toBe('0');
             expect(tourn.getAddOnsInfoBox()).toBe('0');
+        });
+
+        it('should go to clock and verify', function () {
+
+            tourn.getClockLeftMenu().click();
+            expect(clock.getClockPlayers().getText()).toBe('10/10');
+            expect(clock.getClockAverage().getText()).toBe('1500');
+
+            expect(clock.getAllClockPayoutsRows().count()).toBe(3);
         });
 
     });
