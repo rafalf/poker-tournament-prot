@@ -44,7 +44,7 @@ exports.config = {
             '../tests/seating.spec.js'
         ],
         teardown: ['../tests/tearDown.spec.js'],
-        dev: ['../tests/payouts.spec.js']
+        dev: ['../tests/quickStart.spec.js']
     },
 
    onPrepare: function() {

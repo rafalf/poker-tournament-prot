@@ -5,6 +5,7 @@ describe('knockouts in a tournament case', function() {
     var login = require('../pages/login.po.js');
     var lobby = require('../pages/lobby.po.js');
     var tourn = require('../pages/tournament.po.js');
+    var clock = require('../pages/clock.po.js');
 
 
     var testData = require("../confs/test.json");
@@ -366,5 +367,11 @@ describe('knockouts in a tournament case', function() {
         expect(tourn.getRegisterPlayerButton().isDisplayed()).toBeTruthy()
         expect(tourn.getDrawSeatsButton().isDisplayed()).toBeTruthy()
         expect(tourn.getExportLeaderBoardButton().isDisplayed()).toBeFalsy();
+    });
+
+    it('should go to clock and verify', function () {
+
+        // issues
+        tourn.getClockLeftMenu().click();
     });
 });

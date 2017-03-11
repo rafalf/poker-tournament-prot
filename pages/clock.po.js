@@ -1,7 +1,7 @@
 var clockPage = function (){
 
 
-    var page = require('../pages/page.po.js')
+    var page = require('../pages/page.po.js');
     var EC = protractor.ExpectedConditions;
 
     this.waitForTournament = function () {
@@ -53,6 +53,14 @@ var clockPage = function (){
 
     this.getClockAverage = function () {
         return $('.clock-average span')
+    };
+
+    this.getClockNextLevel = function () {
+        return $('#btn_tourn_nextLevel')
+    };
+
+    this.getClockPrevLevel = function () {
+        return $('#btn_tourn_prevLevel')
     };
     
     

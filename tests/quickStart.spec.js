@@ -5,6 +5,8 @@ describe('quick start case', function() {
     var login = require('../pages/login.po.js');
     var lobby = require('../pages/lobby.po.js');
     var club = require('../pages/club.po.js');
+    var tourn = require('../pages/tournament.po.js');
+    var clock = require('../pages/clock.po.js');
 
     var testData = require("../confs/test.json");
 
@@ -78,5 +80,23 @@ describe('quick start case', function() {
         expect(club.getClubName().getAttribute('value')).toBe('Club test.blindvalet')
 
         club.getCloseClubPage().click();
+    });
+
+    it('should go to clock - next and previous level', function () {
+        lobby.getFirstOpenTournamentButton().click()
+        tourn.getClockLeftMenu().click();
+
+        expect(clock.getBlindsClockTableCell(1, 0).getText()).toBe('1');
+        expect(clock.getBlindsClockTableCell(1, 1).getText()).toBe('5/10');
+
+        clock.getClockNextLevel().click();
+
+        expect(clock.getBlindsClockTableCell(1, 0).getText()).toBe('2');
+        expect(clock.getBlindsClockTableCell(1, 1).getText()).toBe('10/20');
+
+        clock.getClockPrevLevel().click();
+
+        expect(clock.getBlindsClockTableCell(1, 0).getText()).toBe('1');
+        expect(clock.getBlindsClockTableCell(1, 1).getText()).toBe('5/10');
     });
 });
